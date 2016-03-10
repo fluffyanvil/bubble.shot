@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.Server.DataContracts", "BubbleShot.Server.DataContracts\BubbleShot.Server.DataContracts.csproj", "{F3ED9E2F-62EB-4394-A61D-6FFFB5C77943}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.Server.Common", "BuubleShot.Server.Common\BubbleShot.Server.Common.csproj", "{E70EA979-DF1F-4393-AA97-1F5791FFFB85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.Server.Adapters", "BubbleShot.Server.Adapters\BubbleShot.Server.Adapters.csproj", "{4742B7C2-6A84-4426-9108-C205D8FD2306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.Server.TestApp", "BubbleShot.Server.TestApp\BubbleShot.Server.TestApp.csproj", "{7B8FC976-9AD2-4E86-85E3-21085A733A3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.WpfClient", "BubbleShot.WpfClient\BubbleShot.WpfClient.csproj", "{8E3462FB-7496-4301-BC2C-E6613F13BC6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Services", "Web Services", "{45CBD267-C36B-4E60-BBF2-E13DE01180AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubbleShot.Server.WebServices.TestWcfService", "Web Services\BubbleShot.Server.WebServices.TestWcfService\BubbleShot.Server.WebServices.TestWcfService.csproj", "{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3ED9E2F-62EB-4394-A61D-6FFFB5C77943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3ED9E2F-62EB-4394-A61D-6FFFB5C77943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3ED9E2F-62EB-4394-A61D-6FFFB5C77943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3ED9E2F-62EB-4394-A61D-6FFFB5C77943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E70EA979-DF1F-4393-AA97-1F5791FFFB85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70EA979-DF1F-4393-AA97-1F5791FFFB85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70EA979-DF1F-4393-AA97-1F5791FFFB85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70EA979-DF1F-4393-AA97-1F5791FFFB85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4742B7C2-6A84-4426-9108-C205D8FD2306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4742B7C2-6A84-4426-9108-C205D8FD2306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4742B7C2-6A84-4426-9108-C205D8FD2306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4742B7C2-6A84-4426-9108-C205D8FD2306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B8FC976-9AD2-4E86-85E3-21085A733A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8FC976-9AD2-4E86-85E3-21085A733A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8FC976-9AD2-4E86-85E3-21085A733A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8FC976-9AD2-4E86-85E3-21085A733A3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3462FB-7496-4301-BC2C-E6613F13BC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3462FB-7496-4301-BC2C-E6613F13BC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3462FB-7496-4301-BC2C-E6613F13BC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3462FB-7496-4301-BC2C-E6613F13BC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{36C853ED-2BEB-48C7-8D0A-0C1EE7E20E79} = {45CBD267-C36B-4E60-BBF2-E13DE01180AF}
+	EndGlobalSection
+EndGlobal
