@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Devices.Geolocation;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -26,6 +27,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private double _longitude;
 		private double _latitude;
 		private int _radius;
+		private Geopoint _location;
 
 		public MainPageViewModel()
 		{
@@ -37,6 +39,16 @@ namespace BubbleShot.UniversalApp.ViewModels
 			_latitude = 57.876779;
 			Photos = new ObservableCollection<ImageSource>();
 			_backgroundDownloader = new BackgroundDownloader();
+		}
+
+		public Geopoint Location
+		{
+			get { return _location; }
+			set
+			{
+				_location = value; 
+				OnPropertyChanged();
+			}
 		}
 
 		private async void AdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)

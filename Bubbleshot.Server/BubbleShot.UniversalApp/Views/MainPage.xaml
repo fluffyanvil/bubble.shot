@@ -6,21 +6,60 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="using:Prism.Windows.Mvvm"
     xmlns:viewModels="using:BubbleShot.UniversalApp.ViewModels"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
-    <Page.TopAppBar>
-        <AppBar>
-            <StackPanel Orientation="Horizontal">
-                <AppBarButton Icon="Play" Label="Start" Command="{Binding StartAdapterCommand}"/>
-                <AppBarButton Icon="Stop" Label="Stop" Command="{Binding StopAdapterCommand}"/>
+
+    <SplitView DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="200" IsPaneOpen="{Binding ElementName=HamburgerButton, Path=IsChecked, Mode=TwoWay}">
+        <!--<SplitView.Pane>
+            <Grid Background="DarkGray">
+                <StackPanel Orientation="Vertical" MaxWidth="50">
+                    <Button x:Name="MenuButton" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
+                   Width="50" Height="50" Background="Transparent"/>
+                    <AppBarButton Icon="Play" Label="Запустить" Command="{Binding StartAdapterCommand}"/>
+                    <AppBarButton Icon="Stop" Label="Остановить" Command="{Binding StopAdapterCommand}"/>
+                    <AppBarSeparator/>
+                    
+                </StackPanel>
+            </Grid>
+        </SplitView.Pane>-->
+        <SplitView.Pane>
+            <StackPanel Background="Gray">
+                <ToggleButton x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button FontFamily="Segoe MDL2 Assets" Content="&#xE768;"
+                    Width="50" Height="50" Background="Transparent" Command="{Binding StartAdapterCommand}"/>
+                    <TextBlock Text="Запустить" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button FontFamily="Segoe MDL2 Assets" Content="&#xE71A;"
+                        Width="50" Height="50" Background="Transparent" Command="{Binding StopAdapterCommand}"/>
+                    <TextBlock Text="Остановить" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel >
+                    <TextBlock Margin="5">
+                        <Run>Радиус:</Run>
+                    </TextBlock>
+                    <Slider Width="100" Minimum="5000" Maximum="100000" Value="{Binding Radius, Mode=TwoWay}"/>
+                </StackPanel>
+                
             </StackPanel>
-        </AppBar>
-    </Page.TopAppBar>
-    <FlipView>
-        <StackPanel>
-            <TextBlock Text="Карта" />
-        </StackPanel>
-        <StackPanel>
-            <TextBlock Text="Галерея" />
-        </StackPanel>
-    </FlipView>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <FlipView>
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <maps:MapControl x:Name="Map"
+                             MapServiceToken="uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G"
+                             ZoomInteractionMode="GestureAndControl"
+                             LandmarksVisible="True"
+                             IsRightTapEnabled="True"
+                             CenterChanged="Map_OnCenterChanged"/>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="готов стать галереей вашей хуйни" />
+                </Grid>
+            </FlipView>
+        </SplitView.Content>
+    </SplitView>
+
 </Page>
