@@ -1,6 +1,6 @@
 ﻿using Prism.Events;
 
-namespace BubbleShot.Server.Adapters.Events
+namespace Bubbleshot.Server.Adapters.Pcl.Events
 {
 	public class NewPhotoEvent : EventBase
 	{
