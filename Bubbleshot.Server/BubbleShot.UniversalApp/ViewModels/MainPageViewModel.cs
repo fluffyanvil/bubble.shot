@@ -34,9 +34,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			var adapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			_adapter = new VkAdapter(adapterConfig);
 			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
-			_radius = 5000;
-			_longitude = 35.00511;
-			_latitude = 57.876779;
+			Radius = 50000;
 			Photos = new ObservableCollection<ImageSource>();
 			_backgroundDownloader = new BackgroundDownloader();
 		}
@@ -56,34 +54,41 @@ namespace BubbleShot.UniversalApp.ViewModels
 			try
 			{
 				var imageLinks = ((List<PhotoItemModel>)e.Photos).Select(p => p.ImageLink);
-				foreach (var imageLink in imageLinks)
-				{
-					await Task.Factory.StartNew(async () =>
-					{
-						try
-						{
-							var sf = Windows.ApplicationModel.Package.Current.InstalledLocation;
-							var file = await sf.CreateFileAsync(Guid.NewGuid().ToString("N"), CreationCollisionOption.GenerateUniqueName);
-							var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(imageLink), file);
-							await downloadOperation.StartAsync();
+				await DownloadPhotos(imageLinks);
 
-							var result = downloadOperation.ResultFile;
-
-
-							var tempImage = await LoadImage(result);
-
-							Photos.Add(tempImage);
-						}
-						catch (Exception)
-						{
-
-						}
-					});
-				}
 			}
 			catch (Exception exception)
 			{
 			}
+		}
+
+		private async Task DownloadPhotos(IEnumerable<string> imageLinks)
+		{
+			try
+			{
+				foreach (var imageLink in imageLinks)
+				{
+					await DownloadPhoto(imageLink);
+				}
+			}
+			catch (Exception)
+			{
+
+			}
+		}
+
+		private async Task DownloadPhoto(string imageLink)
+		{
+			var sf = Windows.ApplicationModel.Package.Current.InstalledLocation;
+			var file = await sf.CreateFileAsync(Guid.NewGuid().ToString("N"), CreationCollisionOption.GenerateUniqueName);
+			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(imageLink), file);
+			await downloadOperation.StartAsync();
+
+			var result = downloadOperation.ResultFile;
+
+			var tempImage = await LoadImage(result);
+
+			Photos.Add(tempImage);
 		}
 
 		private static async Task<BitmapImage> LoadImage(IStorageFile file)
@@ -151,7 +156,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		private void OnExecuteStartAdapter()
 		{
-			_adapter?.Start(Latitude, Longitude, Radius);
+			_adapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
 			UpdateCommandsAvailability();
 		}
 

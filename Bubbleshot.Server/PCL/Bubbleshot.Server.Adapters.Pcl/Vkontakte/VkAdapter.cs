@@ -19,7 +19,7 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 		public override void Start()
 		{
 			Active = true;
-			PollingManager.Start(TimeSpan.FromSeconds(5), () =>
+			PollingManager.Start(TimeSpan.FromSeconds(5), async () =>
 			{
 				_vkPhotosSearchRequestParameters = new VkPhotosSearchRequestParameters
 				{
@@ -30,16 +30,16 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 					Longitude = 35.00511,
 					Radius = 10000
 				};
-				var result = _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
-				if (result.Result.Items.Count > 0)
-					OnNewPhotoAlert(new NewPhotoAlertEventArgs {Count = result.Result.Items.Count, Photos = result.Result.Items});
+				var result = await _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
+				if (result.Items.Count > 0)
+					OnNewPhotoAlert(new NewPhotoAlertEventArgs {Count = result.Items.Count, Photos = result.Items});
 			});
 		}
 
 		public override void Start(double latitude, double longitude, int radius)
 		{
 			Active = true;
-			PollingManager.Start(TimeSpan.FromSeconds(5), () =>
+			PollingManager.Start(TimeSpan.FromSeconds(5), async () =>
 			{
 				_vkPhotosSearchRequestParameters = new VkPhotosSearchRequestParameters
 				{
@@ -50,11 +50,11 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 					Longitude = longitude,
 					Radius = radius
 				};
-				var result = _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
-				if (!(result.Result.Items.Count > 0)) return;
+				var result = await _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
+				if (!(result.Items.Count > 0)) return;
 				var mapper = new VkPhotoItemMapper();
-				var genericResult = mapper.MapVkPhotoItems(result.Result.Items).ToList();
-				OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Result.Items.Count, Photos = genericResult });
+				var genericResult = mapper.MapVkPhotoItems(result.Items).ToList();
+				OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Items.Count, Photos = genericResult });
 			});
 		}
 
