@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Media.Imaging;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Vkontakte;
 using Bubbleshot.Server.Common.Pcl.Models;
+using BubbleShot.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
 
@@ -28,6 +28,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private double _latitude;
 		private int _radius;
 		private Geopoint _location;
+		private IStorageFolder _installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
 		public MainPageViewModel()
 		{
@@ -35,7 +36,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			_adapter = new VkAdapter(adapterConfig);
 			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 50000;
-			Photos = new ObservableCollection<ImageSource>();
+			Photos = new ObservableCollection<VkPhotoWithUserLink>();
 			_backgroundDownloader = new BackgroundDownloader();
 		}
 
@@ -53,47 +54,41 @@ namespace BubbleShot.UniversalApp.ViewModels
 		{
 			try
 			{
-				var imageLinks = ((List<PhotoItemModel>)e.Photos).Select(p => p.ImageLink);
-				await DownloadPhotos(imageLinks);
-
-			}
-			catch (Exception exception)
-			{
-			}
-		}
-
-		private async Task DownloadPhotos(IEnumerable<string> imageLinks)
-		{
-			try
-			{
+				var imageLinks = (List<PhotoItemModel>) e.Photos;
 				foreach (var imageLink in imageLinks)
 				{
 					await DownloadPhoto(imageLink);
 				}
-			}
-			catch (Exception)
-			{
 
+			}
+			catch (Exception exception)
+			{
+				await new Windows.UI.Popups.MessageDialog(exception.Message).ShowAsync();
 			}
 		}
 
-		private async Task DownloadPhoto(string imageLink)
+		private async Task DownloadPhoto(PhotoItemModel photoItem)
 		{
-			var sf = Windows.ApplicationModel.Package.Current.InstalledLocation;
-			var file = await sf.CreateFileAsync(Guid.NewGuid().ToString("N"), CreationCollisionOption.GenerateUniqueName);
-			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(imageLink), file);
+			var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
+			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
 			await downloadOperation.StartAsync();
+			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
 
-			var result = downloadOperation.ResultFile;
 
-			var tempImage = await LoadImage(result);
-
-			Photos.Add(tempImage);
+			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			{
+				var bitmapImage = new BitmapImage();
+				bitmapImage.SetSource(stream);
+				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.UserLink});
+				
+			});
+			await file.DeleteAsync();
 		}
 
 		private static async Task<BitmapImage> LoadImage(IStorageFile file)
 		{
 			var bitmapImage = new BitmapImage();
+			
 			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
 
 			bitmapImage.SetSource(stream);
@@ -102,7 +97,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		}
 
-		public ObservableCollection<ImageSource> Photos { get; set; }
+		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
 
 		public int Radius
 		{

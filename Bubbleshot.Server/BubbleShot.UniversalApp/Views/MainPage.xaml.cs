@@ -31,5 +31,10 @@ namespace BubbleShot.UniversalApp.Views
 		    var geopoint = Map.Center;
 		    ViewModel.Location = geopoint;
 	    }
+
+	    private void Map_OnMapDoubleTapped(MapControl sender, MapInputEventArgs args)
+	    {
+		    
+	    }
     }
 }

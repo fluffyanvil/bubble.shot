@@ -8,11 +8,18 @@
     xmlns:viewModels="using:BubbleShot.UniversalApp.ViewModels"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:models="using:BubbleShot.UniversalApp.Models"
     mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     <Page.Resources>
-        <DataTemplate x:Key="ItemTemplate">
+        <DataTemplate x:Key="ItemTemplate" x:DataType="models:VkPhotoWithUserLink">
             <VariableSizedWrapGrid>
-                <Image Width="200" Height="200" Stretch="Uniform" Source="{Binding}"/>
+                <Border Padding="5" Background="CornflowerBlue" Margin="5">
+                    <StackPanel Orientation="Vertical">
+                        <Image Width="200" Height="200" Stretch="Uniform" Source="{Binding Image}"/>
+                        <TextBlock Text="{Binding UserLink}"><Hyperlink></Hyperlink></TextBlock>
+                    </StackPanel>
+                </Border>
+                
             </VariableSizedWrapGrid>
         </DataTemplate>
     </Page.Resources>
@@ -42,13 +49,14 @@
         <SplitView.Content>
           <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseTouchAnimationsForAllNavigation="True">
               <FlipViewItem>
-                  <Grid Margin="0,0,10,0" Background="AntiqueWhite">
+                  <Grid Margin="0,0,20,0" Background="AntiqueWhite">
                         <maps:MapControl x:Name="Map"
                              MapServiceToken="uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G"
                              ZoomInteractionMode="GestureAndControl"
                              LandmarksVisible="True"
                              IsRightTapEnabled="True"
-                             CenterChanged="Map_OnCenterChanged"/>
+                             CenterChanged="Map_OnCenterChanged" MapDoubleTapped="Map_OnMapDoubleTapped">
+                        </maps:MapControl>
                     </Grid>
                     
                 </FlipViewItem>
