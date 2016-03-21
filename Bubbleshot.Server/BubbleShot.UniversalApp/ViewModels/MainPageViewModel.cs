@@ -15,6 +15,7 @@ using Bubbleshot.Server.Common.Pcl.Models;
 using BubbleShot.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
+using Prism.Windows.Navigation;
 
 namespace BubbleShot.UniversalApp.ViewModels
 {
@@ -28,10 +29,26 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private double _latitude;
 		private int _radius;
 		private Geopoint _location;
-		private IStorageFolder _installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+		private readonly IStorageFolder _installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+		private readonly INavigationService _navigationService;
+		private VkPhotoWithUserLink _selectedItem;
+		private DelegateCommand _cLoseDetails;
 
-		public MainPageViewModel()
+		public bool ItemIsSelected => SelectedItem != null;
+
+		public VkPhotoWithUserLink SelectedItem
 		{
+			get { return _selectedItem; }
+			set
+			{
+				_selectedItem = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public MainPageViewModel(INavigationService navigationService)
+		{
+			_navigationService = navigationService;
 			var adapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			_adapter = new VkAdapter(adapterConfig);
 			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
@@ -85,17 +102,6 @@ namespace BubbleShot.UniversalApp.ViewModels
 			await file.DeleteAsync();
 		}
 
-		private static async Task<BitmapImage> LoadImage(IStorageFile file)
-		{
-			var bitmapImage = new BitmapImage();
-			
-			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
-
-			bitmapImage.SetSource(stream);
-
-			return bitmapImage;
-
-		}
 
 		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
 
@@ -159,6 +165,13 @@ namespace BubbleShot.UniversalApp.ViewModels
 		{
 			_startAdapterCommand.RaiseCanExecuteChanged();
 			_stopAdapterCommand.RaiseCanExecuteChanged();
+		}
+
+		public ICommand CLoseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
+
+		private void OnExecuteCloseDetails()
+		{
+			SelectedItem = null;
 		}
 	}
 }

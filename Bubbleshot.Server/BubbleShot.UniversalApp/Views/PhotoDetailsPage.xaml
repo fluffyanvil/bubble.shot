@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="BubbleShot.UniversalApp.Views.PhotoDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BubbleShot.UniversalApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:BubbleShot.UniversalApp.ViewModels"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PhotoDetailsPageViewModel}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+    </Grid>
+</Page>

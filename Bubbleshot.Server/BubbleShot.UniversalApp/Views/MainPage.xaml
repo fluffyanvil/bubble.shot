@@ -9,8 +9,12 @@
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:controls="using:WinRTXamlToolkit.Controls"
     xmlns:models="using:BubbleShot.UniversalApp.Models"
+    xmlns:converters="using:BubbleShot.UniversalApp.Converters"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity1="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     <Page.Resources>
+        <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"></converters:NullVisibilityConverter>
         <DataTemplate x:Key="ItemTemplate" x:DataType="models:VkPhotoWithUserLink">
             <VariableSizedWrapGrid>
                 <Border Padding="5" Background="CornflowerBlue" Margin="5">
@@ -19,7 +23,6 @@
                         <TextBlock Text="{Binding UserLink}"><Hyperlink></Hyperlink></TextBlock>
                     </StackPanel>
                 </Border>
-                
             </VariableSizedWrapGrid>
         </DataTemplate>
     </Page.Resources>
@@ -61,16 +64,34 @@
                     
                 </FlipViewItem>
                 <FlipViewItem>
-                    <ListView
+                    <Grid>
+                        <ListView
                         ItemTemplate="{StaticResource ItemTemplate}"
                         ItemsSource="{Binding Photos}"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <controls:UniformGrid Columns="5" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                    </ListView>
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:UniformGrid Columns="5" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                        <StackPanel Orientation="Vertical" Background="Azure" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
+                            <HyperlinkButton Command="{Binding CLoseDetails}" Margin="10" HorizontalAlignment="Right">Закрыть</HyperlinkButton>
+                            <StackPanel Orientation="Vertical" Margin="20">
+                                <HyperlinkButton NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}"/>
+                                <Image Stretch="None" Source="{Binding SelectedItem.Image}">
+                                    <interactivity1:Interaction.Behaviors>
+                                        <interactivity1:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding CLoseDetails}"></core:InvokeCommandAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity1:BehaviorCollection>
+                                    </interactivity1:Interaction.Behaviors>
+                                </Image>
+                            </StackPanel>
+                       </StackPanel>
+                    </Grid>
                 </FlipViewItem>
             </FlipView>
         </SplitView.Content>
