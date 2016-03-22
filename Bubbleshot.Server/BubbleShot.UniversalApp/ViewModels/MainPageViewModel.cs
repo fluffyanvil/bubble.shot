@@ -33,6 +33,25 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private readonly INavigationService _navigationService;
 		private VkPhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
+		private readonly Geolocator _geolocator;
+		private Geoposition _geoposition;
+
+		public Geoposition Geoposition
+		{
+			get { return _geoposition; }
+			set
+			{
+				_geoposition = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public delegate void GetLocation();
+
+		public delegate void RadiusChanged();
+
+		public event GetLocation GetLocationEvent;
+		public event RadiusChanged RadiusChangedEvent;
 
 		public bool ItemIsSelected => SelectedItem != null;
 
@@ -55,6 +74,15 @@ namespace BubbleShot.UniversalApp.ViewModels
 			Radius = 50000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink>();
 			_backgroundDownloader = new BackgroundDownloader();
+			_geolocator = new Geolocator();
+		}
+
+		public async void GetPosition()
+		{
+			Geoposition = await _geolocator.GetGeopositionAsync();
+			Longitude = _geoposition.Coordinate.Longitude;
+			Latitude = _geoposition.Coordinate.Latitude;
+			OnOnGetLocation();
 		}
 
 		public Geopoint Location
@@ -108,7 +136,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 		public int Radius
 		{
 			get { return _radius; }
-			set { _radius = value; OnPropertyChanged(); }
+			set { _radius = value; OnPropertyChanged(); OnRadiusChangedEvent(); }
 		}
 
 		public double Latitude
@@ -172,6 +200,16 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private void OnExecuteCloseDetails()
 		{
 			SelectedItem = null;
+		}
+
+		protected virtual void OnOnGetLocation()
+		{
+			GetLocationEvent?.Invoke();
+		}
+
+		protected virtual void OnRadiusChangedEvent()
+		{
+			RadiusChangedEvent?.Invoke();
 		}
 	}
 }

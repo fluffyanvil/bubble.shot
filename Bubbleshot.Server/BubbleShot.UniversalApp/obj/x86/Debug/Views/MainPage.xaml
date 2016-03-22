@@ -19,12 +19,12 @@
     <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseTouchAnimationsForAllNavigation="True">
         <FlipViewItem>
             <Grid Margin="0,0,20,0" Background="AntiqueWhite">
-                <maps:MapControl x:Name="Map"
+                <maps:MapControl x:ConnectionId='1' x:Name="Map"
                              MapServiceToken="uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G"
                              ZoomInteractionMode="GestureAndControl"
                              LandmarksVisible="True"
                              IsRightTapEnabled="True"
-                             CenterChanged="Map_OnCenterChanged" MapDoubleTapped="Map_OnMapDoubleTapped">
+                                                                                                        >
                 </maps:MapControl>
 
                 <Border Background="RoyalBlue" Opacity="0.6" HorizontalAlignment="Right" Width="50">
@@ -53,7 +53,7 @@
             <Grid>
                 <GridView Margin="15" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                        <DataTemplate                                        >
                             <Grid HorizontalAlignment="Left" Width="150" Height="150">
                                 <Border>
                                     <Image Source="{Binding Image}" Stretch="UniformToFill"/>
@@ -95,3 +95,4 @@
     </FlipView>
 
 </Page>
+
