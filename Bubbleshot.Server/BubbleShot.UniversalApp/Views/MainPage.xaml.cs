@@ -5,7 +5,9 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using BubbleShot.UniversalApp.Converters;
 using BubbleShot.UniversalApp.Extensions;
 using BubbleShot.UniversalApp.ViewModels;
 
@@ -42,9 +44,9 @@ namespace BubbleShot.UniversalApp.Views
 	    private async void GetLocationEvent()
 	    {
 		    await Map.TrySetViewAsync(new Geopoint(new BasicGeoposition() {Latitude = ViewModel.Geoposition.Coordinate.Latitude, Longitude = ViewModel.Geoposition.Coordinate.Longitude}));
-		    await Map.TryZoomToAsync(18);
+		    await Map.TryZoomToAsync(11);
 			MarkAndDrawCircle(Map, ViewModel.Radius);
-		}
+	    }
 
 	    private MainPageViewModel ViewModel => (MainPageViewModel) DataContext;
 
@@ -62,24 +64,30 @@ namespace BubbleShot.UniversalApp.Views
 
 	    private void MarkAndDrawCircle(MapControl mapControl, int radius)
 	    {
-		    mapControl.MapElements.Clear();
-			var icon = new MapIcon { Location = Map.Center};
-			Map.MapElements.Add(icon);
-			var fill = Colors.Purple;
-			var stroke = Colors.Red;
+			mapControl.MapElements.Clear();
+			//var icon = new MapIcon { Location = Map.Center};
+
+			//Map.MapElements.Add(icon);
+			var fill = Colors.LawnGreen;
+			var stroke = Colors.Green;
 			fill.A = 80;
 			stroke.A = 100;
-		    var circle = new MapPolygon
-		    {
-			    StrokeThickness = 2,
-			    FillColor = fill,
-			    StrokeColor = stroke,
-			    StrokeDashed = false,
-			    Path = new Geopath(mapControl.Center.GetCirclePoints(radius))
-		    };
+			var circle = new MapPolygon
+			{
+				StrokeThickness = 2,
+				FillColor = fill,
+				StrokeColor = stroke,
+				StrokeDashed = false,
+				Path = new Geopath(mapControl.Center.GetCirclePoints(radius))
+			};
 
 
-		    mapControl.MapElements.Add(circle);
+			mapControl.MapElements.Add(circle);
 		}
-	}
+
+	    private void MainPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
+	    {
+			ViewModel.AvailableModalSize = e.NewSize.Height > e.NewSize.Width ? e.NewSize.Width - 200 : e.NewSize.Height - 200;
+	    }
+    }
 }

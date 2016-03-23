@@ -25,7 +25,8 @@ namespace Bubbleshot.Server.Adapters.Pcl.Helpers
 					Latitude = i.Latitude,
 					Longitude = i.Longitude,
 					TimeCreated = i.Date,
-					UserLink = i.OwnerId[0] == '-' ? string.Format("https://vk.com/club{0}", i.OwnerId.Substring(1)) : string.Format("https://vk.com/id{0}", i.OwnerId)
+					UserLink = i.OwnerId[0] == '-' ? string.Format("https://vk.com/club{0}", i.OwnerId.Substring(1)) : string.Format("https://vk.com/id{0}", i.OwnerId),
+					Description = i.Text
 				});
 			}
 			catch (Exception)

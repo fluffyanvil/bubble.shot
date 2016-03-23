@@ -12,5 +12,6 @@ namespace Bubbleshot.Server.Common.Pcl.Models
 		public double Latitude { get; set; }
 
 		public string UserLink { get; set; }
+		public string Description { get; set; }
 	}
 }

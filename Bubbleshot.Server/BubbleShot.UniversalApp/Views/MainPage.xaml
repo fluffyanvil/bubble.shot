@@ -12,7 +12,7 @@
     xmlns:converters="using:BubbleShot.UniversalApp.Converters"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:interactivity1="using:Microsoft.Xaml.Interactivity"
-    mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
+    mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }" SizeChanged="MainPage_OnSizeChanged">
     <Page.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Page.Resources>
@@ -25,28 +25,27 @@
                              LandmarksVisible="True"
                              IsRightTapEnabled="True"
                              CenterChanged="Map_OnCenterChanged" MapDoubleTapped="Map_OnMapDoubleTapped">
+                    <maps:MapItemsControl>
+                        <Border Background="Green" Width="10" Height="10" CornerRadius="10" maps:MapControl.Location="{Binding DeviceLocation}">
+                        </Border>
+                    </maps:MapItemsControl>
                 </maps:MapControl>
-
-                <Border Background="RoyalBlue" Opacity="0.6" HorizontalAlignment="Right" Width="50">
-                    <StackPanel Orientation="Vertical">
+                <Grid VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
-                            <Button FontFamily="Segoe MDL2 Assets" 
-                                    Content="&#xE768;"
-                                    Width="50" Height="50"
-                                    Background="Transparent" 
-                                    Command="{Binding StartAdapterCommand}"/>
+                            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE768;" Command="{Binding StartAdapterCommand}"
+                    Width="50" Height="50" Background="Transparent"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="10">
                             <Button FontFamily="Segoe MDL2 Assets" Content="&#xE71A;"
-                                    Width="50" Height="50" 
-                                    Background="Transparent" 
-                                    Command="{Binding StopAdapterCommand}"/>
+                        Width="50" Height="50" Background="Transparent" Command="{Binding StopAdapterCommand}"/>
                         </StackPanel>
-                        <StackPanel>
-                            <Slider Orientation="Vertical" Width="50" Height="200" Minimum="5000" Maximum="100000" Value="{Binding Radius, Mode=TwoWay}"/>
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <Slider Width="100" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="100000"></Slider>
+
                         </StackPanel>
                     </StackPanel>
-                </Border>
+                </Grid>
             </Grid>
         </FlipViewItem>
         <FlipViewItem>
@@ -63,31 +62,34 @@
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapGrid ItemWidth="200" ItemHeight="200"
-                      Orientation="Horizontal" VerticalChildrenAlignment="Top"></WrapGrid>
+                            <WrapGrid ItemWidth="200" 
+                                      ItemHeight="200" 
+                                      Orientation="Horizontal"
+                                      VerticalChildrenAlignment="Top"
+                                      HorizontalAlignment="Stretch"/>
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
 
-                <Grid HorizontalAlignment="Center" MaxHeight="600" MaxWidth="600">
-                    <StackPanel MaxHeight="700" MaxWidth="700" Orientation="Vertical" Background="Azure" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
-                        <HyperlinkButton Command="{Binding CLoseDetails}" Margin="10" HorizontalAlignment="Right">Закрыть</HyperlinkButton>
-                        <StackPanel Orientation="Vertical" Margin="20">
-                            <HyperlinkButton NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}"/>
-                            <Border MaxWidth="500" MaxHeight="500">
-                                <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}">
-                                    <!--кусочек кода для возможности закрытия фотографии по тапу-->
-                                    <interactivity1:Interaction.Behaviors>
-                                        <interactivity1:BehaviorCollection>
-                                            <core:EventTriggerBehavior EventName="Tapped">
-                                                <core:InvokeCommandAction Command="{Binding CLoseDetails}"></core:InvokeCommandAction>
-                                            </core:EventTriggerBehavior>
-                                        </interactivity1:BehaviorCollection>
-                                    </interactivity1:Interaction.Behaviors>
-                                </Image>
+                <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Border>
+                        <Grid>
+                            <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}">
+                                <interactivity1:Interaction.Behaviors>
+                                    <interactivity1:BehaviorCollection>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:InvokeCommandAction Command="{Binding CLoseDetails}"></core:InvokeCommandAction>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity1:BehaviorCollection>
+                                </interactivity1:Interaction.Behaviors>
+                            </Image>
+                            <Border Background="DarkSlateGray" Opacity="0.6" Height="45" VerticalAlignment="Bottom">
+                                <StackPanel>
+                                    <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
                             </Border>
-                        </StackPanel>
-                    </StackPanel>
+                        </Grid>
+                    </Border>
 
                 </Grid>
             </Grid>

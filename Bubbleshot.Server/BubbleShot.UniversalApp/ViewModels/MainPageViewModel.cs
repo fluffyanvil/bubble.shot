@@ -8,7 +8,10 @@ using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Shapes;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Vkontakte;
 using Bubbleshot.Server.Common.Pcl.Models;
@@ -35,6 +38,19 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private DelegateCommand _cLoseDetails;
 		private readonly Geolocator _geolocator;
 		private Geoposition _geoposition;
+		private double _availableModalSize;
+		private Geopoint _deviceLocation;
+
+
+		public Geopoint DeviceLocation
+		{
+			get { return _deviceLocation; }
+			set
+			{
+				_deviceLocation = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public Geoposition Geoposition
 		{
@@ -71,18 +87,38 @@ namespace BubbleShot.UniversalApp.ViewModels
 			var adapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			_adapter = new VkAdapter(adapterConfig);
 			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
-			Radius = 50000;
+			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink>();
 			_backgroundDownloader = new BackgroundDownloader();
 			_geolocator = new Geolocator();
 		}
 
+		public double AvailableModalSize
+		{
+			get { return _availableModalSize; }
+			set
+			{
+				_availableModalSize = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public async void GetPosition()
 		{
-			Geoposition = await _geolocator.GetGeopositionAsync();
-			Longitude = _geoposition.Coordinate.Longitude;
-			Latitude = _geoposition.Coordinate.Latitude;
-			OnOnGetLocation();
+			try
+			{
+				Geoposition = await _geolocator.GetGeopositionAsync();
+				Longitude = _geoposition.Coordinate.Longitude;
+				Latitude = _geoposition.Coordinate.Latitude;
+				DeviceLocation = new Geopoint(new BasicGeoposition() {Longitude = Geoposition.Coordinate.Longitude, Latitude = Geoposition.Coordinate.Latitude});
+				OnOnGetLocation();
+			}
+			catch (Exception)
+			{
+				var dialog = new MessageDialog("Надо было разрешить");
+				await dialog.ShowAsync();
+			}
+
 		}
 
 		public Geopoint Location
@@ -108,7 +144,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 			catch (Exception exception)
 			{
-				await new Windows.UI.Popups.MessageDialog(exception.Message).ShowAsync();
+				await new MessageDialog(exception.Message).ShowAsync();
 			}
 		}
 

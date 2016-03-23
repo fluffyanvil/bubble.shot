@@ -11,5 +11,6 @@ namespace BubbleShot.UniversalApp.Models
 	{
 		public ImageSource Image { get; set; }
 		public string UserLink { get; set; }
+		public string ImageDescription { get; set; }
 	}
 }
