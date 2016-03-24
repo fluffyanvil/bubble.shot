@@ -2,8 +2,11 @@
     x:Class="BubbleShot.UniversalApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BubbleShot.UniversalApp"
     xmlns:windows="using:Prism.Unity.Windows"
+    xmlns:converters="using:BubbleShot.UniversalApp.Converters"
     RequestedTheme="Light">
-
+    <windows:PrismUnityApplication.Resources>
+        <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
+    </windows:PrismUnityApplication.Resources>
 </windows:PrismUnityApplication>

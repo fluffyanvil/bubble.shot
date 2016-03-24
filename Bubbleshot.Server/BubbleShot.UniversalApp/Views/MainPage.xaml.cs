@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.Services.Maps;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +28,7 @@ namespace BubbleShot.UniversalApp.Views
         {
             InitializeComponent();
 	        ApplyTemplate();
-        }
+		}
 
 	    protected override void OnNavigatedTo(NavigationEventArgs e)
 	    {
@@ -80,8 +84,6 @@ namespace BubbleShot.UniversalApp.Views
 				StrokeDashed = false,
 				Path = new Geopath(mapControl.Center.GetCirclePoints(radius))
 			};
-
-
 			mapControl.MapElements.Add(circle);
 		}
 
@@ -89,5 +91,55 @@ namespace BubbleShot.UniversalApp.Views
 	    {
 			ViewModel.AvailableModalSize = e.NewSize.Height > e.NewSize.Width ? e.NewSize.Width - 200 : e.NewSize.Height - 200;
 	    }
+		private async void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+	    {
+			if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+			{
+				var result = await GetPositionFromAddressAsync(sender.Text);
+				sender.ItemsSource = result.ToList();
+			}
+		}
+
+		private async Task<IList<MapLocation>> GetPositionFromAddressAsync(string address)
+		{
+			if (string.IsNullOrEmpty(address))
+				return new List<MapLocation>();
+			var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, ViewModel.Location, 10);
+			return mapLocationFinderResult.Status == MapLocationFinderStatus.Success ? mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
+		}
+
+	    private async void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+	    {
+		    var chosen = args.ChosenSuggestion as MapLocation;
+		    ViewModel.SearchedLocation = chosen;
+		    if (chosen != null) await Map.TrySetViewAsync(chosen.Point);
+			MarkAndDrawCircle(Map, ViewModel.Radius);
+		}
+
+	    private void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+	    {
+		    var mapLocation = args.SelectedItem as MapLocation;
+		    if (mapLocation != null)
+			    sender.Text = mapLocation.Address.FormattedAddress;
+	    }
+
+	    private void Ellipse_OnLoaded(object sender, RoutedEventArgs e)
+	    {
+		    BlinkStoryboard.Begin();
+	    }
+
+	  //  private void Map_OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+	  //  {
+		 //   var map = sender as MapControl;
+		 //   var tappedX = _x_position;
+			//var windowWidth = Window.Current.Bounds.Width;
+			//const int flipZoneDistance = 30;
+
+			//var needToHandled = tappedX - windowWidth > 0
+			//	? tappedX - windowWidth <= flipZoneDistance
+			//	: windowWidth - tappedX <= flipZoneDistance;
+
+		 //   e.Handled = true;
+	  //  }
     }
 }

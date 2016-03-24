@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using Windows.Networking.BackgroundTransfer;
+using Windows.Services.Maps;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
@@ -40,7 +41,18 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private Geoposition _geoposition;
 		private double _availableModalSize;
 		private Geopoint _deviceLocation;
+		private string _searchAddress;
+		private MapLocation _searchedLocation;
 
+		public MapLocation SearchedLocation
+		{
+			get { return _searchedLocation; }
+			set
+			{
+				_searchedLocation = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public Geopoint DeviceLocation
 		{
@@ -246,6 +258,16 @@ namespace BubbleShot.UniversalApp.ViewModels
 		protected virtual void OnRadiusChangedEvent()
 		{
 			RadiusChangedEvent?.Invoke();
+		}
+
+		public string SearchAddress
+		{
+			get { return _searchAddress; }
+			set
+			{
+				_searchAddress = value;
+				OnPropertyChanged();
+			}
 		}
 	}
 }
