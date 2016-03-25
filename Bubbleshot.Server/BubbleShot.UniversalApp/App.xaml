@@ -4,9 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:windows="using:Prism.Unity.Windows"
     xmlns:converters="using:BubbleShot.UniversalApp.Converters"
+    xmlns:converters1="using:WinRTXamlToolkit.Converters"
     RequestedTheme="Light">
     <windows:PrismUnityApplication.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
         <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
     </windows:PrismUnityApplication.Resources>
 </windows:PrismUnityApplication>

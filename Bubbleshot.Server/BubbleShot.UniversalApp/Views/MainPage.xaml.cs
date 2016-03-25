@@ -28,9 +28,38 @@ namespace BubbleShot.UniversalApp.Views
         {
             InitializeComponent();
 	        ApplyTemplate();
+        }
+
+	    private double _x1, _x2, _y1, _y2;
+
+	    private void OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+	    {
+		    _x1 = e.Position.X;
+		    _y1 = e.Position.Y;
+	    }
+
+		private void OnManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+		{
+			_x2 = e.Position.X;
+			_y2 = e.Position.Y;
+			if (_x1 > _x2 && Math.Abs(_y1 - _y2) < 50)
+			{
+				ViewModel.NextVictimCommand.Execute(null);
+				return;
+			}
+			if (_x1 < _x2 && Math.Abs(_y1 - _y2) < 50)
+			{
+				ViewModel.PrevVictimCommand.Execute(null);
+				return;
+			}
+
+			if (_y2 - _y1 > 50)
+			{
+				ViewModel.CLoseDetails.Execute(null);
+			}
 		}
 
-	    protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected override void OnNavigatedTo(NavigationEventArgs e)
 	    {
 
 		    base.OnNavigatedTo(e);
@@ -89,7 +118,8 @@ namespace BubbleShot.UniversalApp.Views
 
 	    private void MainPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
 	    {
-			ViewModel.AvailableModalSize = e.NewSize.Height > e.NewSize.Width ? e.NewSize.Width - 200 : e.NewSize.Height - 200;
+		    var isLandscape = e.NewSize.Width > e.NewSize.Height;
+			ViewModel.AvailableModalSize = isLandscape ? e.NewSize.Height - 75 : e.NewSize.Width - 75;
 	    }
 		private async void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 	    {
@@ -123,23 +153,11 @@ namespace BubbleShot.UniversalApp.Views
 			    sender.Text = mapLocation.Address.FormattedAddress;
 	    }
 
-	    private void Ellipse_OnLoaded(object sender, RoutedEventArgs e)
+	    private void WrapGridSizeChanged(object sender, SizeChangedEventArgs e)
 	    {
-		    BlinkStoryboard.Begin();
+			var isLandscape = e.NewSize.Width > e.NewSize.Height;
+			ViewModel.DynamicPhotoSize = isLandscape ? e.NewSize.Width / 10 : e.NewSize.Width / 5;
+		    ViewModel.MaximumColumns = (int) (e.NewSize.Width/ViewModel.DynamicPhotoSize);
 	    }
-
-	  //  private void Map_OnManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
-	  //  {
-		 //   var map = sender as MapControl;
-		 //   var tappedX = _x_position;
-			//var windowWidth = Window.Current.Bounds.Width;
-			//const int flipZoneDistance = 30;
-
-			//var needToHandled = tappedX - windowWidth > 0
-			//	? tappedX - windowWidth <= flipZoneDistance
-			//	: windowWidth - tappedX <= flipZoneDistance;
-
-		 //   e.Handled = true;
-	  //  }
     }
 }

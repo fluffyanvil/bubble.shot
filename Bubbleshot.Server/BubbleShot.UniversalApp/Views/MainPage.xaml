@@ -26,31 +26,76 @@
                              CenterChanged="Map_OnCenterChanged" MapDoubleTapped="Map_OnMapDoubleTapped">
                         <maps:MapItemsControl>
                             <maps:MapItemsControl.Items>
-                                <Border Width="20" Height="20" maps:MapControl.Location="{Binding DeviceLocation}">
-                                    <Ellipse Fill="Red" Stroke="DarkRed" x:Name="Ellipse" Loaded="Ellipse_OnLoaded" Visibility="{Binding Location, Converter={StaticResource NullToVisibilityConverter}}">
-                                        <Ellipse.Resources>
-                                            <Storyboard x:Name="BlinkStoryboard">
-                                                <DoubleAnimation
+                                <Border Width="10" Height="10" maps:MapControl.Location="{Binding DeviceLocation}">
+                                    <Ellipse Fill="Red" Stroke="DarkRed" x:Name="Ellipse" Visibility="{Binding Location, Converter={StaticResource NullToVisibilityConverter}}">
+                                        <Ellipse.Triggers>
+                                            <EventTrigger RoutedEvent="Ellipse.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard BeginTime="0:0:0.1">
+                                                        <DoubleAnimation
                                                     Storyboard.TargetName="Ellipse"
                                                     Storyboard.TargetProperty="Opacity"
                                                     From="1.0" To="0.0" Duration="0:0:0.5"
                                                     AutoReverse="True" RepeatBehavior="Forever"/>
-                                            </Storyboard>
-                                        </Ellipse.Resources>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Ellipse.Triggers>
                                     </Ellipse>
                                 </Border>
                             </maps:MapItemsControl.Items>
                         </maps:MapItemsControl>
                     </maps:MapControl>
+                    <Grid x:Name="TopToolBar" VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <AutoSuggestBox Margin="20,0" Grid.Column="0" VerticalAlignment="Center" QueryIcon="Find" Text="{Binding SearchAddress, Mode=TwoWay}" PlaceholderText="Адрес" 
+                                        TextChanged="AutoSuggestBox_OnTextChanged"
+                                        QuerySubmitted="AutoSuggestBox_OnQuerySubmitted"
+                                        AutoMaximizeSuggestionArea="True"
+                                        SuggestionChosen="AutoSuggestBox_OnSuggestionChosen">
+                            <AutoSuggestBox.ItemTemplate>
+                                <DataTemplate x:DataType="maps1:MapLocation">
+                                    <TextBlock Foreground="DarkSlateGray" Text="{Binding Address.FormattedAddress}"></TextBlock>
+                                </DataTemplate>
+                            </AutoSuggestBox.ItemTemplate>
+                        </AutoSuggestBox>
+                        <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="100000">
+                            <Slider.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                            <Run>Радиус</Run>
+                            <Run Text="{Binding Radius}"></Run>
+                            <Run>м</Run>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </Slider.HeaderTemplate>
+                        </Slider>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <AppBarButton Command="{Binding StartAdapterCommand}" Label="Старт">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf01d;"></FontIcon>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton Command="{Binding StopAdapterCommand}" Label="Стоп">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf28e;"></FontIcon>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </FlipViewItem>
             <FlipViewItem IsSelected="{Binding ElementName=GalleryToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid>
-                    <GridView Margin="15" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <GridView CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="models:VkPhotoWithUserLink">
-                                <Grid HorizontalAlignment="Left" Width="150" Height="150">
-                                    <Border>
+                                <Grid>
+                                    <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                                     </Border>
                                 </Grid>
@@ -58,81 +103,49 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid ItemWidth="200" 
-                                      ItemHeight="200" 
+                                <WrapGrid ItemWidth="{Binding DynamicPhotoSize}" 
+                                      ItemHeight="{Binding DynamicPhotoSize}" 
                                       Orientation="Horizontal"
-                                      VerticalChildrenAlignment="Top"
-                                      HorizontalAlignment="Stretch"/>
+                                      MaximumRowsOrColumns="{Binding MaximumColumns}"
+                                      SizeChanged="WrapGridSizeChanged"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style
+                TargetType="GridViewItem">
+                                <Setter
+                    Property="Padding"
+                    Value="0" />
+                                <Setter
+                    Property="Margin"
+                    Value="0" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
                     </GridView>
 
                     <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
                         <Border>
                             <Grid>
-                                <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}">
+                                <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}" ManipulationMode="TranslateY" ManipulationStarted="OnManipulationStarted" ManipulationCompleted="OnManipulationCompleted">
                                     <interactivity1:Interaction.Behaviors>
                                         <interactivity1:BehaviorCollection>
                                             <core:EventTriggerBehavior EventName="Tapped">
-                                                <core:InvokeCommandAction Command="{Binding CLoseDetails}"></core:InvokeCommandAction>
+                                                <core:InvokeCommandAction Command="{Binding ShowLinkCommand}"></core:InvokeCommandAction>
                                             </core:EventTriggerBehavior>
                                         </interactivity1:BehaviorCollection>
                                     </interactivity1:Interaction.Behaviors>
                                 </Image>
-                                <Border Background="DarkSlateGray" Opacity="0.6" Height="45" VerticalAlignment="Bottom">
+                                <Border Background="DarkSlateGray" Opacity="0.6" Height="45" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <StackPanel>
                                         <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
                         </Border>
-
                     </Grid>
                 </Grid>
             </FlipViewItem>
         </FlipView>
-        <Grid x:Name="TopToolBar" VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <AppBarButton Command="{Binding StartAdapterCommand}" Label="Старт">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf01d;"></FontIcon>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton Command="{Binding StopAdapterCommand}" Label="Стоп">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf28e;"></FontIcon>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
-            
-            <AutoSuggestBox Margin="10,0" Grid.Column="0" VerticalAlignment="Center" QueryIcon="Find" Text="{Binding SearchAddress, Mode=TwoWay}" PlaceholderText="Адрес" 
-                                        TextChanged="AutoSuggestBox_OnTextChanged"
-                                        QuerySubmitted="AutoSuggestBox_OnQuerySubmitted"
-                                        AutoMaximizeSuggestionArea="True"
-                                        SuggestionChosen="AutoSuggestBox_OnSuggestionChosen">
-                <AutoSuggestBox.ItemTemplate>
-                    <DataTemplate x:DataType="maps1:MapLocation">
-                        <TextBlock Foreground="DarkSlateGray" Text="{Binding Address.FormattedAddress}"></TextBlock>
-                    </DataTemplate>
-                </AutoSuggestBox.ItemTemplate>
-            </AutoSuggestBox>
-            <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="100000">
-                <Slider.HeaderTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <Run>Радиус</Run>
-                            <Run Text="{Binding Radius}"></Run>
-                            <Run>м</Run>
-                        </TextBlock>
-                    </DataTemplate>
-                </Slider.HeaderTemplate>
-            </Slider>
-        </Grid>
         <Grid x:Name="BottomToolBar" VerticalAlignment="Bottom" Background="DarkGray" Opacity="0.7">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <AppBarToggleButton x:Name="MapToggleButton" Label="Карта" IsChecked="True">

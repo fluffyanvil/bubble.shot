@@ -43,6 +43,12 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private Geopoint _deviceLocation;
 		private string _searchAddress;
 		private MapLocation _searchedLocation;
+		private DelegateCommand _showLinkCommand;
+		private bool _isShowLink;
+		private ICommand _nextVictimCommand;
+		private ICommand _prevVictimCommand;
+		private double _dynamicPhotoSize;
+		private int _maximumColumns;
 
 		public MapLocation SearchedLocation
 		{
@@ -111,6 +117,26 @@ namespace BubbleShot.UniversalApp.ViewModels
 			set
 			{
 				_availableModalSize = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public double DynamicPhotoSize
+		{
+			get { return _dynamicPhotoSize; }
+			set
+			{
+				_dynamicPhotoSize = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public int MaximumColumns
+		{
+			get { return _maximumColumns; }
+			set
+			{
+				_maximumColumns = value; 
 				OnPropertyChanged();
 			}
 		}
@@ -241,6 +267,50 @@ namespace BubbleShot.UniversalApp.ViewModels
 		{
 			_startAdapterCommand.RaiseCanExecuteChanged();
 			_stopAdapterCommand.RaiseCanExecuteChanged();
+		}
+
+		public ICommand NextVictimCommand => _nextVictimCommand ?? (_nextVictimCommand = new DelegateCommand(OnExecuteNextVictimCommand));
+
+		private void OnExecuteNextVictimCommand()
+		{
+			var index = Photos.IndexOf(SelectedItem);
+			if (index + 1 < Photos.Count)
+			{
+				SelectedItem = Photos[index + 1];
+			}
+		}
+
+		public ICommand PrevVictimCommand => _prevVictimCommand ?? (_prevVictimCommand = new DelegateCommand(OnExecutePrevVictimCommand));
+
+		private void OnExecutePrevVictimCommand()
+		{
+			var index = Photos.IndexOf(SelectedItem);
+			if (index != 0)
+			{
+				SelectedItem = Photos[index - 1];
+			}
+		}
+
+		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
+
+		private bool CanExecuteShowLinkCommand()
+		{
+			return SelectedItem != null;
+		}
+
+		public bool IsShowLink
+		{
+			get { return _isShowLink; }
+			set
+			{
+				_isShowLink = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private void OnExecuteShowLinkCommand()
+		{
+			IsShowLink = !IsShowLink;
 		}
 
 		public ICommand CLoseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
