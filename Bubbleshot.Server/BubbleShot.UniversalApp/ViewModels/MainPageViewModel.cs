@@ -10,9 +10,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Shapes;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Vkontakte;
 using Bubbleshot.Server.Common.Pcl.Models;
@@ -45,10 +43,11 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private MapLocation _searchedLocation;
 		private DelegateCommand _showLinkCommand;
 		private bool _isShowLink;
-		private ICommand _nextVictimCommand;
-		private ICommand _prevVictimCommand;
+		private DelegateCommand _nextVictimCommand;
+		private DelegateCommand _prevVictimCommand;
 		private double _dynamicPhotoSize;
 		private int _maximumColumns;
+		private DelegateCommand _goToSelectedItemAddress;
 
 		public MapLocation SearchedLocation
 		{
@@ -96,6 +95,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 			{
 				_selectedItem = value;
 				OnPropertyChanged();
+				if (value != null)
+					OnGoToAddressEvent(_selectedItem.PositionGeopoint);
 			}
 		}
 
@@ -182,7 +183,6 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 			catch (Exception exception)
 			{
-				await new MessageDialog(exception.Message).ShowAsync();
 			}
 		}
 
@@ -194,11 +194,11 @@ namespace BubbleShot.UniversalApp.ViewModels
 			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
 
 
-			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
 			{
 				var bitmapImage = new BitmapImage();
 				bitmapImage.SetSource(stream);
-				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.UserLink});
+				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.UserLink, Longitude = photoItem.Longitude, Latitude = photoItem.Latitude, FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)});
 				
 			});
 			await file.DeleteAsync();
@@ -339,5 +339,54 @@ namespace BubbleShot.UniversalApp.ViewModels
 				OnPropertyChanged();
 			}
 		}
+
+		private async Task<string> ReverseGeocoding(double longitude, double latitude)
+		{
+			try
+			{
+				var location = new BasicGeoposition
+				{
+					Latitude = latitude,
+					Longitude = longitude
+				};
+				var pointToReverseGeocode = new Geopoint(location);
+				var result =
+					  await MapLocationFinder.FindLocationsAtAsync(pointToReverseGeocode);
+
+				return result.Status == MapLocationFinderStatus.Success ? result.Locations[0].Address.FormattedAddress : string.Empty;
+			}
+			catch (Exception ex)
+			{
+				var message = new MessageDialog(ex.Message);
+				await message.ShowAsync();
+			}
+			return string.Empty;
+		}
+
+		public ICommand GoToSelectedItemAddress => _goToSelectedItemAddress ??
+		                                           (_goToSelectedItemAddress = new DelegateCommand(OnExecuteGoToSelectedItemAddress, CanExecuteGoToSelectedItemAddress));
+
+		private bool CanExecuteGoToSelectedItemAddress()
+		{
+			if (SelectedItem != null)
+				return !string.IsNullOrEmpty(SelectedItem.FormattedAddress);
+			return false;
+		}
+
+		private void OnExecuteGoToSelectedItemAddress()
+		{
+			OnGoToAddressEvent(SelectedItem.PositionGeopoint);
+		}
+
+		public delegate void GoToAddress(Geopoint positionGeopoint);
+
+		public event GoToAddress GoToAddressEvent;
+
+		protected virtual void OnGoToAddressEvent(Geopoint positionGeopoint)
+		{
+			GoToAddressEvent?.Invoke(positionGeopoint);
+		}
+
+		public bool SelectedItemMarkerVisibility { get; set; }
 	}
 }

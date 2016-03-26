@@ -66,7 +66,13 @@ namespace BubbleShot.UniversalApp.Views
 			Map.Focus(FocusState.Keyboard);
 			ViewModel.GetLocationEvent += GetLocationEvent;
 			ViewModel.RadiusChangedEvent += ViewModelOnRadiusChangedEvent;
+			ViewModel.GoToAddressEvent += ViewModelOnGoToAddressEvent;
 			ViewModel.GetPosition();
+	    }
+
+	    private async void ViewModelOnGoToAddressEvent(Geopoint geopoint)
+	    {
+		    await Map.TrySetViewAsync(geopoint);
 	    }
 
 	    private void ViewModelOnRadiusChangedEvent()
@@ -119,7 +125,7 @@ namespace BubbleShot.UniversalApp.Views
 	    private void MainPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
 	    {
 		    var isLandscape = e.NewSize.Width > e.NewSize.Height;
-			ViewModel.AvailableModalSize = isLandscape ? e.NewSize.Height - 75 : e.NewSize.Width - 75;
+			ViewModel.AvailableModalSize = isLandscape ? e.NewSize.Height - 100 : e.NewSize.Width - 100;
 	    }
 		private async void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 	    {
@@ -134,7 +140,7 @@ namespace BubbleShot.UniversalApp.Views
 		{
 			if (string.IsNullOrEmpty(address))
 				return new List<MapLocation>();
-			var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, ViewModel.Location, 10);
+			var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, Map.Center, 10);
 			return mapLocationFinderResult.Status == MapLocationFinderStatus.Success ? mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
 		}
 
