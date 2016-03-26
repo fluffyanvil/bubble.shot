@@ -18,7 +18,7 @@
         <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <FlipViewItem IsSelected="{Binding ElementName=MapToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid Background="AntiqueWhite">
-                    <maps:MapControl x:ConnectionId='7' x:Name="Map" Style="Road"
+                    <maps:MapControl x:ConnectionId='8' x:Name="Map" Style="Road"
                              MapServiceToken="uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G"
                              ZoomInteractionMode="GestureAndControl"
                              LandmarksVisible="True"
@@ -26,33 +26,29 @@
                                                                                                         >
                         <maps:MapItemsControl>
                             <maps:MapItemsControl.Items>
-                                <Border Width="10" Height="10" maps:MapControl.Location="{Binding DeviceLocation}">
-                                    <Ellipse x:ConnectionId='10' Fill="Red" Stroke="DarkRed" x:Name="Ellipse" Visibility="{Binding Location, Converter={StaticResource NullToVisibilityConverter}}">
-                                        <Ellipse.Triggers>
-                                            <EventTrigger RoutedEvent="Ellipse.Loaded">
-                                                <BeginStoryboard>
-                                                    <Storyboard BeginTime="0:0:0.1">
-                                                        <DoubleAnimation
-                                                    Storyboard.TargetName="Ellipse"
-                                                    Storyboard.TargetProperty="Opacity"
-                                                    From="1.0" To="0.0" Duration="0:0:0.5"
-                                                    AutoReverse="True" RepeatBehavior="Forever"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Ellipse.Triggers>
+                                <Border Width="65" Height="65" maps:MapControl.Location="{Binding SelectedItemGeopoint}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <Ellipse Stroke="AliceBlue" StrokeThickness="1" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
+                                        <Ellipse.Fill>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding SelectedItem.Image}" />
+                                        </Ellipse.Fill>
                                     </Ellipse>
+                                </Border>
+                                <Border maps:MapControl.Location="{Binding DeviceLocation}" Visibility="{Binding DeviceLocation, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <Path Width="24" Height="30" Stretch="Fill" Fill="Red" Stroke="DarkRed" Data="M409.81,160.113C409.79,71.684,338.136,0,249.725,0C161.276,0,89.583,71.684,89.583,160.113
+				c0,76.325,119.274,280.238,151.955,334.638c1.72,2.882,4.826,4.641,8.178,4.641c3.351,0,6.468-1.759,8.168-4.631
+				C290.545,440.361,409.81,236.438,409.81,160.113z M249.716,283.999c-68.303,0-123.915-55.573-123.915-123.895
+				c0-68.313,55.592-123.895,123.915-123.895s123.876,55.582,123.876,123.895S318.029,283.999,249.716,283.999z"/>
                                 </Border>
                             </maps:MapItemsControl.Items>
                         </maps:MapItemsControl>
                     </maps:MapControl>
-                    <Grid x:ConnectionId='8' x:Name="TopToolBar" VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
+                    <Grid x:ConnectionId='9' x:Name="TopToolBar" VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <AutoSuggestBox x:ConnectionId='9' Margin="20,0" Grid.Column="0" VerticalAlignment="Center" QueryIcon="Find" Text="{Binding SearchAddress, Mode=TwoWay}" PlaceholderText="Адрес" 
+                        <AutoSuggestBox x:ConnectionId='10' Margin="20,0" Grid.Column="0" VerticalAlignment="Center" QueryIcon="Find" Text="{Binding SearchAddress, Mode=TwoWay}" PlaceholderText="Адрес" 
                                                                                   
                                                                                         
                                         AutoMaximizeSuggestionArea="True"
@@ -63,7 +59,7 @@
                                 </DataTemplate>
                             </AutoSuggestBox.ItemTemplate>
                         </AutoSuggestBox>
-                        <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="100000">
+                        <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="50000">
                             <Slider.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -91,11 +87,11 @@
             </FlipViewItem>
             <FlipViewItem IsSelected="{Binding ElementName=GalleryToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid>
-                    <GridView x:ConnectionId='5' x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <GridView x:ConnectionId='5' CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <GridView.ItemTemplate>
                             <DataTemplate                                        >
-                                <Grid Margin="5" HorizontalAlignment="Left" >
-                                    <Border>
+                                <Grid>
+                                    <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                                     </Border>
                                 </Grid>
@@ -103,13 +99,19 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid ItemWidth="200" 
-                                      ItemHeight="200" 
+                                <WrapGrid x:ConnectionId='7' ItemWidth="{Binding DynamicPhotoSize}" 
+                                      ItemHeight="{Binding DynamicPhotoSize}" 
                                       Orientation="Horizontal"
-                                      VerticalChildrenAlignment="Top"
-                                      HorizontalAlignment="Stretch"/>
+                                      MaximumRowsOrColumns="{Binding MaximumColumns}"
+                                                                       />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem"> 
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
                     </GridView>
 
                     <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
@@ -124,9 +126,10 @@
                                         </interactivity1:BehaviorCollection>
                                     </interactivity1:Interaction.Behaviors>
                                 </Image>
-                                <Border Background="DarkSlateGray" Opacity="0.6" Height="45" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <StackPanel>
-                                        <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Padding="2">
+                                        <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
+                                        <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" Margin="1"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -139,7 +142,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <AppBarToggleButton x:ConnectionId='3' x:Name="MapToggleButton" Label="Карта" IsChecked="True">
                     <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf041;"></FontIcon>
+                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf278;"></FontIcon>
                     </AppBarToggleButton.Icon>
                 </AppBarToggleButton>
                 <AppBarToggleButton x:ConnectionId='4' x:Name="GalleryToggleButton" Label="Галерея">

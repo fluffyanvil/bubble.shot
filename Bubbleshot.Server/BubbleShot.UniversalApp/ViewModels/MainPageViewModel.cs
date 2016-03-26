@@ -48,6 +48,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private double _dynamicPhotoSize;
 		private int _maximumColumns;
 		private DelegateCommand _goToSelectedItemAddress;
+		private Geopoint _selectedItemGeopoint;
 
 		public MapLocation SearchedLocation
 		{
@@ -86,17 +87,27 @@ namespace BubbleShot.UniversalApp.ViewModels
 		public event GetLocation GetLocationEvent;
 		public event RadiusChanged RadiusChangedEvent;
 
-		public bool ItemIsSelected => SelectedItem != null;
-
 		public VkPhotoWithUserLink SelectedItem
 		{
 			get { return _selectedItem; }
 			set
 			{
 				_selectedItem = value;
+				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
 				OnPropertyChanged();
+				
+			}
+		}
+
+		public Geopoint SelectedItemGeopoint
+		{
+			get { return _selectedItemGeopoint; }
+			set
+			{
+				_selectedItemGeopoint = value ?? new Geopoint(new BasicGeoposition());
 				if (value != null)
 					OnGoToAddressEvent(_selectedItem.PositionGeopoint);
+				OnPropertyChanged();
 			}
 		}
 
@@ -368,9 +379,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		private bool CanExecuteGoToSelectedItemAddress()
 		{
-			if (SelectedItem != null)
-				return !string.IsNullOrEmpty(SelectedItem.FormattedAddress);
-			return false;
+			return !string.IsNullOrEmpty(SelectedItem?.FormattedAddress);
 		}
 
 		private void OnExecuteGoToSelectedItemAddress()

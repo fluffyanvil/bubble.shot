@@ -125,7 +125,7 @@ namespace BubbleShot.UniversalApp.Views
 	    private void MainPage_OnSizeChanged(object sender, SizeChangedEventArgs e)
 	    {
 		    var isLandscape = e.NewSize.Width > e.NewSize.Height;
-			ViewModel.AvailableModalSize = isLandscape ? e.NewSize.Height - 100 : e.NewSize.Width - 100;
+			ViewModel.AvailableModalSize = isLandscape ? e.NewSize.Height - 125 : e.NewSize.Width - 125;
 	    }
 		private async void AutoSuggestBox_OnTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 	    {

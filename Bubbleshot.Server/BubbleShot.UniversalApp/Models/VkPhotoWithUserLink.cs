@@ -4,7 +4,7 @@ using Prism.Windows.Mvvm;
 
 namespace BubbleShot.UniversalApp.Models
 {
-	public class VkPhotoWithUserLink : ViewModelBase
+	public class VkPhotoWithUserLink
 	{
 		public ImageSource Image { get; set; }
 		public string UserLink { get; set; }
