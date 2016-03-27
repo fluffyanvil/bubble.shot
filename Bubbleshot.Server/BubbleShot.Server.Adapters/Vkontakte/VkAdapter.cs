@@ -31,8 +31,8 @@ namespace BubbleShot.Server.Adapters.Vkontakte
 					Radius = 10000
 				};
 				var result = _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
-				if (result?.Items.Count > 0)
-					OnNewPhotoAlert(new NewPhotoAlertEventArgs {Count = result.Items.Count, Photos = result.Items});
+				if (result?.Response.Images.Count > 0)
+					OnNewPhotoAlert(new NewPhotoAlertEventArgs {Count = result.Response.Images.Count, Photos = result.Response.Images});
 			});
 		}
 
@@ -51,11 +51,11 @@ namespace BubbleShot.Server.Adapters.Vkontakte
 					Radius = radius
 				};
 				var result = _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
-				if (result?.Items.Count > 0)
+				if (result?.Response.Images.Count > 0)
 				{
 					var mapper = new VkPhotoItemMapper();
-					var genericResult = mapper.MapVkPhotoItems(result.Items).ToList();
-					OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Items.Count, Photos = genericResult });
+					var genericResult = mapper.MapVkPhotoItems(result.Response.Images).ToList();
+					OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Response.Images.Count, Photos = genericResult });
 				}
 					
 			});

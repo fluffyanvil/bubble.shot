@@ -48,8 +48,11 @@
     <Compile Include="Base\PollingManager.cs" />
     <Compile Include="EventArgs\NewPhotoAlertEventArgs.cs" />
     <Compile Include="Events\NewPhotoEvent.cs" />
+    <Compile Include="Helpers\InstagramPhotoItemMapper.cs" />
     <Compile Include="Helpers\VkPhotoItemMapper.cs" />
     <Compile Include="IAdapter.cs" />
+    <Compile Include="Instagram\InstagramAdapter.cs" />
+    <Compile Include="Instagram\InstagramAdapterConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vkontakte\VkAdapter.cs" />
     <Compile Include="Vkontakte\VkAdapterConfig.cs" />

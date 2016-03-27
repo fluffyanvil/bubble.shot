@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 
 namespace Bubbleshot.Server.Common.Pcl.Results.Vkontakte
 {
-	public class VkPhotosSearchResponse : BaseResponse
+	public class VkPhotosSearchResult : BaseResult
 	{
 		[JsonProperty("count")]
 		public int Count { get; set; }
 
 		[JsonProperty("items")]
-		public List<VkPhotosSearchResponsePhotoItem> Items { get; set; }
+		public List<VkPhotosSearchResponsePhotoItem> Images { get; set; }
 	}
 }

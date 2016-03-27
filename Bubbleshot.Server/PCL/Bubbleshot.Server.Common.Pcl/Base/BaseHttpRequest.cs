@@ -8,23 +8,21 @@ using Bubbleshot.Server.Common.Pcl.Serializers;
 
 namespace Bubbleshot.Server.Common.Pcl.Base
 {
-	public abstract class BaseHttpRequest<TRequest, TResult, TResponse>
+	public abstract class BaseHttpRequest<TRequest, TResponse>
 		where TRequest : BaseRequestParameters
-		where TResponse : BaseResponse
-		where TResult : BaseHttpResult<TResponse>
+		where TResponse : BaseHttpResponse
 	{
 		private HttpWebRequest _request;
 		private readonly string _address;
 		private readonly string _method;
 		private string _responseJson;
-		private readonly Serializer<TResult> _serializer;
-		private TResult _result;
-		private TResponse _response;
+		private readonly Serializer<TResponse> _serializer;
+		private TResponse _result;
 		protected BaseHttpRequest(string address, string method = "GET")
 		{
 			_address = address;
 			_method = method;
-			_serializer = new Serializer<TResult>();
+			_serializer = new Serializer<TResponse>();
 		}
 		public async Task<TResponse> Execute(TRequest request)
 		{
@@ -36,7 +34,7 @@ namespace Bubbleshot.Server.Common.Pcl.Base
 				_request = (HttpWebRequest) WebRequest.Create(url);
 				_request.Method = _method;
 				
-				WebResponse response = await _request.GetResponseAsync();
+				var response = await _request.GetResponseAsync();
 				var responseStream = response.GetResponseStream();
 
 				if (responseStream != null)
@@ -44,14 +42,13 @@ namespace Bubbleshot.Server.Common.Pcl.Base
 					{
 						_responseJson = sr.ReadToEnd();
 						_result = _serializer.DeserializeJson(_responseJson);
-						_response = _result.Response;
 					}
 			}
 			catch (Exception ex)
 			{
 				Debug.Write(ex.Message);
 			}
-			return _response;
+			return _result;
 		}
 	}
 }

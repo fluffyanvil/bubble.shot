@@ -12,6 +12,7 @@ using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 using Bubbleshot.Server.Adapters.Pcl.Base;
+using Bubbleshot.Server.Adapters.Pcl.Instagram;
 using Bubbleshot.Server.Adapters.Pcl.Vkontakte;
 using Bubbleshot.Server.Common.Pcl.Models;
 using BubbleShot.UniversalApp.Models;
@@ -23,7 +24,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
-		private readonly VkAdapter _adapter;
+		private readonly VkAdapter _vkAdapter;
+		private readonly InstagramAdapter _instagramAdapter;
 		private readonly BackgroundDownloader _backgroundDownloader;
 		private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
@@ -114,9 +116,17 @@ namespace BubbleShot.UniversalApp.ViewModels
 		public MainPageViewModel(INavigationService navigationService)
 		{
 			_navigationService = navigationService;
-			var adapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
-			_adapter = new VkAdapter(adapterConfig);
-			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
+			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
+			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" };
+
+			
+
+			_vkAdapter = new VkAdapter(vkAdapterConfig);
+			_instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
+
+			_instagramAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+			_vkAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink>();
 			_backgroundDownloader = new BackgroundDownloader();
@@ -181,7 +191,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 		}
 
-		private async void AdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
+		private async void VkAdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
 		{
 			try
 			{
@@ -209,7 +219,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			{
 				var bitmapImage = new BitmapImage();
 				bitmapImage.SetSource(stream);
-				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.UserLink, Longitude = photoItem.Longitude, Latitude = photoItem.Latitude, FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)});
+				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.ProfileLink, Longitude = photoItem.Longitude, Latitude = photoItem.Latitude, FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)});
 				
 			});
 			await file.DeleteAsync();
@@ -252,12 +262,13 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		private bool CanExecuteStopAdapterCommand()
 		{
-			return _adapter.Active;
+			return _vkAdapter.Active || _instagramAdapter.Active;
 		}
 
 		private void OnExecuteStopAdapterCommand()
 		{
-			_adapter.Stop();
+			_vkAdapter.Stop();
+			_instagramAdapter.Stop();
 			UpdateCommandsAvailability();
 		}
 
@@ -265,12 +276,13 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		private bool CanExecuteStartAdapter()
 		{
-			return !_adapter.Active;
+			return !_vkAdapter.Active || !_instagramAdapter.Active;
 		}
 
 		private void OnExecuteStartAdapter()
 		{
-			_adapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
+			_vkAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
+			_instagramAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
 			UpdateCommandsAvailability();
 		}
 

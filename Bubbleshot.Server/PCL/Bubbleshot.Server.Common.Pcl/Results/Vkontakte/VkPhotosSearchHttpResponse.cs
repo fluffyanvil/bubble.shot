@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 namespace Bubbleshot.Server.Common.Pcl.Results.Vkontakte
 {
 	[JsonObject]
-	public class VkPhotosSearchHttpResult : BaseHttpResult<VkPhotosSearchResponse>
+	public class VkPhotosSearchHttpResponse : BaseHttpResponse
 	{
+		[JsonProperty("response")]
+		public VkPhotosSearchResult Response { get; set; }
 	}
 }

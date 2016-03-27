@@ -51,9 +51,9 @@
   <ItemGroup>
     <Compile Include="Base\BaseAuthHttpRequest.cs" />
     <Compile Include="Base\BaseHttpRequest.cs" />
-    <Compile Include="Base\BaseHttpResult.cs" />
+    <Compile Include="Base\BaseHttpResponse.cs" />
     <Compile Include="Base\BaseRequestParameters.cs" />
-    <Compile Include="Base\BaseResponse.cs" />
+    <Compile Include="Base\BaseResult.cs" />
     <Compile Include="Base\ConfigurationBase.cs" />
     <Compile Include="Base\SimpleHttpRequest.cs" />
     <Compile Include="Enums\ChannelType.cs" />
@@ -61,11 +61,14 @@
     <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="Models\PhotoItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\Instagram\InstagramAuthHttpRequest.cs" />
+    <Compile Include="Requests\Instagram\InstagramPhotosSearchHttpRequest.cs" />
+    <Compile Include="Requests\Instagram\InstagramPhotosSearchRequestParameters.cs" />
     <Compile Include="Requests\Vkontakte\VkPhotosSearchHttpRequest.cs" />
     <Compile Include="Requests\Vkontakte\VkPhotosSearchRequestParameters.cs" />
-    <Compile Include="Results\Vkontakte\VkPhotosSearchHttpResult.cs" />
-    <Compile Include="Results\Vkontakte\VkPhotosSearchResponse.cs" />
+    <Compile Include="Results\Instagram\InstagramPhotosSearchHttpResponse.cs" />
+    <Compile Include="Results\Instagram\InstagramPhotosSearchResultPhotoItem.cs" />
+    <Compile Include="Results\Vkontakte\VkPhotosSearchHttpResponse.cs" />
+    <Compile Include="Results\Vkontakte\VkPhotosSearchResult.cs" />
     <Compile Include="Results\Vkontakte\VkPhotosSearchResponsePhotoItem.cs" />
     <Compile Include="Serializers\Serializer.cs" />
   </ItemGroup>

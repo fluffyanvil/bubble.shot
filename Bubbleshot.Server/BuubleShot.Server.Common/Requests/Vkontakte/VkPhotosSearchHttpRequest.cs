@@ -3,7 +3,7 @@ using BubbleShot.Server.Common.Results.Vkontakte;
 
 namespace BubbleShot.Server.Common.Requests.Vkontakte
 {
-	public class VkPhotosSearchHttpRequest : BaseHttpRequest<VkPhotosSearchRequestParameters, VkPhotosSearchHttpResult, VkPhotosSearchResponse>
+	public class VkPhotosSearchHttpRequest : BaseHttpRequest<VkPhotosSearchRequestParameters, VkPhotosSearchHttpResponse>
 	{
 		public VkPhotosSearchHttpRequest(string address, string method = "GET") : base(address, method)
 		{

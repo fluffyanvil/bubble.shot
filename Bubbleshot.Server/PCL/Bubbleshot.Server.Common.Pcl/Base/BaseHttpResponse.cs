@@ -1,6 +1,6 @@
 ﻿namespace Bubbleshot.Server.Common.Pcl.Base
 {
-	public abstract class BaseResponse
+	public abstract class BaseHttpResponse
 	{
 	}
 }
