@@ -165,5 +165,17 @@ namespace BubbleShot.UniversalApp.Views
 			ViewModel.DynamicPhotoSize = isLandscape ? e.NewSize.Width / 10 : e.NewSize.Width / 5;
 		    ViewModel.MaximumColumns = (int) (e.NewSize.Width/ViewModel.DynamicPhotoSize);
 	    }
+
+	    private void Toggle_OnChecked(object sender, RoutedEventArgs e)
+	    {
+		    var toggle = sender as AppBarToggleButton;
+		    if (toggle != null) ViewModel.StartAdapterCommand.Execute(toggle.Name);
+	    }
+
+	    private void Toggle_OnUnchecked(object sender, RoutedEventArgs e)
+	    {
+		    var toggle = sender as AppBarToggleButton;
+		    if (toggle != null) ViewModel.StopAdapterCommand.Execute(toggle.Name);
+	    }
     }
 }

@@ -71,16 +71,16 @@
                             </Slider.HeaderTemplate>
                         </Slider>
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <AppBarButton Command="{Binding StartAdapterCommand}" Label="Старт">
-                                <AppBarButton.Icon>
-                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf01d;"></FontIcon>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                            <AppBarButton Command="{Binding StopAdapterCommand}" Label="Стоп">
-                                <AppBarButton.Icon>
-                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf28e;"></FontIcon>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
+                            <AppBarToggleButton x:ConnectionId='11' x:Name="vk" Label="ВКонтакте" IsChecked="{Binding Vkontakte, Mode=TwoWay}"                                                          >
+                                <AppBarToggleButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf189;"></FontIcon>
+                                </AppBarToggleButton.Icon>
+                            </AppBarToggleButton>
+                            <AppBarToggleButton x:ConnectionId='12' x:Name="instagram" Label="Instagram" IsChecked="{Binding Instagram, Mode=TwoWay}"                                                          >
+                                <AppBarToggleButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf16d;"></FontIcon>
+                                </AppBarToggleButton.Icon>
+                            </AppBarToggleButton>
                         </StackPanel>
                     </Grid>
                 </Grid>

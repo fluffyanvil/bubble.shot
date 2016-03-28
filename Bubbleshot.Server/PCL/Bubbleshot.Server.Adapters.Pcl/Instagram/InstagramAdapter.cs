@@ -72,14 +72,14 @@ namespace Bubbleshot.Server.Adapters.Pcl.Instagram
 					AccessToken = _accessToken
 				};
 				var result = _instagramPhotosSearchHttpRequest.Execute(_instagramPhotosSearchRequestParameters);
-				if (result?.Result.Images.Count > 0)
+				if (result?.Result?.Images.Count > 0)
 				{
 					result.Result.Images = result.Result.Images.Where(
 						i =>
 							i.DateUnixStyle >= startTime.ToUnixStyle() &&
 							i.DateUnixStyle <= endTime.ToUnixStyle()).ToList();
 				}
-				if (result?.Result.Images.Count > 0)
+				if (result?.Result?.Images.Count > 0)
 				{
 					var mapper = new InstagramPhotoItemMapper();
 					var genericResult = mapper.MapVkPhotoItems(result.Result.Images).ToList();

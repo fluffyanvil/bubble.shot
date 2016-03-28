@@ -27,8 +27,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private readonly VkAdapter _vkAdapter;
 		private readonly InstagramAdapter _instagramAdapter;
 		private readonly BackgroundDownloader _backgroundDownloader;
-		private DelegateCommand _startAdapterCommand;
-		private DelegateCommand _stopAdapterCommand;
+		private DelegateCommand<string> _startAdapterCommand;
+		private DelegateCommand<string> _stopAdapterCommand;
 		private double _longitude;
 		private double _latitude;
 		private int _radius;
@@ -51,6 +51,134 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private int _maximumColumns;
 		private DelegateCommand _goToSelectedItemAddress;
 		private Geopoint _selectedItemGeopoint;
+		private bool _instagram;
+		private bool _vkontakte;
+
+
+		#region Commands
+
+		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand<string>(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
+
+		private bool CanExecuteStopAdapterCommand(string adapter)
+		{
+			switch (adapter)
+			{
+				case "instagram":
+					return _instagramAdapter.Active;
+				case "vk":
+					return _vkAdapter.Active;
+			}
+			return false;
+		}
+
+		private void OnExecuteStopAdapterCommand(string adapter)
+		{
+			switch (adapter)
+			{
+				case "instagram":
+					_instagramAdapter.Stop();
+					break;
+				case "vk":
+					_vkAdapter.Stop();
+					break;
+			}
+		}
+
+		public ICommand StartAdapterCommand => _startAdapterCommand ?? (_startAdapterCommand = new DelegateCommand<string>(OnExecuteStartAdapter, CanExecuteStartAdapter));
+
+		private bool CanExecuteStartAdapter(string adapter)
+		{
+			switch (adapter)
+			{
+				case "instagram":
+					return !_instagramAdapter.Active;
+				case "vk":
+					return !_vkAdapter.Active;
+			}
+
+			return false;
+		}
+
+		private void OnExecuteStartAdapter(string adapter)
+		{
+			if (adapter == "vk")
+				_vkAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
+
+			if (adapter == "instagram")
+				_instagramAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
+		}
+
+		public ICommand NextVictimCommand => _nextVictimCommand ?? (_nextVictimCommand = new DelegateCommand(OnExecuteNextVictimCommand));
+
+		private void OnExecuteNextVictimCommand()
+		{
+			var index = Photos.IndexOf(SelectedItem);
+			if (index + 1 < Photos.Count)
+			{
+				SelectedItem = Photos[index + 1];
+			}
+		}
+
+		public ICommand PrevVictimCommand => _prevVictimCommand ?? (_prevVictimCommand = new DelegateCommand(OnExecutePrevVictimCommand));
+
+		private void OnExecutePrevVictimCommand()
+		{
+			var index = Photos.IndexOf(SelectedItem);
+			if (index != 0)
+			{
+				SelectedItem = Photos[index - 1];
+			}
+		}
+
+		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
+
+		private bool CanExecuteShowLinkCommand()
+		{
+			return SelectedItem != null;
+		}
+
+		public bool IsShowLink
+		{
+			get { return _isShowLink; }
+			set
+			{
+				_isShowLink = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private void OnExecuteShowLinkCommand()
+		{
+			IsShowLink = !IsShowLink;
+		}
+
+		public ICommand CLoseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
+
+		private void OnExecuteCloseDetails()
+		{
+			SelectedItem = null;
+		}
+
+		#endregion
+		public bool Instagram
+		{
+			get { return _instagram; }
+			set
+			{
+				_instagram = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public bool Vkontakte
+		{
+			get { return _vkontakte; }
+			set
+			{
+				_vkontakte = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public MapLocation SearchedLocation
 		{
@@ -258,90 +386,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 		}
 
-		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
-
-		private bool CanExecuteStopAdapterCommand()
-		{
-			return _vkAdapter.Active || _instagramAdapter.Active;
-		}
-
-		private void OnExecuteStopAdapterCommand()
-		{
-			_vkAdapter.Stop();
-			_instagramAdapter.Stop();
-			UpdateCommandsAvailability();
-		}
-
-		public ICommand StartAdapterCommand => _startAdapterCommand ?? (_startAdapterCommand = new DelegateCommand(OnExecuteStartAdapter, CanExecuteStartAdapter));
-
-		private bool CanExecuteStartAdapter()
-		{
-			return !_vkAdapter.Active || !_instagramAdapter.Active;
-		}
-
-		private void OnExecuteStartAdapter()
-		{
-			_vkAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
-			_instagramAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
-			UpdateCommandsAvailability();
-		}
-
-		private void UpdateCommandsAvailability()
-		{
-			_startAdapterCommand.RaiseCanExecuteChanged();
-			_stopAdapterCommand.RaiseCanExecuteChanged();
-		}
-
-		public ICommand NextVictimCommand => _nextVictimCommand ?? (_nextVictimCommand = new DelegateCommand(OnExecuteNextVictimCommand));
-
-		private void OnExecuteNextVictimCommand()
-		{
-			var index = Photos.IndexOf(SelectedItem);
-			if (index + 1 < Photos.Count)
-			{
-				SelectedItem = Photos[index + 1];
-			}
-		}
-
-		public ICommand PrevVictimCommand => _prevVictimCommand ?? (_prevVictimCommand = new DelegateCommand(OnExecutePrevVictimCommand));
-
-		private void OnExecutePrevVictimCommand()
-		{
-			var index = Photos.IndexOf(SelectedItem);
-			if (index != 0)
-			{
-				SelectedItem = Photos[index - 1];
-			}
-		}
-
-		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
-
-		private bool CanExecuteShowLinkCommand()
-		{
-			return SelectedItem != null;
-		}
-
-		public bool IsShowLink
-		{
-			get { return _isShowLink; }
-			set
-			{
-				_isShowLink = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private void OnExecuteShowLinkCommand()
-		{
-			IsShowLink = !IsShowLink;
-		}
-
-		public ICommand CLoseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
-
-		private void OnExecuteCloseDetails()
-		{
-			SelectedItem = null;
-		}
+		
 
 		protected virtual void OnOnGetLocation()
 		{
