@@ -11,6 +11,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:interactivity1="using:Microsoft.Xaml.Interactivity"
     xmlns:maps1="using:Windows.Services.Maps"
+    xmlns:actions="using:BubbleShot.UniversalApp.Actions"
     mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }"                                     >
     <Page.Resources>
     </Page.Resources>
@@ -71,26 +72,64 @@
                             </Slider.HeaderTemplate>
                         </Slider>
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <AppBarToggleButton x:ConnectionId='11' x:Name="vk" Label="ВКонтакте" IsChecked="{Binding Vkontakte, Mode=TwoWay}"                                                          >
-                                <AppBarToggleButton.Icon>
-                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf189;"></FontIcon>
-                                </AppBarToggleButton.Icon>
-                            </AppBarToggleButton>
-                            <AppBarToggleButton x:ConnectionId='12' x:Name="instagram" Label="Instagram" IsChecked="{Binding Instagram, Mode=TwoWay}"                                                          >
-                                <AppBarToggleButton.Icon>
-                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf16d;"></FontIcon>
-                                </AppBarToggleButton.Icon>
-                            </AppBarToggleButton>
+                            <AppBarButton Label="Старт" Command="{Binding StartAdapterCommand}">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf04b;"></FontIcon>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton Label="Стоп" Command="{Binding StopAdapterCommand}">
+                                <AppBarButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf04d;"></FontIcon>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </FlipViewItem>
             <FlipViewItem IsSelected="{Binding ElementName=GalleryToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid>
-                    <GridView x:ConnectionId='5' CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                        <GridView.ItemTemplate>
+                    <GridView x:ConnectionId='5' IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"><GridView.ItemTemplate>
                             <DataTemplate                                        >
-                                <Grid>
+                                <Grid x:Name="ItemGrid">
+                                    <interactivity1:Interaction.Behaviors>
+                                        <interactivity1:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Holding">
+                                                <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                                            </core:EventTriggerBehavior>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity1:BehaviorCollection>
+                                    </interactivity1:Interaction.Behaviors>
+                                    <MenuFlyout.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Удалить" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveItemCommand}"
+                                                            CommandParameter="{Binding}">
+                                                <MenuFlyoutItem.Template>
+                                                    <ControlTemplate TargetType="MenuFlyoutItem">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf1f8;"/>
+                                                            <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                                        </StackPanel>
+                                                    </ControlTemplate>
+                                                </MenuFlyoutItem.Template>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem Text="Очистить все" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}"
+                                                           >
+                                                <MenuFlyoutItem.Template>
+                                                    <ControlTemplate TargetType="MenuFlyoutItem">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf00d;"/>
+                                                            <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                                        </StackPanel>
+                                                    </ControlTemplate>
+                                                </MenuFlyoutItem.Template>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </MenuFlyout.AttachedFlyout>
                                     <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                                     </Border>

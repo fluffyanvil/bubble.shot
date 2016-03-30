@@ -2,7 +2,8 @@
 
 namespace Bubbleshot.Server.Adapters.Pcl.Base
 {
-	public abstract class BaseAdapter<TBaseAdapterConfig> : IAdapter where TBaseAdapterConfig : BaseAdapterConfig
+	public abstract class BaseAdapter<TBaseAdapterConfig>
+		where TBaseAdapterConfig : BaseAdapterConfig
 	{
 		public TBaseAdapterConfig C { get; set; }
 		protected PollingManager PollingManager;
@@ -15,10 +16,6 @@ namespace Bubbleshot.Server.Adapters.Pcl.Base
 			C = c;
 			PollingManager = new PollingManager();
 		}
-
-		public abstract void Start();
-		public abstract void Start(double latitude, double longitude, int radius);
-		public abstract void Stop();
 
 		protected virtual void OnNewPhotoAlert(NewPhotoAlertEventArgs args)
 		{

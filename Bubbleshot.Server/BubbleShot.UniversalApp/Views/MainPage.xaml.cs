@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
@@ -11,7 +10,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using BubbleShot.UniversalApp.Converters;
 using BubbleShot.UniversalApp.Extensions;
 using BubbleShot.UniversalApp.ViewModels;
 
@@ -164,18 +162,6 @@ namespace BubbleShot.UniversalApp.Views
 			var isLandscape = e.NewSize.Width > e.NewSize.Height;
 			ViewModel.DynamicPhotoSize = isLandscape ? e.NewSize.Width / 10 : e.NewSize.Width / 5;
 		    ViewModel.MaximumColumns = (int) (e.NewSize.Width/ViewModel.DynamicPhotoSize);
-	    }
-
-	    private void Toggle_OnChecked(object sender, RoutedEventArgs e)
-	    {
-		    var toggle = sender as AppBarToggleButton;
-		    if (toggle != null) ViewModel.StartAdapterCommand.Execute(toggle.Name);
-	    }
-
-	    private void Toggle_OnUnchecked(object sender, RoutedEventArgs e)
-	    {
-		    var toggle = sender as AppBarToggleButton;
-		    if (toggle != null) ViewModel.StopAdapterCommand.Execute(toggle.Name);
 	    }
     }
 }

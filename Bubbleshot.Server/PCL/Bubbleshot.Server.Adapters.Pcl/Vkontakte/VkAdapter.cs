@@ -2,11 +2,12 @@
 using System.Linq;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Helpers;
+using Bubbleshot.Server.Adapters.Pcl.Rules;
 using Bubbleshot.Server.Common.Pcl.Requests.Vkontakte;
 
 namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 {
-	public class VkAdapter : BaseAdapter<VkAdapterConfig>
+	public class VkAdapter : BaseAdapter<VkAdapterConfig>, IAdapter
 	{
 		private VkPhotosSearchRequestParameters _vkPhotosSearchRequestParameters;
 		private readonly VkPhotosSearchHttpRequest _vkPhotosSearchHttpRequest;
@@ -16,7 +17,7 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 			_vkPhotosSearchHttpRequest = new VkPhotosSearchHttpRequest(c.ApiAddress);
 		}
 
-		public override void Start()
+		public void Start(IAdapterRule rule)
 		{
 			Active = true;
 			PollingManager.Start(TimeSpan.FromSeconds(5), async () =>
@@ -26,29 +27,9 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 					Count = 100,
 					StartTime = DateTime.UtcNow.AddSeconds(-5),
 					EndTime = DateTime.UtcNow,
-					Latitude = 57.876779,
-					Longitude = 35.00511,
-					Radius = 10000
-				};
-				var result = await _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
-				if (result.Response.Images.Count > 0)
-					OnNewPhotoAlert(new NewPhotoAlertEventArgs {Count = result.Response.Images.Count, Photos = result.Response.Images});
-			});
-		}
-
-		public override void Start(double latitude, double longitude, int radius)
-		{
-			Active = true;
-			PollingManager.Start(TimeSpan.FromSeconds(5), async () =>
-			{
-				_vkPhotosSearchRequestParameters = new VkPhotosSearchRequestParameters
-				{
-					Count = 100,
-					StartTime = DateTime.UtcNow.AddSeconds(-5),
-					EndTime = DateTime.UtcNow,
-					Latitude = latitude,
-					Longitude = longitude,
-					Radius = radius
+					Latitude = rule.Latitude,
+					Longitude = rule.Longitude,
+					Radius = rule.Radius
 				};
 				var result = await _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
 				if (!(result.Response.Images.Count > 0)) return;
@@ -58,10 +39,12 @@ namespace Bubbleshot.Server.Adapters.Pcl.Vkontakte
 			});
 		}
 
-		public override void Stop()
+		public void Stop()
 		{
 			Active = false;
 			PollingManager.Stop();
 		}
+
+		public bool IsActive => Active;
 	}
 }

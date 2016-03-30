@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
@@ -13,6 +14,8 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Instagram;
+using Bubbleshot.Server.Adapters.Pcl.Manager;
+using Bubbleshot.Server.Adapters.Pcl.Rules;
 using Bubbleshot.Server.Adapters.Pcl.Vkontakte;
 using Bubbleshot.Server.Common.Pcl.Models;
 using BubbleShot.UniversalApp.Models;
@@ -27,8 +30,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private readonly VkAdapter _vkAdapter;
 		private readonly InstagramAdapter _instagramAdapter;
 		private readonly BackgroundDownloader _backgroundDownloader;
-		private DelegateCommand<string> _startAdapterCommand;
-		private DelegateCommand<string> _stopAdapterCommand;
+		private DelegateCommand _startAdapterCommand;
+		private DelegateCommand _stopAdapterCommand;
 		private double _longitude;
 		private double _latitude;
 		private int _radius;
@@ -54,58 +57,69 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private bool _instagram;
 		private bool _vkontakte;
 
+		private IAdapterManager _adapterManager;
+		private DelegateCommand<object> _removeItemCommand;
+		private DelegateCommand _removeAllItemsCommand;
 
 		#region Commands
 
-		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand<string>(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
+		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
 
-		private bool CanExecuteStopAdapterCommand(string adapter)
+		private bool CanExecuteStopAdapterCommand()
 		{
-			switch (adapter)
-			{
-				case "instagram":
-					return _instagramAdapter.Active;
-				case "vk":
-					return _vkAdapter.Active;
-			}
-			return false;
+			return _adapterManager.CanStop;
 		}
 
-		private void OnExecuteStopAdapterCommand(string adapter)
+		private void OnExecuteStopAdapterCommand()
 		{
-			switch (adapter)
+			_adapterManager.Stop();
+			UpdateCommandAvailability();
+		}
+
+		public ICommand StartAdapterCommand => _startAdapterCommand ?? (_startAdapterCommand = new DelegateCommand(OnExecuteStartAdapter, CanExecuteStartAdapter));
+
+		private bool CanExecuteStartAdapter()
+		{
+			return _adapterManager.CanStart;
+		}
+
+		private IAdapterRule AdapterRule => new AdapterRule()
+		{
+			Latitude = Location.Position.Latitude,
+			Longitude = Location.Position.Longitude,
+			Radius = Radius
+		};
+
+		private void OnExecuteStartAdapter()
+		{
+			_adapterManager.Start(AdapterRule);
+			UpdateCommandAvailability();
+		}
+
+		private void UpdateCommandAvailability()
+		{
+			_startAdapterCommand.RaiseCanExecuteChanged();
+			_stopAdapterCommand.RaiseCanExecuteChanged();
+		}
+
+		public ICommand RemoveItemCommand => _removeItemCommand ??
+		                                     (_removeItemCommand = new DelegateCommand<object>(OnExecuteRemoveItemCommand));
+
+		private void OnExecuteRemoveItemCommand(object parameter)
+		{
+			var photo = parameter as VkPhotoWithUserLink;
+			if (SelectedItem != photo)
 			{
-				case "instagram":
-					_instagramAdapter.Stop();
-					break;
-				case "vk":
-					_vkAdapter.Stop();
-					break;
+				Photos.Remove(photo);
 			}
 		}
 
-		public ICommand StartAdapterCommand => _startAdapterCommand ?? (_startAdapterCommand = new DelegateCommand<string>(OnExecuteStartAdapter, CanExecuteStartAdapter));
+		public ICommand RemoveAllItemsCommand => _removeAllItemsCommand ?? (_removeAllItemsCommand = new DelegateCommand(OnExecuteRemoveAllItemsCommand));
 
-		private bool CanExecuteStartAdapter(string adapter)
+		private void OnExecuteRemoveAllItemsCommand()
 		{
-			switch (adapter)
-			{
-				case "instagram":
-					return !_instagramAdapter.Active;
-				case "vk":
-					return !_vkAdapter.Active;
-			}
-
-			return false;
-		}
-
-		private void OnExecuteStartAdapter(string adapter)
-		{
-			if (adapter == "vk")
-				_vkAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
-
-			if (adapter == "instagram")
-				_instagramAdapter?.Start(Location.Position.Latitude, Location.Position.Longitude, Radius);
+			SelectedItem = null;
+			Photos.Clear();
 		}
 
 		public ICommand NextVictimCommand => _nextVictimCommand ?? (_nextVictimCommand = new DelegateCommand(OnExecuteNextVictimCommand));
@@ -160,12 +174,15 @@ namespace BubbleShot.UniversalApp.ViewModels
 		}
 
 		#endregion
+
+		#region Public fields
+
 		public bool Instagram
 		{
 			get { return _instagram; }
 			set
 			{
-				_instagram = value; 
+				_instagram = value;
 				OnPropertyChanged();
 			}
 		}
@@ -175,7 +192,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			get { return _vkontakte; }
 			set
 			{
-				_vkontakte = value; 
+				_vkontakte = value;
 				OnPropertyChanged();
 			}
 		}
@@ -185,7 +202,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			get { return _searchedLocation; }
 			set
 			{
-				_searchedLocation = value; 
+				_searchedLocation = value;
 				OnPropertyChanged();
 			}
 		}
@@ -195,7 +212,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			get { return _deviceLocation; }
 			set
 			{
-				_deviceLocation = value; 
+				_deviceLocation = value;
 				OnPropertyChanged();
 			}
 		}
@@ -207,25 +224,6 @@ namespace BubbleShot.UniversalApp.ViewModels
 			{
 				_geoposition = value;
 				OnPropertyChanged();
-			}
-		}
-
-		public delegate void GetLocation();
-
-		public delegate void RadiusChanged();
-
-		public event GetLocation GetLocationEvent;
-		public event RadiusChanged RadiusChangedEvent;
-
-		public VkPhotoWithUserLink SelectedItem
-		{
-			get { return _selectedItem; }
-			set
-			{
-				_selectedItem = value;
-				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
-				OnPropertyChanged();
-				
 			}
 		}
 
@@ -241,6 +239,32 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 		}
 
+		public VkPhotoWithUserLink SelectedItem
+		{
+			get { return _selectedItem; }
+			set
+			{
+				_selectedItem = value;
+				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
+				OnPropertyChanged();
+
+			}
+		}
+
+		#endregion
+
+
+		public delegate void GetLocation();
+
+		public delegate void RadiusChanged();
+
+		public event GetLocation GetLocationEvent;
+		public event RadiusChanged RadiusChangedEvent;
+
+
+
+		
+
 		public MainPageViewModel(INavigationService navigationService)
 		{
 			_navigationService = navigationService;
@@ -254,6 +278,11 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 			_instagramAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
 			_vkAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+
+			_adapterManager = new AdapterManager();
+
+			_adapterManager.AddAdapter(_vkAdapter);
+			_adapterManager.AddAdapter(_instagramAdapter);
 
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink>();
@@ -342,12 +371,24 @@ namespace BubbleShot.UniversalApp.ViewModels
 			await downloadOperation.StartAsync();
 			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
 
-
 			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
 			{
 				var bitmapImage = new BitmapImage();
 				bitmapImage.SetSource(stream);
-				Photos.Add(new VkPhotoWithUserLink {Image = bitmapImage, UserLink = photoItem.ProfileLink, Longitude = photoItem.Longitude, Latitude = photoItem.Latitude, FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)});
+
+				var item = new VkPhotoWithUserLink
+				{
+					Image = bitmapImage,
+					UserLink = photoItem.ProfileLink,
+					Longitude = photoItem.Longitude,
+					Latitude = photoItem.Latitude,
+					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)
+			};
+				if (!Photos.Contains(item))
+				{
+					Photos.Add(item);
+				}
+					
 				
 			});
 			await file.DeleteAsync();
