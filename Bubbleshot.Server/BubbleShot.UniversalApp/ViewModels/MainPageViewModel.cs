@@ -27,8 +27,6 @@ namespace BubbleShot.UniversalApp.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
-		private readonly VkAdapter _vkAdapter;
-		private readonly InstagramAdapter _instagramAdapter;
 		private readonly BackgroundDownloader _backgroundDownloader;
 		private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
@@ -62,6 +60,19 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private DelegateCommand _removeAllItemsCommand;
 
 		#region Commands
+
+		public ICommand GoToSelectedItemAddress => _goToSelectedItemAddress ??
+												   (_goToSelectedItemAddress = new DelegateCommand(OnExecuteGoToSelectedItemAddress, CanExecuteGoToSelectedItemAddress));
+
+		private bool CanExecuteGoToSelectedItemAddress()
+		{
+			return !string.IsNullOrEmpty(SelectedItem?.FormattedAddress);
+		}
+
+		private void OnExecuteGoToSelectedItemAddress()
+		{
+			OnGoToAddressEvent(SelectedItem.PositionGeopoint);
+		}
 
 		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
 
@@ -177,6 +188,17 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		#region Public fields
 
+		public Geopoint Location
+		{
+			get { return _location; }
+			set
+			{
+				_location = value;
+				OnPropertyChanged();
+			}
+		}
+		public bool SelectedItemMarkerVisibility { get; set; }
+
 		public bool Instagram
 		{
 			get { return _instagram; }
@@ -251,45 +273,6 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 		}
 
-		#endregion
-
-
-		public delegate void GetLocation();
-
-		public delegate void RadiusChanged();
-
-		public event GetLocation GetLocationEvent;
-		public event RadiusChanged RadiusChangedEvent;
-
-
-
-		
-
-		public MainPageViewModel(INavigationService navigationService)
-		{
-			_navigationService = navigationService;
-			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
-			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" };
-
-			
-
-			_vkAdapter = new VkAdapter(vkAdapterConfig);
-			_instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
-
-			_instagramAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
-			_vkAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
-
-			_adapterManager = new AdapterManager();
-
-			_adapterManager.AddAdapter(_vkAdapter);
-			_adapterManager.AddAdapter(_instagramAdapter);
-
-			Radius = 5000;
-			Photos = new ObservableCollection<VkPhotoWithUserLink>();
-			_backgroundDownloader = new BackgroundDownloader();
-			_geolocator = new Geolocator();
-		}
-
 		public double AvailableModalSize
 		{
 			get { return _availableModalSize; }
@@ -305,7 +288,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			get { return _dynamicPhotoSize; }
 			set
 			{
-				_dynamicPhotoSize = value; 
+				_dynamicPhotoSize = value;
 				OnPropertyChanged();
 			}
 		}
@@ -315,85 +298,10 @@ namespace BubbleShot.UniversalApp.ViewModels
 			get { return _maximumColumns; }
 			set
 			{
-				_maximumColumns = value; 
+				_maximumColumns = value;
 				OnPropertyChanged();
 			}
 		}
-
-		public async void GetPosition()
-		{
-			try
-			{
-				Geoposition = await _geolocator.GetGeopositionAsync();
-				Longitude = _geoposition.Coordinate.Longitude;
-				Latitude = _geoposition.Coordinate.Latitude;
-				DeviceLocation = new Geopoint(new BasicGeoposition() {Longitude = Geoposition.Coordinate.Longitude, Latitude = Geoposition.Coordinate.Latitude});
-				OnOnGetLocation();
-			}
-			catch (Exception)
-			{
-				var dialog = new MessageDialog("Надо было разрешить");
-				await dialog.ShowAsync();
-			}
-
-		}
-
-		public Geopoint Location
-		{
-			get { return _location; }
-			set
-			{
-				_location = value; 
-				OnPropertyChanged();
-			}
-		}
-
-		private async void VkAdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
-		{
-			try
-			{
-				var imageLinks = (List<PhotoItemModel>) e.Photos;
-				foreach (var imageLink in imageLinks)
-				{
-					await DownloadPhoto(imageLink);
-				}
-
-			}
-			catch (Exception exception)
-			{
-			}
-		}
-
-		private async Task DownloadPhoto(PhotoItemModel photoItem)
-		{
-			var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
-			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
-			await downloadOperation.StartAsync();
-			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
-
-			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-			{
-				var bitmapImage = new BitmapImage();
-				bitmapImage.SetSource(stream);
-
-				var item = new VkPhotoWithUserLink
-				{
-					Image = bitmapImage,
-					UserLink = photoItem.ProfileLink,
-					Longitude = photoItem.Longitude,
-					Latitude = photoItem.Latitude,
-					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)
-			};
-				if (!Photos.Contains(item))
-				{
-					Photos.Add(item);
-				}
-					
-				
-			});
-			await file.DeleteAsync();
-		}
-
 
 		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
 
@@ -427,7 +335,32 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 		}
 
-		
+		public string SearchAddress
+		{
+			get { return _searchAddress; }
+			set
+			{
+				_searchAddress = value;
+				OnPropertyChanged();
+			}
+		}
+
+		#endregion
+
+		#region Delegates
+
+		public delegate void GetLocation();
+		public delegate void RadiusChanged();
+		public delegate void GoToAddress(Geopoint positionGeopoint);
+
+		public event GetLocation GetLocationEvent;
+		public event RadiusChanged RadiusChangedEvent;
+		public event GoToAddress GoToAddressEvent;
+
+		protected virtual void OnGoToAddressEvent(Geopoint positionGeopoint)
+		{
+			GoToAddressEvent?.Invoke(positionGeopoint);
+		}
 
 		protected virtual void OnOnGetLocation()
 		{
@@ -439,14 +372,76 @@ namespace BubbleShot.UniversalApp.ViewModels
 			RadiusChangedEvent?.Invoke();
 		}
 
-		public string SearchAddress
+		#endregion
+
+		#region Public methods
+
+		public async void GetPosition()
 		{
-			get { return _searchAddress; }
-			set
+			try
 			{
-				_searchAddress = value;
-				OnPropertyChanged();
+				Geoposition = await _geolocator.GetGeopositionAsync();
+				Longitude = _geoposition.Coordinate.Longitude;
+				Latitude = _geoposition.Coordinate.Latitude;
+				DeviceLocation = new Geopoint(new BasicGeoposition() { Longitude = Geoposition.Coordinate.Longitude, Latitude = Geoposition.Coordinate.Latitude });
+				OnOnGetLocation();
 			}
+			catch (Exception)
+			{
+				var dialog = new MessageDialog("Надо было разрешить");
+				await dialog.ShowAsync();
+			}
+
+		}
+
+		#endregion
+
+		#region Private methods
+
+		private async void VkAdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
+		{
+			try
+			{
+				var imageLinks = (List<PhotoItemModel>)e.Photos;
+				foreach (var imageLink in imageLinks)
+				{
+					await DownloadPhoto(imageLink);
+				}
+
+			}
+			catch (Exception exception)
+			{
+			}
+		}
+
+		private async Task DownloadPhoto(PhotoItemModel photoItem)
+		{
+			var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
+			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
+			await downloadOperation.StartAsync();
+			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
+
+			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+			{
+				var bitmapImage = new BitmapImage();
+				bitmapImage.SetSource(stream);
+
+				var item = new VkPhotoWithUserLink
+				{
+					Image = bitmapImage,
+					UserLink = photoItem.ProfileLink,
+					Longitude = photoItem.Longitude,
+					Latitude = photoItem.Latitude,
+					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)
+				};
+				if (!Photos.Contains(item))
+				{
+					Photos.Add(item);
+				}
+
+
+			});
+			await file.DeleteAsync();
 		}
 
 		private async Task<string> ReverseGeocoding(double longitude, double latitude)
@@ -471,29 +466,29 @@ namespace BubbleShot.UniversalApp.ViewModels
 			}
 			return string.Empty;
 		}
+		#endregion
 
-		public ICommand GoToSelectedItemAddress => _goToSelectedItemAddress ??
-		                                           (_goToSelectedItemAddress = new DelegateCommand(OnExecuteGoToSelectedItemAddress, CanExecuteGoToSelectedItemAddress));
-
-		private bool CanExecuteGoToSelectedItemAddress()
+		public MainPageViewModel(INavigationService navigationService)
 		{
-			return !string.IsNullOrEmpty(SelectedItem?.FormattedAddress);
+			_navigationService = navigationService;
+			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
+			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" };
+
+			var vkAdapter = new VkAdapter(vkAdapterConfig);
+			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
+
+			instagramAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+			vkAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+
+			_adapterManager = new AdapterManager();
+
+			_adapterManager.AddAdapter(vkAdapter);
+			_adapterManager.AddAdapter(instagramAdapter);
+
+			Radius = 5000;
+			Photos = new ObservableCollection<VkPhotoWithUserLink>();
+			_backgroundDownloader = new BackgroundDownloader();
+			_geolocator = new Geolocator();
 		}
-
-		private void OnExecuteGoToSelectedItemAddress()
-		{
-			OnGoToAddressEvent(SelectedItem.PositionGeopoint);
-		}
-
-		public delegate void GoToAddress(Geopoint positionGeopoint);
-
-		public event GoToAddress GoToAddressEvent;
-
-		protected virtual void OnGoToAddressEvent(Geopoint positionGeopoint)
-		{
-			GoToAddressEvent?.Invoke(positionGeopoint);
-		}
-
-		public bool SelectedItemMarkerVisibility { get; set; }
 	}
 }

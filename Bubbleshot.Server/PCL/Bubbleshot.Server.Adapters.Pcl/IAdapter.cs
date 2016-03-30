@@ -6,7 +6,6 @@ namespace Bubbleshot.Server.Adapters.Pcl
 	{
 		void Start(IAdapterRule rule);
 		void Stop();
-
 		bool IsActive { get; }
 	}
 }

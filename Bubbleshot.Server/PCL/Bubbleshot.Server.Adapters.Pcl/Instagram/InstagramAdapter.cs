@@ -13,7 +13,7 @@ namespace Bubbleshot.Server.Adapters.Pcl.Instagram
 		private InstagramPhotosSearchRequestParameters  _instagramPhotosSearchRequestParameters;
 		private readonly InstagramPhotosSearchHttpRequest _instagramPhotosSearchHttpRequest;
 
-		private string _accessToken;
+		private readonly string _accessToken;
 
 		public InstagramAdapter(InstagramAdapterConfig c) : base(c)
 		{

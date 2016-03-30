@@ -6,16 +6,8 @@ namespace Bubbleshot.Server.Adapters.Pcl.Base
 {
 	public class PollingManager
 	{
-		private TimeSpan _interval;
-		private Action _action;
 		private CancellationToken _cancellationToken;
 		private CancellationTokenSource _cancellationTokenSource;
-		private Task _task;
-
-		public PollingManager()
-		{
-			
-		}
 
 		public void Start(TimeSpan interval, Action action)
 		{
@@ -43,7 +35,6 @@ namespace Bubbleshot.Server.Adapters.Pcl.Base
 						action();
 					}
 				}, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-			return;
 		}
 	}
 }

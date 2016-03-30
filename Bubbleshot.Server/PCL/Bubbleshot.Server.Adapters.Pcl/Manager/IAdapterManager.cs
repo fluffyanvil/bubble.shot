@@ -6,13 +6,9 @@ namespace Bubbleshot.Server.Adapters.Pcl.Manager
 	{
 		void AddAdapter(IAdapter adapter);
 		void RemoveAdapter(IAdapter adapter);
-
 		bool CanStart { get; }
-
 		bool CanStop { get; }
-
-void Start(IAdapterRule rule);
-
+		void Start(IAdapterRule rule);
 		void Stop();
 	}
 }

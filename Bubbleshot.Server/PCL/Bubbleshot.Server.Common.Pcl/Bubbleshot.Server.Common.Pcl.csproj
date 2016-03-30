@@ -107,7 +107,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseAuthHttpRequest.cs" />
     <Compile Include="Base\BaseHttpRequest.cs" />
     <Compile Include="Base\BaseHttpResponse.cs" />
     <Compile Include="Base\BaseRequestParameters.cs" />

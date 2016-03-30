@@ -9,11 +9,6 @@ namespace Bubbleshot.Server.Adapters.Pcl.Helpers
 {
 	public class InstagramPhotoItemMapper
 	{
-		public InstagramPhotoItemMapper()
-		{
-
-		}
-
 		public IEnumerable<PhotoItemModel> MapVkPhotoItems(List<InstagramPhotosSearchResultPhotoItem> items)
 		{
 			try
