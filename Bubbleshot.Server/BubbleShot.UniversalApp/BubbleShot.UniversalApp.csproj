@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Extensions\GetCoordinateExtensions.cs" />
+    <Compile Include="Models\CycleObservableCollection.cs" />
     <Compile Include="Models\VkPhotoWithUserLink.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PhotoDetailsPageViewModel.cs" />

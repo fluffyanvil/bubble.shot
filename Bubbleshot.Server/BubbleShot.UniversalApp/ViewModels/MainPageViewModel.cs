@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,6 +14,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Web.Http;
 using Bubbleshot.Server.Adapters.Pcl.Base;
 using Bubbleshot.Server.Adapters.Pcl.Instagram;
 using Bubbleshot.Server.Adapters.Pcl.Manager;
@@ -398,7 +401,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		#region Private methods
 
-		private async void VkAdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
+		private async void AdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
 		{
 			try
 			{
@@ -416,15 +419,14 @@ namespace BubbleShot.UniversalApp.ViewModels
 
 		private async Task DownloadPhoto(PhotoItemModel photoItem)
 		{
-			var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
-			var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
-			await downloadOperation.StartAsync();
-			var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
+			//var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
+			//var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
+			//await downloadOperation.StartAsync();
+			//var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
 
 			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
 			{
-				var bitmapImage = new BitmapImage();
-				bitmapImage.SetSource(stream);
+				var bitmapImage = new BitmapImage(new Uri(photoItem.ImageLink));
 
 				var item = new VkPhotoWithUserLink
 				{
@@ -438,10 +440,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 				{
 					Photos.Add(item);
 				}
-
-
 			});
-			await file.DeleteAsync();
 		}
 
 		private async Task<string> ReverseGeocoding(double longitude, double latitude)
@@ -477,8 +476,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 			var vkAdapter = new VkAdapter(vkAdapterConfig);
 			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
 
-			instagramAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
-			vkAdapter.NewPhotoAlertEventHandler += VkAdapterOnNewPhotoAlertEventHandler;
+			instagramAdapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
+			vkAdapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
 
 			_adapterManager = new AdapterManager();
 
@@ -486,7 +485,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 			_adapterManager.AddAdapter(instagramAdapter);
 
 			Radius = 5000;
-			Photos = new ObservableCollection<VkPhotoWithUserLink>();
+			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
 			_backgroundDownloader = new BackgroundDownloader();
 			_geolocator = new Geolocator();
 		}

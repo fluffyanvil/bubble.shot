@@ -103,6 +103,11 @@
                                     </interactivity1:Interaction.Behaviors>
                                     <MenuFlyout.AttachedFlyout>
                                         <MenuFlyout>
+                                            <MenuFlyout.MenuFlyoutPresenterStyle>
+                                                <Style TargetType="MenuFlyoutPresenter">
+                                                    <Setter Property="Padding" Value="5"></Setter>
+                                                </Style>
+                                            </MenuFlyout.MenuFlyoutPresenterStyle>
                                             <MenuFlyoutItem Text="Удалить" 
                                                             Command="{Binding ElementName=GridView, Path=DataContext.RemoveItemCommand}"
                                                             CommandParameter="{Binding}">
@@ -117,8 +122,7 @@
                                             </MenuFlyoutItem>
 
                                             <MenuFlyoutItem Text="Очистить все" 
-                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}"
-                                                           >
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}">
                                                 <MenuFlyoutItem.Template>
                                                     <ControlTemplate TargetType="MenuFlyoutItem">
                                                         <StackPanel Orientation="Horizontal">
