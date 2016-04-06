@@ -16,7 +16,7 @@ namespace Bubbleshot.Server.Adapters.Pcl.Helpers
 				return items?.Select(i => new PhotoItemModel
 				{
 					ChannelType = ChannelType.Vkontakte,
-					ImageLink = i.Photo604,
+					ImageLink = i.Photo130,
 					Latitude = i.Latitude,
 					Longitude = i.Longitude,
 					TimeCreated = i.Date,

@@ -108,7 +108,6 @@
     <Compile Include="Models\CycleObservableCollection.cs" />
     <Compile Include="Models\VkPhotoWithUserLink.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\PhotoDetailsPageViewModel.cs" />
     <Compile Include="Views\BubbleShotSplash.xaml.cs">
       <DependentUpon>BubbleShotSplash.xaml</DependentUpon>
     </Compile>
@@ -116,9 +115,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\PhotoDetailsPage.xaml.cs">
-      <DependentUpon>PhotoDetailsPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -148,10 +144,6 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PhotoDetailsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -58,9 +58,10 @@ namespace BubbleShot.UniversalApp.ViewModels
 		private bool _instagram;
 		private bool _vkontakte;
 
-		private IAdapterManager _adapterManager;
+		private readonly IAdapterManager _adapterManager;
 		private DelegateCommand<object> _removeItemCommand;
 		private DelegateCommand _removeAllItemsCommand;
+		private bool _showOnMap;
 
 		#region Commands
 
@@ -190,6 +191,16 @@ namespace BubbleShot.UniversalApp.ViewModels
 		#endregion
 
 		#region Public fields
+
+		public bool ShowOnMap
+		{
+			get { return _showOnMap; }
+			set
+			{
+				_showOnMap = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public Geopoint Location
 		{
@@ -467,9 +478,8 @@ namespace BubbleShot.UniversalApp.ViewModels
 		}
 		#endregion
 
-		public MainPageViewModel(INavigationService navigationService)
+		public MainPageViewModel()
 		{
-			_navigationService = navigationService;
 			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" };
 

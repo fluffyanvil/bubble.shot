@@ -25,22 +25,47 @@
                              LandmarksVisible="True"
                              IsRightTapEnabled="True"
                              CenterChanged="Map_OnCenterChanged" MapDoubleTapped="Map_OnMapDoubleTapped">
-                        <maps:MapItemsControl>
-                            <maps:MapItemsControl.Items>
-                                <Border Width="65" Height="65" maps:MapControl.Location="{Binding SelectedItemGeopoint}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
-                                    <Ellipse Stroke="AliceBlue" StrokeThickness="1" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
-                                        <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding SelectedItem.Image}" />
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                </Border>
-                                <Border maps:MapControl.Location="{Binding DeviceLocation}" Visibility="{Binding DeviceLocation, Converter={StaticResource NullToVisibilityConverter}}">
-                                    <Path Width="24" Height="30" Stretch="Fill" Fill="Red" Stroke="DarkRed" Data="M409.81,160.113C409.79,71.684,338.136,0,249.725,0C161.276,0,89.583,71.684,89.583,160.113
-				c0,76.325,119.274,280.238,151.955,334.638c1.72,2.882,4.826,4.641,8.178,4.641c3.351,0,6.468-1.759,8.168-4.631
-				C290.545,440.361,409.81,236.438,409.81,160.113z M249.716,283.999c-68.303,0-123.915-55.573-123.915-123.895
-				c0-68.313,55.592-123.895,123.915-123.895s123.876,55.582,123.876,123.895S318.029,283.999,249.716,283.999z"/>
-                                </Border>
-                            </maps:MapItemsControl.Items>
+                        <maps:MapItemsControl ItemsSource="{Binding Photos}">
+                            <maps:MapItemsControl.ItemTemplate>
+                                
+                                <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                                    <Border Width="65" Height="65" maps:MapControl.Location="{Binding PositionGeopoint}" Visibility="{Binding ElementName=Map, Path=DataContext.ShowOnMap, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Ellipse Stroke="AliceBlue" StrokeThickness="1" >
+                                            <interactivity1:Interaction.Behaviors>
+                                                <interactivity1:BehaviorCollection>
+                                                    <core:EventTriggerBehavior EventName="Tapped">
+                                                        <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity1:BehaviorCollection>
+                                            </interactivity1:Interaction.Behaviors>
+                                            <MenuFlyout.AttachedFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyout.MenuFlyoutPresenterStyle>
+                                                        <Style TargetType="MenuFlyoutPresenter">
+                                                            <Setter Property="Padding" Value="5"></Setter>
+                                                        </Style>
+                                                    </MenuFlyout.MenuFlyoutPresenterStyle>
+                                                    <MenuFlyoutItem Text="На сайте">
+                                                        <MenuFlyoutItem.Template>
+                                                            <ControlTemplate TargetType="MenuFlyoutItem">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf007;"/>
+                                                                    <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                                                </StackPanel>
+                                                            </ControlTemplate>
+                                                        </MenuFlyoutItem.Template>
+                                                    </MenuFlyoutItem>
+                                                </MenuFlyout>
+                                            </MenuFlyout.AttachedFlyout>
+                                            <Ellipse.Fill>
+                                                
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Image}" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Border>
+                                </DataTemplate>
+                                
+                                </maps:MapItemsControl.ItemTemplate>
                         </maps:MapItemsControl>
                     </maps:MapControl>
                     <Grid x:Name="TopToolBar" VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
@@ -82,6 +107,12 @@
                                     <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf04d;"></FontIcon>
                                 </AppBarButton.Icon>
                             </AppBarButton>
+                            
+                            <AppBarToggleButton Label="На карте" IsChecked="{Binding ShowOnMap, Mode=TwoWay}">
+                                <AppBarToggleButton.Icon>
+                                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="&#xf276;"></FontIcon>
+                                </AppBarToggleButton.Icon>
+                            </AppBarToggleButton>
                         </StackPanel>
                     </Grid>
                 </Grid>

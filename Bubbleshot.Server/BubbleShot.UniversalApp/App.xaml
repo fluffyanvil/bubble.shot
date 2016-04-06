@@ -1,4 +1,4 @@
-﻿<windows:PrismUnityApplication
+﻿<Application
     x:Class="BubbleShot.UniversalApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,9 +6,9 @@
     xmlns:converters="using:BubbleShot.UniversalApp.Converters"
     xmlns:converters1="using:WinRTXamlToolkit.Converters"
     RequestedTheme="Light">
-    <windows:PrismUnityApplication.Resources>
+    <Application.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
         <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
         <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
-    </windows:PrismUnityApplication.Resources>
-</windows:PrismUnityApplication>
+    </Application.Resources>
+</Application>
