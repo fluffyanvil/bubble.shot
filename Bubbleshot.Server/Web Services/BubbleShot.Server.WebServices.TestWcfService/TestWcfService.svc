@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="BubbleShot.Server.WebServices.TestWcfService.TestWcfService" CodeBehind="TestWcfService.svc.cs" %>
