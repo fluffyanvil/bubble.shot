@@ -48,16 +48,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BubbleShot.Server.Adapters\BubbleShot.Server.Adapters.csproj">
-      <Project>{4742b7c2-6a84-4426-9108-c205d8fd2306}</Project>
-      <Name>BubbleShot.Server.Adapters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuubleShot.Server.Common\BubbleShot.Server.Common.csproj">
-      <Project>{e70ea979-df1f-4393-aa97-1f5791fffb85}</Project>
-      <Name>BubbleShot.Server.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
