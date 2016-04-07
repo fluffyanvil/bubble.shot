@@ -147,16 +147,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PCL\Bubbleshot.Server.Adapters.Pcl\Bubbleshot.Server.Adapters.Pcl.csproj">
-      <Project>{7DFC55AB-A0E2-4C6E-9518-4A17F39CB68B}</Project>
-      <Name>Bubbleshot.Server.Adapters.Pcl</Name>
+    <ProjectReference Include="..\Core\Bubbleshot.Core.Portable.Adapters\Bubbleshot.Core.Portable.Adapters.csproj">
+      <Project>{2d69114a-ba46-44d5-a39f-49a7f0e2abd3}</Project>
+      <Name>Bubbleshot.Core.Portable.Adapters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PCL\Bubbleshot.Server.Common.Pcl\Bubbleshot.Server.Common.Pcl.csproj">
-      <Project>{E0B13F93-F3A1-4E7E-A1AC-EA9EEEE42C3B}</Project>
-      <Name>Bubbleshot.Server.Common.Pcl</Name>
+    <ProjectReference Include="..\Core\Bubbleshot.Core.Portable.Common\Bubbleshot.Core.Portable.Common.csproj">
+      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
+      <Name>Bubbleshot.Core.Portable.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

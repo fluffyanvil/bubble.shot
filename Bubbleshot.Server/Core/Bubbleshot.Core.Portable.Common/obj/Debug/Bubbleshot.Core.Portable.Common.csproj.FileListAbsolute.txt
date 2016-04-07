@@ -1,0 +1,6 @@
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\bin\Debug\Bubbleshot.Core.Portable.Common.dll
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\bin\Debug\Bubbleshot.Core.Portable.Common.pdb
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\bin\Debug\System.Net.Requests.dll
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\bin\Debug\System.Net.Requests.xml
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\obj\Debug\Bubbleshot.Core.Portable.Common.dll
+F:\Git\Repositories\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\obj\Debug\Bubbleshot.Core.Portable.Common.pdb
