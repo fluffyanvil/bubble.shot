@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Bubbleshot.Core.Portable.Adapters.Base;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
 using Bubbleshot.Core.Portable.Adapters.Helpers;
 using Bubbleshot.Core.Portable.Adapters.Rules;
 using Bubbleshot.Core.Portable.Common.Requests.Vkontakte;
@@ -35,7 +36,8 @@ namespace Bubbleshot.Core.Portable.Adapters.Vkontakte
 				if (!(result.Response.Images.Count > 0)) return;
 				var mapper = new VkPhotoItemMapper();
 				var genericResult = mapper.MapVkPhotoItems(result.Response.Images).ToList();
-				OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Response.Images.Count, Photos = genericResult });
+				if (OnNewPhotosReceived != null)
+					OnNewPhotosReceived(this, new NewPhotoAlertEventArgs { Count = result.Response.Images.Count, Photos = genericResult });
 			});
 		}
 
@@ -46,5 +48,6 @@ namespace Bubbleshot.Core.Portable.Adapters.Vkontakte
 		}
 
 		public bool IsActive => Active;
+		public event EventHandler<NewPhotoAlertEventArgs> OnNewPhotosReceived;
 	}
 }

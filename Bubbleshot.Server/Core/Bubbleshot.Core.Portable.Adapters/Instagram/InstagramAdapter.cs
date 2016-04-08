@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Bubbleshot.Core.Portable.Adapters.Base;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
 using Bubbleshot.Core.Portable.Adapters.Helpers;
 using Bubbleshot.Core.Portable.Adapters.Rules;
 using Bubbleshot.Core.Portable.Common.Extensions;
@@ -50,7 +51,7 @@ namespace Bubbleshot.Core.Portable.Adapters.Instagram
 				{
 					var mapper = new InstagramPhotoItemMapper();
 					var genericResult = mapper.MapVkPhotoItems(result.Result.Images).ToList();
-					OnNewPhotoAlert(new NewPhotoAlertEventArgs { Count = result.Result.Images.Count, Photos = genericResult });
+					OnNewPhotosReceived?.Invoke(this, new NewPhotoAlertEventArgs { Count = result.Result.Images.Count, Photos = genericResult });
 				}
 
 			});
@@ -63,5 +64,6 @@ namespace Bubbleshot.Core.Portable.Adapters.Instagram
 		}
 
 		public bool IsActive => Active;
+		public event EventHandler<NewPhotoAlertEventArgs> OnNewPhotosReceived;
 	}
 }

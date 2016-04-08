@@ -11,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
 using Bubbleshot.Core.Portable.Adapters.Base;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
 using Bubbleshot.Core.Portable.Adapters.Instagram;
 using Bubbleshot.Core.Portable.Adapters.Manager;
 using Bubbleshot.Core.Portable.Adapters.Rules;
@@ -411,7 +412,7 @@ namespace BubbleShot.UniversalApp.ViewModels
 		{
 			try
 			{
-				var imageLinks = (List<PhotoItemModel>)e.Photos;
+				var imageLinks = e.Photos;
 				foreach (var imageLink in imageLinks)
 				{
 					await DownloadPhoto(imageLink);
@@ -481,14 +482,11 @@ namespace BubbleShot.UniversalApp.ViewModels
 			var vkAdapter = new VkAdapter(vkAdapterConfig);
 			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
 
-			instagramAdapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
-			vkAdapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
-
 			_adapterManager = new AdapterManager();
-
+			
 			_adapterManager.AddAdapter(vkAdapter);
 			_adapterManager.AddAdapter(instagramAdapter);
-
+			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
 			_backgroundDownloader = new BackgroundDownloader();

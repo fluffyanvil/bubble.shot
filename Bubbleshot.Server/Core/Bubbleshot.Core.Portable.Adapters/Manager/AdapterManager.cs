@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
 using Bubbleshot.Core.Portable.Adapters.Rules;
 
 namespace Bubbleshot.Core.Portable.Adapters.Manager
@@ -7,25 +9,26 @@ namespace Bubbleshot.Core.Portable.Adapters.Manager
 	public class AdapterManager : IAdapterManager
 	{
 		private readonly List<IAdapter> _adapters;
-		private long _chatId;
 		public AdapterManager()
 		{
 			_adapters = new List<IAdapter>();
 		}
 
-		public AdapterManager(long chatId)
-		{
-			_chatId = chatId;
-			_adapters = new List<IAdapter>();
-		}
 		public void AddAdapter(IAdapter adapter)
 		{
+			adapter.OnNewPhotosReceived += AdapterOnOnNewPhotosReceived;
 			_adapters.Add(adapter);
 		}
 
 		public void RemoveAdapter(IAdapter adapter)
 		{
+			adapter.OnNewPhotosReceived -= AdapterOnOnNewPhotosReceived;
 			_adapters.Remove(adapter);
+		}
+
+		private void AdapterOnOnNewPhotosReceived(object sender, NewPhotoAlertEventArgs newPhotoAlertEventArgs)
+		{
+			OnNewPhotosReceived?.Invoke(this, newPhotoAlertEventArgs);
 		}
 
 		public bool CanStart => _adapters.Any(a => a.IsActive == false);
@@ -50,5 +53,7 @@ namespace Bubbleshot.Core.Portable.Adapters.Manager
 					adapter.Stop();
 			}
 		}
+
+		public event EventHandler<NewPhotoAlertEventArgs> OnNewPhotosReceived;
 	}
 }

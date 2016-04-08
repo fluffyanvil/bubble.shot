@@ -1,4 +1,7 @@
-﻿using Bubbleshot.Core.Portable.Adapters.Rules;
+﻿using System;
+using Bubbleshot.Core.Portable.Adapters.Base;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
+using Bubbleshot.Core.Portable.Adapters.Rules;
 
 namespace Bubbleshot.Core.Portable.Adapters
 {
@@ -7,5 +10,7 @@ namespace Bubbleshot.Core.Portable.Adapters
 		void Start(IAdapterRule rule);
 		void Stop();
 		bool IsActive { get; }
+
+		event EventHandler<NewPhotoAlertEventArgs> OnNewPhotosReceived;
 	}
 }

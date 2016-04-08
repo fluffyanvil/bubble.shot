@@ -36,6 +36,7 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -52,8 +53,20 @@
       <HintPath>..\packages\Telegram.Bot.8.1.0\lib\net45\Telegram.Bot.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotWork.cs" />
+    <Compile Include="Enums\KeyboardType.cs" />
+    <Compile Include="Extensions\LinksExtensions.cs" />
+    <Compile Include="Helpers\TelegramApiHelper.cs" />
+    <Compile Include="Interfaces\IScenario.cs" />
+    <Compile Include="Interfaces\IStep.cs" />
+    <Compile Include="IWork.cs" />
+    <Compile Include="Models\Scenario.cs" />
+    <Compile Include="Models\SetLocationByAddressStep.cs" />
+    <Compile Include="Models\SetLocationStep.cs" />
+    <Compile Include="Models\SetRadiusStep.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,6 +84,7 @@
       <Name>Bubbleshot.Core.Portable.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
