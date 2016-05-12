@@ -11,17 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using BubbleShot.Server.Adapters.Base;
-using BubbleShot.Server.Adapters.Vkontakte;
-using BubbleShot.Server.Common.Models;
 using BubbleShot.WpfClient.Annotations;
 using Hardcodet.Wpf.TaskbarNotification;
 using Prism.Commands;
 using Prism.Events;
+using Bubbleshot.Core.Portable.Adapters.Vkontakte;
+using Bubbleshot.Core.Portable.Adapters.EventArgs;
+using Bubbleshot.Core.Portable.Common.Models;
 
 namespace BubbleShot.WpfClient.ViewModels
 {
-	public class ClientViewModel : INotifyPropertyChanged
+    public class ClientViewModel : INotifyPropertyChanged
 	{
 		private readonly VkAdapter _adapter;
 		private DelegateCommand _startAdapterCommand;
@@ -114,7 +114,7 @@ namespace BubbleShot.WpfClient.ViewModels
 
 		private void OnExecuteStartAdapterCommand()
 		{
-			_adapter?.Start(Latitude, Longitude, Radius);
+			//_adapter?.Start(Latitude, Longitude, Radius);
 			UpdateCommandsAvailability();
 		}
 
@@ -130,7 +130,7 @@ namespace BubbleShot.WpfClient.ViewModels
 		{
 			var adapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			_adapter = new VkAdapter(adapterConfig);
-			_adapter.NewPhotoAlertEventHandler += AdapterOnNewPhotoAlertEventHandler;
+			_adapter.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			_radius = 5000;
 			_longitude = 35.00511;
 			_latitude = 57.876779;
@@ -144,7 +144,7 @@ namespace BubbleShot.WpfClient.ViewModels
 		{
 			try
 			{
-				var imageLinks = ((List<PhotoItemModel>) newPhotoAlertEventArgs.Photos).Select(p => p.ImageLink);
+				var imageLinks = newPhotoAlertEventArgs.Photos.Select(p => p.ImageLink);
 				foreach (var imageLink in imageLinks)
 				{
 					Task.Factory.StartNew(() =>
