@@ -20,7 +20,7 @@
             <FlipViewItem IsSelected="{Binding ElementName=MapToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid Background="AntiqueWhite">
                     <maps:MapControl x:Name="Map" Style="Road"
-                             MapServiceToken="uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G"
+                             MapServiceToken="{StaticResource MapApiKey}"
                              ZoomInteractionMode="GestureAndControl"
                              LandmarksVisible="True"
                              IsRightTapEnabled="True"

@@ -10,5 +10,6 @@
         <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
         <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
         <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
+        <x:String x:Key="MapApiKey">uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G</x:String>
     </Application.Resources>
 </Application>
