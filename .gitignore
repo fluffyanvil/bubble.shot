@@ -3,3 +3,13 @@
 ################################################################################
 
 /Bubbleshot.Server/packages
+/Bubbleshot.Server/BubbleShot.Server.TestApp/bin/Debug
+/Bubbleshot.Server/BubbleShot.Server.TestApp/obj/Debug
+/Bubbleshot.Server/Bubbleshot.TelegramBot/obj/Debug
+/Bubbleshot.Server/Bubbleshot.TelegramBot/bin/Debug
+/Bubbleshot.Server/BubbleShot.UniversalApp/obj/x86/Debug
+/Bubbleshot.Server/BubbleShot.UniversalApp/bin/x86/Debug
+/Bubbleshot.Server/BubbleShot.WpfClient/obj/Debug
+/Bubbleshot.Server/Core/Bubbleshot.Core.Portable.Adapters/obj/Debug
+/Bubbleshot.Server/Core/Bubbleshot.Core.Portable.Adapters/bin/Debug
+/Bubbleshot.Server/Core/Bubbleshot.Core.Portable.Common/obj/Debug

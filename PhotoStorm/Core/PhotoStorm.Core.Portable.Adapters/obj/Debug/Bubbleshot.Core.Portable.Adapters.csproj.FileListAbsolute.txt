@@ -1,0 +1,7 @@
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\bin\Debug\Bubbleshot.Core.Portable.Adapters.dll
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\bin\Debug\Bubbleshot.Core.Portable.Adapters.pdb
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\bin\Debug\Bubbleshot.Core.Portable.Common.dll
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\bin\Debug\Bubbleshot.Core.Portable.Common.pdb
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\obj\Debug\Bubbleshot.Core.Portable.Adapters.csprojResolveAssemblyReference.cache
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\obj\Debug\Bubbleshot.Core.Portable.Adapters.dll
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\obj\Debug\Bubbleshot.Core.Portable.Adapters.pdb

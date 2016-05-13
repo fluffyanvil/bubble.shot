@@ -1,0 +1,4 @@
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\BubbleShot.UniversalApp\BubbleShot.UniversalApp.csproj;x86
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Adapters\Bubbleshot.Core.Portable.Adapters.csproj;neutral
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\Bubbleshot.Core.Portable.Common.csproj;neutral
+D:\Projects\Git\bubble.shot\Bubbleshot.Server\Core\Bubbleshot.Core.Portable.Common\Bubbleshot.Core.Portable.Common.csproj;neutral
