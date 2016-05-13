@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Bubbleshot.Core.Portable.Common.Base;
 using Newtonsoft.Json;
+using PhotoStorm.Core.Portable.Common.Base;
 
-namespace Bubbleshot.Core.Portable.Common.Results.Instagram
+namespace PhotoStorm.Core.Portable.Common.Results.Instagram
 {
 	[JsonObject]
 	public class InstagramPhotosSearchHttpResponse : BaseHttpResponse

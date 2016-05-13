@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Bubbleshot.Core.Portable.Adapters.Base;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Helpers;
-using Bubbleshot.Core.Portable.Adapters.Rules;
-using Bubbleshot.Core.Portable.Common.Requests.Vkontakte;
+using PhotoStorm.Core.Portable.Adapters.Base;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Helpers;
+using PhotoStorm.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Common.Requests.Vkontakte;
 
-namespace Bubbleshot.Core.Portable.Adapters.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
 {
 	public class VkAdapter : BaseAdapter<VkAdapterConfig>, IAdapter
 	{

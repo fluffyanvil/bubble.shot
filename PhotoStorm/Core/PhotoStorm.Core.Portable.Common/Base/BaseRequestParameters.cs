@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bubbleshot.Core.Portable.Common.Base
+namespace PhotoStorm.Core.Portable.Common.Base
 {
 	public abstract class BaseRequestParameters
 	{

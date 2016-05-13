@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-namespace BubbleShot.UniversalApp.Models
+namespace PhotoStorm.UniversalApp.Models
 {
 	public class CycleObservableCollection<T> : ObservableCollection<T>
 	{

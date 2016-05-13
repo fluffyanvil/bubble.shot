@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using Bubbleshot.Core.Portable.Adapters.Base;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Instagram;
-using Bubbleshot.Core.Portable.Adapters.Manager;
-using Bubbleshot.Core.Portable.Adapters.Rules;
-using Bubbleshot.Core.Portable.Adapters.Vkontakte;
-using Bubbleshot.Core.Portable.Common.Models;
-using Bubbleshot.TelegramBot.Extensions;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Instagram;
+using PhotoStorm.Core.Portable.Adapters.Manager;
+using PhotoStorm.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Adapters.Vkontakte;
 using Telegram.Bot.Types;
 
-namespace Bubbleshot.TelegramBot
+namespace PhotoStorm.TelegramBot
 {
 	class Program
 	{
@@ -65,12 +60,12 @@ namespace Bubbleshot.TelegramBot
 			}
 		}
 
-		private static string[][] GetKeyboard()
+		private static KeyboardButton[][] GetKeyboard()
 		{
-			var firstRow = new[] {"/run", "/stop"};
-			var secondRow = new[] {"/city", "/address"};
-			var keyboard = new[] {firstRow, secondRow};
-			return keyboard;
+            var firstRow = new[] { new KeyboardButton("/run"), new KeyboardButton("/stop"), };
+            var secondRow = new[] { new KeyboardButton("/city"), new KeyboardButton("/address"), };
+            var keyboard = new[] { firstRow, secondRow };
+            return keyboard;
 		}
 
 		private static string CreateWork(long chatId)

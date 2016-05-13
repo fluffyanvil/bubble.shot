@@ -1,8 +1,8 @@
 ﻿using System;
-using Bubbleshot.Core.Portable.Common.Extensions;
 using Newtonsoft.Json;
+using PhotoStorm.Core.Portable.Common.Extensions;
 
-namespace Bubbleshot.Core.Portable.Common.Results.Vkontakte
+namespace PhotoStorm.Core.Portable.Common.Results.Vkontakte
 {
 	public class VkPhotosSearchResponsePhotoItem
 	{

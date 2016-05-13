@@ -1,14 +1,13 @@
-﻿<UserControl x:Class="BubbleShot.WpfClient.Views.ClientView"
+﻿<UserControl x:Class="PhotoStorm.WpfApplication.Views.ClientView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BubbleShot.WpfClient.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:wpf="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-             xmlns:viewModels="clr-namespace:BubbleShot.WpfClient.ViewModels"
+             xmlns:viewModels1="clr-namespace:PhotoStorm.WpfApplication.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels:ClientViewModel}">
+             d:DesignHeight="300" d:DesignWidth="600" d:DataContext="{d:DesignInstance viewModels1:ClientViewModel}">
     <UserControl.Resources>
         <DataTemplate x:Key="ItemTemplate">
             <WrapPanel>

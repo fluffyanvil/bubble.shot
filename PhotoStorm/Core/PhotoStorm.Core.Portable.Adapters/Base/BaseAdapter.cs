@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Bubbleshot.Core.Portable.Adapters.Base
+﻿namespace PhotoStorm.Core.Portable.Adapters.Base
 {
 	public abstract class BaseAdapter<TBaseAdapterConfig>
 		where TBaseAdapterConfig : BaseAdapterConfig

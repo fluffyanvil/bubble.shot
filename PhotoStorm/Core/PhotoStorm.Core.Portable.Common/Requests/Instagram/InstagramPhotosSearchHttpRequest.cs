@@ -1,7 +1,7 @@
-﻿using Bubbleshot.Core.Portable.Common.Base;
-using Bubbleshot.Core.Portable.Common.Results.Instagram;
+﻿using PhotoStorm.Core.Portable.Common.Base;
+using PhotoStorm.Core.Portable.Common.Results.Instagram;
 
-namespace Bubbleshot.Core.Portable.Common.Requests.Instagram
+namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
 {
 	public class InstagramPhotosSearchHttpRequest : BaseHttpRequest<InstagramPhotosSearchRequestParameters, InstagramPhotosSearchHttpResponse>
 	{

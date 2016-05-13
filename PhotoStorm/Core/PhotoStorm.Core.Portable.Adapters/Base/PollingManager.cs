@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Bubbleshot.Core.Portable.Adapters.Base
+namespace PhotoStorm.Core.Portable.Adapters.Base
 {
 	public class PollingManager
 	{

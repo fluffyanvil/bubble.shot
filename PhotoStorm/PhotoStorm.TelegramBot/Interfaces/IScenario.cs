@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bubbleshot.TelegramBot.Interfaces
+namespace PhotoStorm.TelegramBot.Interfaces
 {
 	public interface IScenario
 	{

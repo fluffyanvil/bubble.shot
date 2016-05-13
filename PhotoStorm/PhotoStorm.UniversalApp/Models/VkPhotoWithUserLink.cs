@@ -1,8 +1,7 @@
 ﻿using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media;
-using Prism.Windows.Mvvm;
 
-namespace BubbleShot.UniversalApp.Models
+namespace PhotoStorm.UniversalApp.Models
 {
 	public class VkPhotoWithUserLink
 	{

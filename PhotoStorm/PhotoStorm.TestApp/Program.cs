@@ -1,7 +1,7 @@
-﻿using Bubbleshot.Core.Portable.Adapters.Instagram;
-using System;
+﻿using System;
+using PhotoStorm.Core.Portable.Adapters.Instagram;
 
-namespace BubbleShot.Server.TestApp
+namespace PhotoStorm.TestApp
 {
     class Program
 	{

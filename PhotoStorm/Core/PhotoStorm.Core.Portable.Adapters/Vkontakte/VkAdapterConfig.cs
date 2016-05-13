@@ -1,6 +1,6 @@
-﻿using Bubbleshot.Core.Portable.Adapters.Base;
+﻿using PhotoStorm.Core.Portable.Adapters.Base;
 
-namespace Bubbleshot.Core.Portable.Adapters.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
 {
 	public class VkAdapterConfig : BaseAdapterConfig
 	{

@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using BubbleShot.WpfClient.ViewModels;
-using BubbleShot.WpfClient.Views;
+using PhotoStorm.WpfApplication.ViewModels;
+using PhotoStorm.WpfApplication.Views;
 
-namespace BubbleShot.WpfClient
+namespace PhotoStorm.WpfApplication
 {
 	/// <summary>
 	/// Interaction logic for App.xaml

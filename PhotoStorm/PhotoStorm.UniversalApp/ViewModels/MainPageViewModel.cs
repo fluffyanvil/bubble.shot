@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,19 +9,18 @@ using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
-using Bubbleshot.Core.Portable.Adapters.Base;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Instagram;
-using Bubbleshot.Core.Portable.Adapters.Manager;
-using Bubbleshot.Core.Portable.Adapters.Rules;
-using Bubbleshot.Core.Portable.Adapters.Vkontakte;
-using Bubbleshot.Core.Portable.Common.Models;
-using BubbleShot.UniversalApp.Models;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Instagram;
+using PhotoStorm.Core.Portable.Adapters.Manager;
+using PhotoStorm.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Adapters.Vkontakte;
+using PhotoStorm.Core.Portable.Common.Models;
+using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 
-namespace BubbleShot.UniversalApp.ViewModels
+namespace PhotoStorm.UniversalApp.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{

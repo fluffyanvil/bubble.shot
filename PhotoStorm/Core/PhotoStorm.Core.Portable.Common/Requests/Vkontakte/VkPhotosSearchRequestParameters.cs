@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Bubbleshot.Core.Portable.Common.Base;
-using Bubbleshot.Core.Portable.Common.Extensions;
+using PhotoStorm.Core.Portable.Common.Base;
+using PhotoStorm.Core.Portable.Common.Extensions;
 
-namespace Bubbleshot.Core.Portable.Common.Requests.Vkontakte
+namespace PhotoStorm.Core.Portable.Common.Requests.Vkontakte
 {
 	
 	public class VkPhotosSearchRequestParameters : BaseRequestParameters

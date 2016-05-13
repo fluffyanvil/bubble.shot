@@ -1,7 +1,7 @@
-﻿using Bubbleshot.Core.Portable.Common.Base;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using PhotoStorm.Core.Portable.Common.Base;
 
-namespace Bubbleshot.Core.Portable.Common.Results.Vkontakte
+namespace PhotoStorm.Core.Portable.Common.Results.Vkontakte
 {
 	[JsonObject]
 	public class VkPhotosSearchHttpResponse : BaseHttpResponse

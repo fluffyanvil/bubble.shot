@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BubbleShot.WpfClient.ViewModels;
 using Microsoft.Maps.MapControl.WPF;
+using PhotoStorm.WpfApplication.ViewModels;
 
-namespace BubbleShot.WpfClient.Views
+namespace PhotoStorm.WpfApplication.Views
 {
 	/// <summary>
 	/// Interaction logic for ClientView.xaml

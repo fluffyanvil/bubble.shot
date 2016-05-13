@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bubbleshot.TelegramBot.Interfaces
+namespace PhotoStorm.TelegramBot.Interfaces
 {
 	public interface IStep
 	{

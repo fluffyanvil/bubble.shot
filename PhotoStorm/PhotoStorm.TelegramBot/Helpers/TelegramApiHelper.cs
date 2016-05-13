@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bubbleshot.TelegramBot.Enums;
+using PhotoStorm.TelegramBot.Enums;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace Bubbleshot.TelegramBot.Helpers
+namespace PhotoStorm.TelegramBot.Helpers
 {
 	public class TelegramApiHelper
 	{
@@ -23,7 +19,7 @@ namespace Bubbleshot.TelegramBot.Helpers
 			_api.SendTextMessage(chatId, "Что-то пошло не так", replyMarkup: new ReplyKeyboardMarkup() { Keyboard = GetKeyboard(KeyboardType.SetLocation) });
 		}
 
-		private static string[][] GetKeyboard(KeyboardType type)
+		private static KeyboardButton[][] GetKeyboard(KeyboardType type)
 		{
 			switch (type)
 			{
@@ -34,8 +30,8 @@ namespace Bubbleshot.TelegramBot.Helpers
 				default:
 					throw new ArgumentOutOfRangeException(nameof(type), type, null);
 			}
-			var firstRow = new[] {"/run", "/stop"};
-			var secondRow = new[] {"/city", "/address"};
+			var firstRow = new[] {new KeyboardButton("/run"), new KeyboardButton("/stop"), };
+			var secondRow = new[] {new KeyboardButton("/city"), new KeyboardButton("/address"), };
 			var keyboard = new[] {firstRow, secondRow};
 			return keyboard;
 		}

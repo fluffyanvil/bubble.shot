@@ -1,8 +1,8 @@
 ﻿using System;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Rules;
 
-namespace Bubbleshot.Core.Portable.Adapters
+namespace PhotoStorm.Core.Portable.Adapters
 {
     public interface IAdapter
 	{

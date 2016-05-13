@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BubbleShot.WpfClient.Annotations;
-using BubbleShot.WpfClient.Views;
 using Hardcodet.Wpf.TaskbarNotification;
+using PhotoStorm.WpfApplication.Properties;
 using Prism.Commands;
+using ClientView = PhotoStorm.WpfApplication.Views.ClientView;
 
-namespace BubbleShot.WpfClient.ViewModels
+namespace PhotoStorm.WpfApplication.ViewModels
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{

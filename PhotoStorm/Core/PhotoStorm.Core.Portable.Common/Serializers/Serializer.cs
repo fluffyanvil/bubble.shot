@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Bubbleshot.Core.Portable.Common.Serializers
+namespace PhotoStorm.Core.Portable.Common.Serializers
 {
 	public class Serializer<TResult>
 	{

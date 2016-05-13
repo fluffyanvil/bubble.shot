@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Bubbleshot.Core.Portable.Common.Base;
 using Newtonsoft.Json;
+using PhotoStorm.Core.Portable.Common.Base;
 
-namespace Bubbleshot.Core.Portable.Common.Results.Vkontakte
+namespace PhotoStorm.Core.Portable.Common.Results.Vkontakte
 {
 	public class VkPhotosSearchResult : BaseResult
 	{

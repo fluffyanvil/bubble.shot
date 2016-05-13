@@ -1,7 +1,7 @@
 ﻿using System;
-using Bubbleshot.Core.Portable.Common.Enums;
+using PhotoStorm.Core.Portable.Common.Enums;
 
-namespace Bubbleshot.Core.Portable.Common.Models
+namespace PhotoStorm.Core.Portable.Common.Models
 {
 	public class PhotoItemModel
 	{

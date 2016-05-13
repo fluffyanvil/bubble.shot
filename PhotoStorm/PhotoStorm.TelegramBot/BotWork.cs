@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Manager;
-using Bubbleshot.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Manager;
+using PhotoStorm.Core.Portable.Adapters.Rules;
 
-namespace Bubbleshot.TelegramBot
+namespace PhotoStorm.TelegramBot
 {
 	public class BotWork : IWork
 	{

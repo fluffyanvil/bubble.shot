@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Xaml.Interactivity;
 
-namespace BubbleShot.UniversalApp.Actions
+namespace PhotoStorm.UniversalApp.Actions
 {
 	public class OpenMenuFlyoutAction : DependencyObject, IAction
 	{

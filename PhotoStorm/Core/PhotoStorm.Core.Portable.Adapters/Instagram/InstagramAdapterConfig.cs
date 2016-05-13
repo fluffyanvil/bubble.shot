@@ -1,6 +1,6 @@
-﻿using Bubbleshot.Core.Portable.Adapters.Base;
+﻿using PhotoStorm.Core.Portable.Adapters.Base;
 
-namespace Bubbleshot.Core.Portable.Adapters.Instagram
+namespace PhotoStorm.Core.Portable.Adapters.Instagram
 {
 	public class InstagramAdapterConfig : BaseAdapterConfig
 	{

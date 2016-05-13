@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Bubbleshot.Core.Portable.Common.Serializers;
+using PhotoStorm.Core.Portable.Common.Serializers;
 
-namespace Bubbleshot.Core.Portable.Common.Base
+namespace PhotoStorm.Core.Portable.Common.Base
 {
 	public abstract class BaseHttpRequest<TRequest, TResponse>
 		where TRequest : BaseRequestParameters

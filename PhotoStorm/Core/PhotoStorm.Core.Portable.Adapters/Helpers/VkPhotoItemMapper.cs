@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bubbleshot.Core.Portable.Common.Enums;
-using Bubbleshot.Core.Portable.Common.Models;
-using Bubbleshot.Core.Portable.Common.Results.Vkontakte;
+using PhotoStorm.Core.Portable.Common.Enums;
+using PhotoStorm.Core.Portable.Common.Models;
+using PhotoStorm.Core.Portable.Common.Results.Vkontakte;
 
-namespace Bubbleshot.Core.Portable.Adapters.Helpers
+namespace PhotoStorm.Core.Portable.Adapters.Helpers
 {
 	public class VkPhotoItemMapper
 	{

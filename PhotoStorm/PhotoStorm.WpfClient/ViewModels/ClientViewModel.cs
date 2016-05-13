@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -11,15 +10,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using BubbleShot.WpfClient.Annotations;
 using Hardcodet.Wpf.TaskbarNotification;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Vkontakte;
+using PhotoStorm.WpfApplication.Properties;
 using Prism.Commands;
 using Prism.Events;
-using Bubbleshot.Core.Portable.Adapters.Vkontakte;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Common.Models;
 
-namespace BubbleShot.WpfClient.ViewModels
+namespace PhotoStorm.WpfApplication.ViewModels
 {
     public class ClientViewModel : INotifyPropertyChanged
 	{

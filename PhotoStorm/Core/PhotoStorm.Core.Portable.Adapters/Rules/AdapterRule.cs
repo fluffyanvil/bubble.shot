@@ -1,4 +1,4 @@
-﻿namespace Bubbleshot.Core.Portable.Adapters.Rules
+﻿namespace PhotoStorm.Core.Portable.Adapters.Rules
 {
 	public class AdapterRule : IAdapterRule
 	{

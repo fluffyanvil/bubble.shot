@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bubbleshot.Core.Portable.Common.Extensions
+namespace PhotoStorm.Core.Portable.Common.Extensions
 {
 	public static class DateTimeExtensions
 	{

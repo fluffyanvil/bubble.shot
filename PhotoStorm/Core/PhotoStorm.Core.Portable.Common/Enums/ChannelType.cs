@@ -1,4 +1,4 @@
-﻿namespace Bubbleshot.Core.Portable.Common.Enums
+﻿namespace PhotoStorm.Core.Portable.Common.Enums
 {
 	public enum ChannelType
 	{

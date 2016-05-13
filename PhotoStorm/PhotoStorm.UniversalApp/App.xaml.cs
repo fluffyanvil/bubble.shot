@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using BubbleShot.UniversalApp.Views;
-using Microsoft.Practices.Unity;
-using Prism.Mvvm;
-using Prism.Windows.AppModel;
-using Prism.Windows.Navigation;
+using PhotoStorm.UniversalApp.Views;
 
-namespace BubbleShot.UniversalApp
+namespace PhotoStorm.UniversalApp
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.

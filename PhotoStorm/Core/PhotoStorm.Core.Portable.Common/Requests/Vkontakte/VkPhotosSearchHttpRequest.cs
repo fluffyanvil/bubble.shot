@@ -1,7 +1,7 @@
-﻿using Bubbleshot.Core.Portable.Common.Base;
-using Bubbleshot.Core.Portable.Common.Results.Vkontakte;
+﻿using PhotoStorm.Core.Portable.Common.Base;
+using PhotoStorm.Core.Portable.Common.Results.Vkontakte;
 
-namespace Bubbleshot.Core.Portable.Common.Requests.Vkontakte
+namespace PhotoStorm.Core.Portable.Common.Requests.Vkontakte
 {
 	public class VkPhotosSearchHttpRequest : BaseHttpRequest<VkPhotosSearchRequestParameters, VkPhotosSearchHttpResponse>
 	{

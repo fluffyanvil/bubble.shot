@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Bubbleshot.TelegramBot.Interfaces;
+using PhotoStorm.TelegramBot.Interfaces;
 
-namespace Bubbleshot.TelegramBot.Models
+namespace PhotoStorm.TelegramBot.Models
 {
 	public class Scenario : IScenario
 	{

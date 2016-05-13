@@ -1,6 +1,6 @@
 ﻿using Prism.Events;
 
-namespace Bubbleshot.Core.Portable.Adapters.Events
+namespace PhotoStorm.Core.Portable.Adapters.Events
 {
 	public class NewPhotoEvent : EventBase
 	{

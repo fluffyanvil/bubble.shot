@@ -1,4 +1,4 @@
-﻿namespace Bubbleshot.Core.Portable.Adapters.Base
+﻿namespace PhotoStorm.Core.Portable.Adapters.Base
 {
 	public abstract class BaseAdapterConfig
 	{

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using Bubbleshot.Core.Portable.Adapters.Base;
-using Bubbleshot.Core.Portable.Adapters.EventArgs;
-using Bubbleshot.Core.Portable.Adapters.Helpers;
-using Bubbleshot.Core.Portable.Adapters.Rules;
-using Bubbleshot.Core.Portable.Common.Extensions;
-using Bubbleshot.Core.Portable.Common.Requests.Instagram;
+using PhotoStorm.Core.Portable.Adapters.Base;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Helpers;
+using PhotoStorm.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Common.Extensions;
+using PhotoStorm.Core.Portable.Common.Requests.Instagram;
 
-namespace Bubbleshot.Core.Portable.Adapters.Instagram
+namespace PhotoStorm.Core.Portable.Adapters.Instagram
 {
 	public class InstagramAdapter : BaseAdapter<InstagramAdapterConfig>, IAdapter
 	{

@@ -1,15 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using BubbleShot.WpfClient.ViewModels;
+﻿using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.Maps.MapControl.WPF;
-using Microsoft.Maps.MapControl.WPF.Design;
-using Prism.Regions;
+using PhotoStorm.WpfApplication.ViewModels;
 
-namespace BubbleShot.WpfClient.Views
+namespace PhotoStorm.WpfApplication.Views
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -27,7 +20,7 @@ namespace BubbleShot.WpfClient.Views
 		public override void OnApplyTemplate()
 		{
 			ViewModel.TaskbarIcon = _taskbarIcon;
-			var newClientView = new ClientView();
+			var newClientView = new PhotoStorm.WpfApplication.Views.ClientView();
 			var newClientViewModel = new ClientViewModel(_taskbarIcon);
 			newClientView.DataContext = newClientViewModel;
 			ViewModel.AddNewClientCommand?.Execute(newClientView);

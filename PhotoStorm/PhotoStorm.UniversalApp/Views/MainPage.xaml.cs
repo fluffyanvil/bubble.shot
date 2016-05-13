@@ -10,12 +10,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using BubbleShot.UniversalApp.Extensions;
-using BubbleShot.UniversalApp.ViewModels;
+using PhotoStorm.UniversalApp.Extensions;
+using PhotoStorm.UniversalApp.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace BubbleShot.UniversalApp.Views
+namespace PhotoStorm.UniversalApp.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
