@@ -475,7 +475,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		public MainPageViewModel()
 		{
 			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
-			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" };
+			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" };
 
 			var vkAdapter = new VkAdapter(vkAdapterConfig);
 			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
