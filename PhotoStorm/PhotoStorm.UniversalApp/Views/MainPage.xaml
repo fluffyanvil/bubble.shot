@@ -12,12 +12,12 @@
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
     xmlns:models="using:PhotoStorm.UniversalApp.Models"
-    mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }" SizeChanged="MainPage_OnSizeChanged">
+    mc:Ignorable="d" mvvm:ViewModelLocator.AutoWireViewModel="true" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }" SizeChanged="MainPage_OnSizeChanged"
+    >
     <Page.Resources>
     </Page.Resources>
 
     <Grid>
-
         <FlipView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <FlipViewItem IsSelected="{Binding ElementName=MapToggleButton, Path=IsChecked, Mode=TwoWay}">
                 <Grid Background="AntiqueWhite">

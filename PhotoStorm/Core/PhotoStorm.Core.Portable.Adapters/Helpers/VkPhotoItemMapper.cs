@@ -16,7 +16,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Helpers
 				return items?.Select(i => new PhotoItemModel
 				{
 					ChannelType = ChannelType.Vkontakte,
-					ImageLink = i.Photo130,
+					ImageLink = i.Photo604,
 					Latitude = i.Latitude,
 					Longitude = i.Longitude,
 					TimeCreated = i.Date,
