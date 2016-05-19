@@ -13,24 +13,29 @@ namespace PhotoStorm.UniversalApp.Extensions
 			const double radianToDegrees = 180.0 / Math.PI;
 			const double earthRadius = 6378137.0;
 
-			var latA = point.Position.Latitude * degreesToRadian;
-			var lonA = point.Position.Longitude * degreesToRadian;
-			var angularDistance = distance / earthRadius;
-			var trueCourse = bearing * degreesToRadian;
+		    if (point != null)
+		    {
+                var latA = point.Position.Latitude * degreesToRadian;
+                var lonA = point.Position.Longitude * degreesToRadian;
+                var angularDistance = distance / earthRadius;
+                var trueCourse = bearing * degreesToRadian;
 
-			var lat = Math.Asin(
-				Math.Sin(latA) * Math.Cos(angularDistance) +
-				Math.Cos(latA) * Math.Sin(angularDistance) * Math.Cos(trueCourse));
+                var lat = Math.Asin(
+                    Math.Sin(latA) * Math.Cos(angularDistance) +
+                    Math.Cos(latA) * Math.Sin(angularDistance) * Math.Cos(trueCourse));
 
-			var dlon = Math.Atan2(
-				Math.Sin(trueCourse) * Math.Sin(angularDistance) * Math.Cos(latA),
-				Math.Cos(angularDistance) - Math.Sin(latA) * Math.Sin(lat));
+                var dlon = Math.Atan2(
+                    Math.Sin(trueCourse) * Math.Sin(angularDistance) * Math.Cos(latA),
+                    Math.Cos(angularDistance) - Math.Sin(latA) * Math.Sin(lat));
 
-			var lon = ((lonA + dlon + Math.PI) % (Math.PI * 2)) - Math.PI;
+                var lon = ((lonA + dlon + Math.PI) % (Math.PI * 2)) - Math.PI;
 
-			var result = new BasicGeoposition() { Latitude = lat * radianToDegrees, Longitude = lon * radianToDegrees };
+                var result = new BasicGeoposition() { Latitude = lat * radianToDegrees, Longitude = lon * radianToDegrees };
 
-			return result;
+                return result;
+            }
+		    return new BasicGeoposition();
+
 		}
 
 		public static IList<BasicGeoposition> GetCirclePoints(this Geopoint center,

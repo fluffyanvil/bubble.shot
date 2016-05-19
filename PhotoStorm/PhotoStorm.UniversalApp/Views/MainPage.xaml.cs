@@ -62,10 +62,6 @@ namespace PhotoStorm.UniversalApp.Views
 
 		    base.OnNavigatedTo(e);
 			Map.Focus(FocusState.Keyboard);
-			ViewModel.GetLocationEvent += GetLocationEvent;
-			ViewModel.RadiusChangedEvent += ViewModelOnRadiusChangedEvent;
-			ViewModel.GoToAddressEvent += ViewModelOnGoToAddressEvent;
-			ViewModel.GetPosition();
 	    }
 
 	    private async void ViewModelOnGoToAddressEvent(Geopoint geopoint)
@@ -78,12 +74,6 @@ namespace PhotoStorm.UniversalApp.Views
 		    MarkAndDrawCircle(Map, ViewModel.Radius);
 	    }
 
-	    private async void GetLocationEvent()
-	    {
-		    await Map.TrySetViewAsync(new Geopoint(new BasicGeoposition() {Latitude = ViewModel.Geoposition.Coordinate.Latitude, Longitude = ViewModel.Geoposition.Coordinate.Longitude}));
-		    await Map.TryZoomToAsync(11);
-			MarkAndDrawCircle(Map, ViewModel.Radius);
-	    }
 
 	    private MainPageViewModel ViewModel => (MainPageViewModel) DataContext;
 
@@ -145,7 +135,6 @@ namespace PhotoStorm.UniversalApp.Views
 	    private async void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 	    {
 		    var chosen = args.ChosenSuggestion as MapLocation;
-		    ViewModel.SearchedLocation = chosen;
 		    if (chosen != null) await Map.TrySetViewAsync(chosen.Point);
 			MarkAndDrawCircle(Map, ViewModel.Radius);
 		}

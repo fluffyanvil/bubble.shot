@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Services.Maps;
-using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Media.Imaging;
@@ -15,6 +16,7 @@ using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Adapters.Vkontakte;
 using PhotoStorm.Core.Portable.Common.Models;
+using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
@@ -24,15 +26,13 @@ namespace PhotoStorm.UniversalApp.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
-		private readonly BackgroundDownloader _backgroundDownloader;
-		private DelegateCommand _startAdapterCommand;
+	    private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
 		private double _longitude;
 		private double _latitude;
 		private int _radius;
 		private Geopoint _location;
-		private readonly IStorageFolder _installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
-		private readonly INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
 		private VkPhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
 		private readonly Geolocator _geolocator;
@@ -56,8 +56,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private DelegateCommand<object> _removeItemCommand;
 		private DelegateCommand _removeAllItemsCommand;
 		private bool _showOnMap;
+	    private List<MapLocation> _searchedLocations;
+	    private DelegateCommand<Geopoint> _searchLocationCommand;
+	    private int _zoomLevel;
+	    private Geopath _selectionAreaCirclePath;
 
-		#region Commands
+	    #region Commands
 
 		public ICommand GoToSelectedItemAddress => _goToSelectedItemAddress ??
 												   (_goToSelectedItemAddress = new DelegateCommand(OnExecuteGoToSelectedItemAddress, CanExecuteGoToSelectedItemAddress));
@@ -94,8 +98,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private IAdapterRule AdapterRule => new AdapterRule()
 		{
-			Latitude = Location.Position.Latitude,
-			Longitude = Location.Position.Longitude,
+			Latitude = DeviceLocation.Position.Latitude,
+			Longitude = DeviceLocation.Position.Longitude,
 			Radius = Radius
 		};
 
@@ -182,11 +186,28 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			SelectedItem = null;
 		}
 
-		#endregion
+	    public ICommand SearchLocationCommand => _searchLocationCommand ?? (_searchLocationCommand = new DelegateCommand<Geopoint>(OnExecuteSearchLocationCommand));
+
+	    private void OnExecuteSearchLocationCommand(Geopoint point)
+	    {
+	        DeviceLocation = point;
+	    }
+
+	    #endregion
 
 		#region Public fields
 
-		public bool ShowOnMap
+	    public int ZoomLevel
+	    {
+	        get { return _zoomLevel; }
+	        set
+	        {
+	            _zoomLevel = value;
+                OnPropertyChanged();
+	        }
+	    }
+
+	    public bool ShowOnMap
 		{
 			get { return _showOnMap; }
 			set
@@ -227,16 +248,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			}
 		}
 
-		public MapLocation SearchedLocation
-		{
-			get { return _searchedLocation; }
-			set
-			{
-				_searchedLocation = value;
-				OnPropertyChanged();
-			}
-		}
-
 		public Geopoint DeviceLocation
 		{
 			get { return _deviceLocation; }
@@ -244,20 +255,18 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				_deviceLocation = value;
 				OnPropertyChanged();
+			    ZoomLevel = 11;
+			    SelectionAreaCirclePath = new Geopath(DeviceLocation.GetCirclePoints(Radius));
 			}
 		}
 
-		public Geoposition Geoposition
-		{
-			get { return _geoposition; }
-			set
-			{
-				_geoposition = value;
-				OnPropertyChanged();
-			}
-		}
+	    public Geopath SelectionAreaCirclePath
+	    {
+	        get { return _selectionAreaCirclePath; }
+	        set { _selectionAreaCirclePath = value; OnPropertyChanged(); }
+	    }
 
-		public Geopoint SelectedItemGeopoint
+	    public Geopoint SelectedItemGeopoint
 		{
 			get { return _selectedItemGeopoint; }
 			set
@@ -316,7 +325,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		public int Radius
 		{
 			get { return _radius; }
-			set { _radius = value; OnPropertyChanged(); OnRadiusChangedEvent(); }
+			set
+            {
+                _radius = value; OnPropertyChanged();
+                SelectionAreaCirclePath = new Geopath(DeviceLocation.GetCirclePoints(Radius));
+            }
 		}
 
 		public double Latitude
@@ -350,14 +363,29 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				_searchAddress = value;
 				OnPropertyChanged();
+			    DirectGeocoding(SearchAddress);
+
 			}
 		}
 
-		#endregion
+	    public List<MapLocation> SearchedLocations
+	    {
+	        get
+	        {
+	            return _searchedLocations;
+	        }
+	        set
+	        {
+	            _searchedLocations = value; 
+	            OnPropertyChanged();
+	        }
+	    }
 
-		#region Delegates
+	    #endregion
 
-		public delegate void GetLocation();
+        #region Delegates
+
+        public delegate void GetLocation();
 		public delegate void RadiusChanged();
 		public delegate void GoToAddress(Geopoint positionGeopoint);
 
@@ -388,11 +416,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		{
 			try
 			{
-				Geoposition = await _geolocator.GetGeopositionAsync();
-				Longitude = _geoposition.Coordinate.Longitude;
-				Latitude = _geoposition.Coordinate.Latitude;
-				DeviceLocation = new Geopoint(new BasicGeoposition() { Longitude = Geoposition.Coordinate.Longitude, Latitude = Geoposition.Coordinate.Latitude });
-				OnOnGetLocation();
+				var geoposition = await _geolocator.GetGeopositionAsync();
+			    DeviceLocation = geoposition.Coordinate.Point;
 			}
 			catch (Exception)
 			{
@@ -424,11 +449,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private async Task DownloadPhoto(PhotoItemModel photoItem)
 		{
-			//var file = await _installedLocation.CreateFileAsync(string.Format("{0}.{1}", Guid.NewGuid().ToString("N"), "jpg"), CreationCollisionOption.GenerateUniqueName);
-			//var downloadOperation = _backgroundDownloader.CreateDownload(new Uri(photoItem.ImageLink), file);
-			//await downloadOperation.StartAsync();
-			//var stream = (FileRandomAccessStream)await file.OpenAsync(FileAccessMode.Read);
-
 			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
 			{
 				var bitmapImage = new BitmapImage(new Uri(photoItem.ImageLink));
@@ -470,25 +490,40 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			}
 			return string.Empty;
 		}
-		#endregion
 
-		public MainPageViewModel()
+        private async void DirectGeocoding(string address)
+        {
+            if (string.IsNullOrEmpty(address))
+            {
+                SearchedLocations = new List<MapLocation>();
+                return;
+            }
+                
+            var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, DeviceLocation, 10);
+            SearchedLocations = mapLocationFinderResult.Status == MapLocationFinderStatus.Success ?  mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
+        }
+        #endregion
+
+        public MainPageViewModel()
 		{
 			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
 			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" };
 
 			var vkAdapter = new VkAdapter(vkAdapterConfig);
 			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
+            _geolocator = new Geolocator();
+            GetPosition();
 
-			_adapterManager = new AdapterManager();
+            _adapterManager = new AdapterManager();
 			
 			_adapterManager.AddAdapter(vkAdapter);
 			_adapterManager.AddAdapter(instagramAdapter);
 			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
-			_backgroundDownloader = new BackgroundDownloader();
-			_geolocator = new Geolocator();
+			
+
+
 		}
-	}
+}
 }
