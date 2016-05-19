@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
-using Windows.Networking.BackgroundTransfer;
 using Windows.Services.Maps;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Instagram;
@@ -60,6 +60,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private DelegateCommand<Geopoint> _searchLocationCommand;
 	    private int _zoomLevel;
 	    private Geopath _selectionAreaCirclePath;
+	    private ICommand _adaptWindowSizeCommand;
+	    private ICommand _adaptWrapGridSizeCommand;
 
 	    #region Commands
 
@@ -159,7 +161,24 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
 
-		private bool CanExecuteShowLinkCommand()
+	    public ICommand AdaptWindowSizeCommand => _adaptWindowSizeCommand ?? (_adaptWindowSizeCommand = new DelegateCommand<SizeChangedEventArgs>(OnExecuteAdaptWindowSizeCommand));
+
+	    public ICommand AdaptWrapGridSizeCommand => _adaptWrapGridSizeCommand ?? (_adaptWrapGridSizeCommand = new DelegateCommand<SizeChangedEventArgs>(OnExecuteAdaptWrapGridSizeCommand));
+
+	    private void OnExecuteAdaptWrapGridSizeCommand(SizeChangedEventArgs e)
+	    {
+            var isLandscape = e.NewSize.Width > e.NewSize.Height;
+            DynamicPhotoSize = isLandscape ? e.NewSize.Width / 10 : e.NewSize.Width / 5;
+            MaximumColumns = (int)(e.NewSize.Width / DynamicPhotoSize);
+        }
+
+	    private void OnExecuteAdaptWindowSizeCommand(SizeChangedEventArgs e)
+	    {
+            var isLandscape = e.NewSize.Width > e.NewSize.Height;
+            AvailableModalSize = isLandscape ? e.NewSize.Height - 125 : e.NewSize.Width - 125;
+        }
+
+	    private bool CanExecuteShowLinkCommand()
 		{
 			return SelectedItem != null;
 		}
@@ -179,7 +198,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			IsShowLink = !IsShowLink;
 		}
 
-		public ICommand CLoseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
+		public ICommand CloseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
 
 		private void OnExecuteCloseDetails()
 		{

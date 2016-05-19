@@ -53,7 +53,7 @@ namespace PhotoStorm.UniversalApp.Views
 
 			if (_y2 - _y1 > 50)
 			{
-				ViewModel.CLoseDetails.Execute(null);
+				ViewModel.CloseDetails.Execute(null);
 			}
 		}
 

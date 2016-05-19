@@ -14,6 +14,7 @@
     xmlns:mvvm="using:Prism.Windows.Mvvm"
     xmlns:maps1="using:Windows.Services.Maps"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
+    x:Name="Page"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     <Page.BottomAppBar>
         <AppBar>
@@ -26,9 +27,17 @@
     <Page.Resources>
         <converters:AutoSuggestQueryParameterConverter x:Key="ArgsConverter" />
     </Page.Resources>
+    
+    <interactivity:Interaction.Behaviors>
+        <interactivity:BehaviorCollection>
+            <core:EventTriggerBehavior EventName="SizeChanged">
+                <core:InvokeCommandAction Command="{Binding AdaptWindowSizeCommand}"></core:InvokeCommandAction>
+            </core:EventTriggerBehavior>
+        </interactivity:BehaviorCollection>
+    </interactivity:Interaction.Behaviors>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
-
             <VisualStateGroup>
                 <VisualState x:Name="Small">
                     <VisualState.StateTriggers>
@@ -42,7 +51,7 @@
 
                 <VisualState x:Name="Big">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="800" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Button1.Content"  
@@ -53,11 +62,6 @@
         </VisualStateManager.VisualStateGroups>
 
         <Pivot>
-            <Pivot.LeftHeader>
-                <StackPanel>
-                    <Button Width="10"></Button>
-                </StackPanel>
-            </Pivot.LeftHeader>
             <PivotItem Header="Карта">
                 <Grid>
                     <maps:MapControl x:Name="Map" Style="Road"
@@ -77,6 +81,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
+                        
                         <AutoSuggestBox Margin="20,0" Grid.Column="0"
                                         VerticalAlignment="Center" 
                                         QueryIcon="Find" 
@@ -188,10 +193,18 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid 
+                                <WrapGrid ItemWidth="{Binding DynamicPhotoSize}" 
+                                      ItemHeight="{Binding DynamicPhotoSize}" 
                                       Orientation="Horizontal"
-                                      MaximumRowsOrColumns="10"
-                                      />
+                                      MaximumRowsOrColumns="{Binding MaximumColumns}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="SizeChanged">
+                                                <core:InvokeCommandAction Command="{Binding AdaptWrapGridSizeCommand}"></core:InvokeCommandAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Interaction.Behaviors>
+                                </WrapGrid>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -205,7 +218,7 @@
                     <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
                         <Border>
                             <Grid>
-                                <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}" ManipulationMode="TranslateY">
+                                <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}" ManipulationMode="TranslateY" >
                                     <interactivity:Interaction.Behaviors>
                                         <interactivity:BehaviorCollection>
                                             <core:EventTriggerBehavior EventName="Tapped">
@@ -214,6 +227,40 @@
                                         </interactivity:BehaviorCollection>
                                     </interactivity:Interaction.Behaviors>
                                 </Image>
+                                
+                                <Grid HorizontalAlignment="Right" Width="40" Opacity="0.6" VerticalAlignment="Top" Height="40" Background="DarkSlateGray">
+                                    <TextBlock Text="{StaticResource CloseButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding CloseDetails}"></core:InvokeCommandAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Interaction.Behaviors>
+                                </Grid>
+
+                                <Grid HorizontalAlignment="Left" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
+                                    <TextBlock Text="{StaticResource GalleryModalBackwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding PrevVictimCommand}"></core:InvokeCommandAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Interaction.Behaviors>
+                                </Grid>
+                               
+                                <Grid HorizontalAlignment="Right" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
+                                    <TextBlock Text="{StaticResource GalleryModalForwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Tapped">
+                                                <core:InvokeCommandAction Command="{Binding NextVictimCommand}"></core:InvokeCommandAction>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Interaction.Behaviors>
+                                </Grid>
+
                                 <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Padding="2">
                                         <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
@@ -228,6 +275,30 @@
         </Pivot>
     </Grid>
 </Page>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

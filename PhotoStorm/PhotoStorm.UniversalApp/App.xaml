@@ -16,5 +16,8 @@
         <x:String x:Key="OnMapGlyph">&#xf276;</x:String>
         <x:String x:Key="BottomPanelMapButtonGlyph">&#xf278;</x:String>
         <x:String x:Key="BottomPanelGalleryButtonGlyph">&#xf03e;</x:String>
+        <x:String x:Key="GalleryModalForwardButtonGlyph">&#xf04e;</x:String>
+        <x:String x:Key="GalleryModalBackwardButtonGlyph">&#xf04a;</x:String>
+        <x:String x:Key="CloseButtonGlyph">&#xf00d;</x:String>
     </Application.Resources>
 </Application>
