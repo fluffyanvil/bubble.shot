@@ -103,15 +103,20 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GalleryView.xaml.cs">
+      <DependentUpon>GalleryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MapView.xaml.cs">
+      <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
+    <Compile Include="Converters\MetersToKilometersConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Extensions\MapControlExtensions.cs" />
     <Compile Include="Extensions\GetCoordinateExtensions.cs" />
     <Compile Include="Models\ViewModelCommands.cs" />
     <Compile Include="Models\VkPhotoWithUserLink.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\MainPageNew.xaml.cs">
       <DependentUpon>MainPageNew.xaml</DependentUpon>
@@ -138,9 +143,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\GalleryView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPageNew.xaml">
       <SubType>Designer</SubType>

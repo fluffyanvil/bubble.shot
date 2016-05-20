@@ -1,0 +1,151 @@
+﻿<UserControl
+    x:Class="PhotoStorm.UniversalApp.Controls.GalleryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PhotoStorm.UniversalApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:PhotoStorm.UniversalApp.Models"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
+    xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
+
+    <Grid>
+        <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                    <Grid x:Name="ItemGrid">
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Holding">
+                                    <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                                </core:EventTriggerBehavior>
+                                <core:EventTriggerBehavior EventName="RightTapped">
+                                    <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                        <MenuFlyout.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyout.MenuFlyoutPresenterStyle>
+                                    <Style TargetType="MenuFlyoutPresenter">
+                                        <Setter Property="Padding" Value="5"></Setter>
+                                    </Style>
+                                </MenuFlyout.MenuFlyoutPresenterStyle>
+                                <MenuFlyoutItem Text="Удалить" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveItemCommand}"
+                                                            CommandParameter="{Binding}">
+                                    <MenuFlyoutItem.Template>
+                                        <ControlTemplate TargetType="MenuFlyoutItem">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf1f8;"/>
+                                                <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </MenuFlyoutItem.Template>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem Text="Очистить все" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}">
+                                    <MenuFlyoutItem.Template>
+                                        <ControlTemplate TargetType="MenuFlyoutItem">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf00d;"/>
+                                                <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </MenuFlyoutItem.Template>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </MenuFlyout.AttachedFlyout>
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapGrid ItemWidth="{Binding DynamicPhotoSize}" 
+                                      ItemHeight="{Binding DynamicPhotoSize}" 
+                                      Orientation="Horizontal"
+                                      MaximumRowsOrColumns="{Binding MaximumColumns}">
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="SizeChanged">
+                                    <core:InvokeCommandAction Command="{Binding AdaptWrapGridSizeCommand}"></core:InvokeCommandAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                    </WrapGrid>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+
+        <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
+            <Border>
+                <Grid>
+                    <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}" ManipulationMode="TranslateY" >
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding ShowLinkCommand}"></core:InvokeCommandAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                    </Image>
+
+                    <Grid HorizontalAlignment="Right" Width="40" Opacity="0.6" VerticalAlignment="Top" Height="40" Background="DarkSlateGray">
+                        <TextBlock Text="{StaticResource CloseButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding CloseDetails}"></core:InvokeCommandAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Left" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
+                        <TextBlock Text="{StaticResource GalleryModalBackwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding PrevVictimCommand}"></core:InvokeCommandAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Right" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
+                        <TextBlock Text="{StaticResource GalleryModalForwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:InvokeCommandAction Command="{Binding NextVictimCommand}"></core:InvokeCommandAction>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Interaction.Behaviors>
+                    </Grid>
+
+                    <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Padding="2">
+                            <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
+                            <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" Margin="1"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

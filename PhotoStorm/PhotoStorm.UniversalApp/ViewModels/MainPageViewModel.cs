@@ -9,6 +9,7 @@ using Windows.Services.Maps;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Instagram;
@@ -20,7 +21,6 @@ using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
-using Prism.Windows.Navigation;
 
 namespace PhotoStorm.UniversalApp.ViewModels
 {
@@ -28,20 +28,15 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	{
 	    private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
-		private double _longitude;
-		private double _latitude;
-		private int _radius;
+	    private int _radius;
 		private Geopoint _location;
-        private readonly INavigationService _navigationService;
-		private VkPhotoWithUserLink _selectedItem;
+	    private VkPhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
 		private readonly Geolocator _geolocator;
-		private Geoposition _geoposition;
-		private double _availableModalSize;
-		private Geopoint _deviceLocation;
+	    private double _availableModalSize;
+		private Geopoint _mapCenterGeopoint;
 		private string _searchAddress;
-		private MapLocation _searchedLocation;
-		private DelegateCommand _showLinkCommand;
+	    private DelegateCommand _showLinkCommand;
 		private bool _isShowLink;
 		private DelegateCommand _nextVictimCommand;
 		private DelegateCommand _prevVictimCommand;
@@ -62,6 +57,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private Geopath _selectionAreaCirclePath;
 	    private ICommand _adaptWindowSizeCommand;
 	    private ICommand _adaptWrapGridSizeCommand;
+	    private ICommand _mapDoubleTappedCommand;
+	    private ICommand _mapCenterChangedCommand;
+	    private Geopoint _selectionRadiusGeopoint;
+
+	    public event EventHandler OnRaiseNeedToRedrawCircle;
 
 	    #region Commands
 
@@ -100,8 +100,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private IAdapterRule AdapterRule => new AdapterRule()
 		{
-			Latitude = DeviceLocation.Position.Latitude,
-			Longitude = DeviceLocation.Position.Longitude,
+			Latitude = MapCenterGeopoint.Position.Latitude,
+			Longitude = MapCenterGeopoint.Position.Longitude,
 			Radius = Radius
 		};
 
@@ -209,7 +209,17 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    private void OnExecuteSearchLocationCommand(Geopoint point)
 	    {
-	        DeviceLocation = point;
+	        MapCenterGeopoint = point;
+	        SelectionRadiusGeopoint = point;
+	    }
+
+	    public ICommand MapDoubleTappedCommand => _mapDoubleTappedCommand ??
+	                                              (_mapDoubleTappedCommand = new DelegateCommand<MapInputEventArgs>(OnExecuteMapDoubleTappedCommand));
+
+	    private void OnExecuteMapDoubleTappedCommand(MapInputEventArgs mapInputEventArgs)
+	    {
+	        MapCenterGeopoint = mapInputEventArgs.Location;
+	        SelectionRadiusGeopoint = mapInputEventArgs.Location;
 	    }
 
 	    #endregion
@@ -223,6 +233,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        {
 	            _zoomLevel = value;
                 OnPropertyChanged();
+	            OnRaiseNeedToRedrawCircle?.Invoke(this, null);
 	        }
 	    }
 
@@ -236,53 +247,39 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			}
 		}
 
-		public Geopoint Location
+		public Geopoint MapCenterGeopoint
 		{
-			get { return _location; }
+			get { return _mapCenterGeopoint; }
 			set
 			{
-				_location = value;
-				OnPropertyChanged();
-			}
-		}
-		public bool SelectedItemMarkerVisibility { get; set; }
-
-		public bool Instagram
-		{
-			get { return _instagram; }
-			set
-			{
-				_instagram = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool Vkontakte
-		{
-			get { return _vkontakte; }
-			set
-			{
-				_vkontakte = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public Geopoint DeviceLocation
-		{
-			get { return _deviceLocation; }
-			set
-			{
-				_deviceLocation = value;
+				_mapCenterGeopoint = value;
 				OnPropertyChanged();
 			    ZoomLevel = 11;
-			    SelectionAreaCirclePath = new Geopath(DeviceLocation.GetCirclePoints(Radius));
 			}
 		}
+
+	    public Geopoint SelectionRadiusGeopoint
+	    {
+	        get { return _selectionRadiusGeopoint; }
+	        set
+	        {
+	            _selectionRadiusGeopoint = value;
+                OnPropertyChanged();
+                SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
+            }
+	    }
+
 
 	    public Geopath SelectionAreaCirclePath
 	    {
+            //FillColor="#807CFC00" StrokeColor="#80008000"
 	        get { return _selectionAreaCirclePath; }
-	        set { _selectionAreaCirclePath = value; OnPropertyChanged(); }
+	        set
+            {
+                _selectionAreaCirclePath = value;
+                OnPropertyChanged();
+	            OnRaiseNeedToRedrawCircle?.Invoke(this, null);
+	        }
 	    }
 
 	    public Geopoint SelectedItemGeopoint
@@ -347,32 +344,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			set
             {
                 _radius = value; OnPropertyChanged();
-                SelectionAreaCirclePath = new Geopath(DeviceLocation.GetCirclePoints(Radius));
+                SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
             }
-		}
-
-		public double Latitude
-		{
-			get { return _latitude; }
-			set
-			{
-				if (_latitude == value)
-					return;
-				_latitude = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public double Longitude
-		{
-			get { return _longitude; }
-			set
-			{
-				if (_longitude == value)
-					return;
-				_longitude = value;
-				OnPropertyChanged();
-			}
 		}
 
 		public string SearchAddress
@@ -383,7 +356,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				_searchAddress = value;
 				OnPropertyChanged();
 			    DirectGeocoding(SearchAddress);
-
 			}
 		}
 
@@ -436,12 +408,13 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			try
 			{
 				var geoposition = await _geolocator.GetGeopositionAsync();
-			    DeviceLocation = geoposition.Coordinate.Point;
-			}
+			    MapCenterGeopoint = geoposition.Coordinate.Point;
+                SelectionRadiusGeopoint = geoposition.Coordinate.Point;
+            }
 			catch (Exception)
 			{
-				var dialog = new MessageDialog("Надо было разрешить");
-				await dialog.ShowAsync();
+				//var dialog = new MessageDialog("Надо было разрешить");
+				//await dialog.ShowAsync();
 			}
 
 		}
@@ -518,7 +491,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
                 return;
             }
                 
-            var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, DeviceLocation, 10);
+            var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, MapCenterGeopoint, 10);
             SearchedLocations = mapLocationFinderResult.Status == MapLocationFinderStatus.Success ?  mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
         }
         #endregion

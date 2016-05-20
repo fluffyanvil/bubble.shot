@@ -1,0 +1,95 @@
+﻿<UserControl
+    x:Class="PhotoStorm.UniversalApp.Controls.MapView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:maps1="using:Windows.Services.Maps"
+    xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
+    xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
+    <UserControl.Resources>
+        <converters:AutoSuggestQueryParameterConverter x:Key="AutoSuggestQueryParameterConverter" />
+        <converters:MetersToKilometersConverter x:Key="MetersToKilometersConverter"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <maps:MapControl 
+            x:Name="Map" Style="Road"
+            MapServiceToken="{StaticResource MapApiKey}"
+            ZoomInteractionMode="GestureAndControl"
+            IsDoubleTapEnabled="True"
+            LandmarksVisible="True"
+            Center="{Binding MapCenterGeopoint, Mode=TwoWay}"
+            ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="MapDoubleTapped">
+                    <core:InvokeCommandAction 
+                                          Command="{Binding MapDoubleTappedCommand}"/>
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </maps:MapControl>
+        <Grid VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <AutoSuggestBox Margin="20,0" Grid.Column="0"
+                                        VerticalAlignment="Center" 
+                                        QueryIcon="Find" 
+                                        Text="{Binding SearchAddress, Mode=TwoWay}"
+                                        PlaceholderText="Адрес" 
+                                        ItemsSource="{Binding SearchedLocations, Mode=TwoWay}"
+                                        UpdateTextOnSelect="True">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="QuerySubmitted">
+                        <core:InvokeCommandAction 
+                                          Command="{Binding SearchLocationCommand}"
+                                          InputConverter="{StaticResource AutoSuggestQueryParameterConverter}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <AutoSuggestBox.ItemTemplate>
+                    <DataTemplate x:DataType="maps1:MapLocation">
+                        <TextBlock Foreground="DarkSlateGray" Text="{Binding Address.FormattedAddress}"></TextBlock>
+                    </DataTemplate>
+                </AutoSuggestBox.ItemTemplate>
+            </AutoSuggestBox>
+            <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="50000">
+                <Slider.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                                        <Run>Радиус</Run>
+                                        <Run Text="{Binding Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
+                                        <Run>км</Run>
+                        </TextBlock>
+                    </DataTemplate>
+                </Slider.HeaderTemplate>
+            </Slider>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <AppBarButton Label="Старт" Command="{Binding StartAdapterCommand}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StartButtonGlyph}"></FontIcon>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="Стоп" Command="{Binding StopAdapterCommand}">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StopButtonGlyph}"></FontIcon>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarToggleButton Label="На карте" IsChecked="{Binding ShowOnMap, Mode=TwoWay}">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource OnMapGlyph}"></FontIcon>
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
