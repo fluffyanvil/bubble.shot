@@ -10,6 +10,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
+    xmlns:controls="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
@@ -92,19 +93,18 @@
             </GridView.ItemContainerStyle>
         </GridView>
 
-        <Grid HorizontalAlignment="Stretch" Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
-            <Border>
+        <Grid HorizontalAlignment="Stretch" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}" Background="#CC2F4F4F">
+            <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
                 <Grid>
-                    <Image Stretch="UniformToFill" Source="{Binding SelectedItem.Image}" ManipulationMode="TranslateY" >
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding ShowLinkCommand}"></core:InvokeCommandAction>
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-                    </Image>
-
+                    <FlipView x:Name="FlipView"  ItemsSource="{Binding PhotosForFlipView}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}}" UseTouchAnimationsForAllNavigation="True">
+                        <FlipView.ItemTemplate>
+                            <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                                <Grid>
+                                    <Image Stretch="UniformToFill" Source="{Binding Image}" ManipulationMode="TranslateY"/>
+                                </Grid>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
                     <Grid HorizontalAlignment="Right" Width="40" Opacity="0.6" VerticalAlignment="Top" Height="40" Background="DarkSlateGray">
                         <TextBlock Text="{StaticResource CloseButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
                         <interactivity:Interaction.Behaviors>
@@ -115,36 +115,16 @@
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
                     </Grid>
-
-                    <Grid HorizontalAlignment="Left" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
-                        <TextBlock Text="{StaticResource GalleryModalBackwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding PrevVictimCommand}"></core:InvokeCommandAction>
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-                    </Grid>
-
-                    <Grid HorizontalAlignment="Right" Width="50" Opacity="0.6" VerticalAlignment="Center" Height="50" Background="DarkSlateGray">
-                        <TextBlock Text="{StaticResource GalleryModalForwardButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding NextVictimCommand}"></core:InvokeCommandAction>
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-                    </Grid>
-
-                    <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom" Visibility="{Binding IsShowLink, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    
+                    <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Padding="2">
                             <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
                             <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" Margin="1"/>
                         </StackPanel>
                     </Border>
                 </Grid>
+                
+                
             </Border>
         </Grid>
     </Grid>

@@ -61,19 +61,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    #region Commands
 
-		public ICommand GoToSelectedItemAddress => _goToSelectedItemAddress ??
-												   (_goToSelectedItemAddress = new DelegateCommand(OnExecuteGoToSelectedItemAddress, CanExecuteGoToSelectedItemAddress));
-
-		private bool CanExecuteGoToSelectedItemAddress()
-		{
-			return !string.IsNullOrEmpty(SelectedItem?.FormattedAddress);
-		}
-
-		private void OnExecuteGoToSelectedItemAddress()
-		{
-			OnGoToAddressEvent(SelectedItem.PositionGeopoint);
-		}
-
 		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
 
 		private bool CanExecuteStopAdapterCommand()
@@ -133,28 +120,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			Photos.Clear();
 		}
 
-		public ICommand NextVictimCommand => _nextVictimCommand ?? (_nextVictimCommand = new DelegateCommand(OnExecuteNextVictimCommand));
-
-		private void OnExecuteNextVictimCommand()
-		{
-			var index = Photos.IndexOf(SelectedItem);
-			if (index + 1 < Photos.Count)
-			{
-				SelectedItem = Photos[index + 1];
-			}
-		}
-
-		public ICommand PrevVictimCommand => _prevVictimCommand ?? (_prevVictimCommand = new DelegateCommand(OnExecutePrevVictimCommand));
-
-		private void OnExecutePrevVictimCommand()
-		{
-			var index = Photos.IndexOf(SelectedItem);
-			if (index != 0)
-			{
-				SelectedItem = Photos[index - 1];
-			}
-		}
-
 		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
 
 	    public ICommand AdaptWindowSizeCommand => _adaptWindowSizeCommand ?? (_adaptWindowSizeCommand = new DelegateCommand<SizeChangedEventArgs>(OnExecuteAdaptWindowSizeCommand));
@@ -172,6 +137,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    {
             var isLandscape = e.NewSize.Width > e.NewSize.Height;
             AvailableModalSize = isLandscape ? e.NewSize.Height - 125 : e.NewSize.Width - 125;
+
         }
 
 	    private bool CanExecuteShowLinkCommand()
@@ -298,7 +264,18 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				_selectedItem = value;
 				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
 				OnPropertyChanged();
-
+			    if (value == null)
+			    {
+                    PhotosForFlipView.Clear();
+                    return;
+                }
+			    var selectedItemIndexInPhotos = Photos.IndexOf(SelectedItem);
+			    var left = selectedItemIndexInPhotos == 0 ? 0 : selectedItemIndexInPhotos - 1;
+			    var right = selectedItemIndexInPhotos + 1 != Photos.Count
+			        ? selectedItemIndexInPhotos + 1
+			        : selectedItemIndexInPhotos;
+			    PhotosForFlipView.Clear();
+                PhotosForFlipView.AddRange(Photos.Where(i => Photos.IndexOf(i) >= left && Photos.IndexOf(i) <= right));
 			}
 		}
 
@@ -334,6 +311,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
 
+        public ObservableCollection<VkPhotoWithUserLink> PhotosForFlipView { get; set; }
 		public int Radius
 		{
 			get { return _radius; }
@@ -509,9 +487,9 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
-			
+            PhotosForFlipView = new ObservableCollection<VkPhotoWithUserLink>();
 
 
-		}
+        }
 }
 }
