@@ -29,7 +29,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
 	    private int _radius;
-		private Geopoint _location;
 	    private VkPhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
 		private readonly Geolocator _geolocator;
@@ -44,8 +43,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private int _maximumColumns;
 		private DelegateCommand _goToSelectedItemAddress;
 		private Geopoint _selectedItemGeopoint;
-		private bool _instagram;
-		private bool _vkontakte;
 
 		private readonly IAdapterManager _adapterManager;
 		private DelegateCommand<object> _removeItemCommand;
@@ -58,7 +55,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private ICommand _adaptWindowSizeCommand;
 	    private ICommand _adaptWrapGridSizeCommand;
 	    private ICommand _mapDoubleTappedCommand;
-	    private ICommand _mapCenterChangedCommand;
 	    private Geopoint _selectionRadiusGeopoint;
 
 	    public event EventHandler OnRaiseNeedToRedrawCircle;

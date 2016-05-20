@@ -83,12 +83,6 @@
                         <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StopButtonGlyph}"></FontIcon>
                     </AppBarButton.Icon>
                 </AppBarButton>
-
-                <AppBarToggleButton Label="На карте" IsChecked="{Binding ShowOnMap, Mode=TwoWay}">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource OnMapGlyph}"></FontIcon>
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
             </StackPanel>
         </Grid>
     </Grid>
