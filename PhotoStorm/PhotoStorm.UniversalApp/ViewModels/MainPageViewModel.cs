@@ -56,6 +56,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private ICommand _adaptWrapGridSizeCommand;
 	    private ICommand _mapDoubleTappedCommand;
 	    private Geopoint _selectionRadiusGeopoint;
+	    private bool _detailsIsVisible;
+	    private ICommand _showDetails;
 
 	    public event EventHandler OnRaiseNeedToRedrawCircle;
 
@@ -164,8 +166,17 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private void OnExecuteCloseDetails()
 		{
-			SelectedItem = null;
+			//SelectedItem = null;
+		    DetailsIsVisible = false;
 		}
+
+	    public ICommand ShowDetails => _showDetails ?? (_showDetails = new DelegateCommand(OnExecuteShowDetails));
+
+	    private void OnExecuteShowDetails()
+	    {
+	        if (!DetailsIsVisible)
+	            DetailsIsVisible = true;
+	    }
 
 	    public ICommand SearchLocationCommand => _searchLocationCommand ?? (_searchLocationCommand = new DelegateCommand<Geopoint>(OnExecuteSearchLocationCommand));
 
@@ -264,18 +275,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				_selectedItem = value;
 				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
 				OnPropertyChanged();
-			    if (value == null)
-			    {
-                    PhotosForFlipView.Clear();
-                    return;
-                }
-			    var selectedItemIndexInPhotos = Photos.IndexOf(SelectedItem);
-			    var left = selectedItemIndexInPhotos == 0 ? 0 : selectedItemIndexInPhotos - 1;
-			    var right = selectedItemIndexInPhotos + 1 != Photos.Count
-			        ? selectedItemIndexInPhotos + 1
-			        : selectedItemIndexInPhotos;
-			    PhotosForFlipView.Clear();
-                PhotosForFlipView.AddRange(Photos.Where(i => Photos.IndexOf(i) >= left && Photos.IndexOf(i) <= right));
 			}
 		}
 
@@ -311,7 +310,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
 
-        public ObservableCollection<VkPhotoWithUserLink> PhotosForFlipView { get; set; }
 		public int Radius
 		{
 			get { return _radius; }
@@ -487,9 +485,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
 			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
-            PhotosForFlipView = new ObservableCollection<VkPhotoWithUserLink>();
-
-
         }
-}
+
+	    public bool DetailsIsVisible
+	    {
+	        get { return _detailsIsVisible; }
+	        set { _detailsIsVisible = value; OnPropertyChanged();}
+	    }
+	}
 }

@@ -10,13 +10,19 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
-    xmlns:controls="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
 
     <Grid>
         <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:BehaviorCollection>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding ShowDetails}"></core:InvokeCommandAction>
+                    </core:EventTriggerBehavior>
+                </interactivity:BehaviorCollection>
+            </interactivity:Interaction.Behaviors>
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:VkPhotoWithUserLink">
                     <Grid x:Name="ItemGrid">
@@ -93,10 +99,11 @@
             </GridView.ItemContainerStyle>
         </GridView>
 
-        <Grid HorizontalAlignment="Stretch" Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}" Background="#CC2F4F4F">
+        <Grid HorizontalAlignment="Stretch" Visibility="{Binding DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
             <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
                 <Grid>
-                    <FlipView x:Name="FlipView"  ItemsSource="{Binding PhotosForFlipView}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}}" UseTouchAnimationsForAllNavigation="True">
+                   
+                    <FlipView x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}" UseTouchAnimationsForAllNavigation="True">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:VkPhotoWithUserLink">
                                 <Grid>
@@ -105,6 +112,7 @@
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
+
                     <Grid HorizontalAlignment="Right" Width="40" Opacity="0.6" VerticalAlignment="Top" Height="40" Background="DarkSlateGray">
                         <TextBlock Text="{StaticResource CloseButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
                         <interactivity:Interaction.Behaviors>
