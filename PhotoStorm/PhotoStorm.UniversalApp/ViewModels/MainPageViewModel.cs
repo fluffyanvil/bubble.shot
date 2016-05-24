@@ -26,8 +26,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
-	    private DelegateCommand _startAdapterCommand;
-		private DelegateCommand _stopAdapterCommand;
+	    private DelegateCommand _startManagerCommand;
+		private DelegateCommand _stopManagerCommand;
 	    private int _radius;
 	    private PhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
@@ -60,22 +60,22 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    #region Commands
 
-		public ICommand StopAdapterCommand => _stopAdapterCommand ?? (_stopAdapterCommand = new DelegateCommand(OnExecuteStopAdapterCommand, CanExecuteStopAdapterCommand));
+		public ICommand StopManagerCommand => _stopManagerCommand ?? (_stopManagerCommand = new DelegateCommand(OnExecuteStopManagerCommand, CanExecuteStopManagerCommand));
 
-		private bool CanExecuteStopAdapterCommand()
+		private bool CanExecuteStopManagerCommand()
 		{
 			return _adapterManager.CanStop;
 		}
 
-		private void OnExecuteStopAdapterCommand()
+		private void OnExecuteStopManagerCommand()
 		{
 			_adapterManager.Stop();
 			UpdateCommandAvailability();
 		}
 
-		public ICommand StartAdapterCommand => _startAdapterCommand ?? (_startAdapterCommand = new DelegateCommand(OnExecuteStartAdapter, CanExecuteStartAdapter));
+		public ICommand StartManagerCommand => _startManagerCommand ?? (_startManagerCommand = new DelegateCommand(OnExecuteStartManager, CanExecuteStartManager));
 
-		private bool CanExecuteStartAdapter()
+		private bool CanExecuteStartManager()
 		{
 			return _adapterManager.CanStart;
 		}
@@ -87,7 +87,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			Radius = Radius
 		};
 
-		private void OnExecuteStartAdapter()
+		private void OnExecuteStartManager()
 		{
 			_adapterManager.Start(AdapterRule);
 			UpdateCommandAvailability();
@@ -95,8 +95,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private void UpdateCommandAvailability()
 		{
-			_startAdapterCommand.RaiseCanExecuteChanged();
-			_stopAdapterCommand.RaiseCanExecuteChanged();
+			_startManagerCommand.RaiseCanExecuteChanged();
+			_stopManagerCommand.RaiseCanExecuteChanged();
 		}
 
 		public ICommand RemoveItemCommand => _removeItemCommand ??
