@@ -20,7 +20,8 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <HockeyAppResourceId>3637cc5bf0374bada4857db26c0ad52e</HockeyAppResourceId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -153,6 +154,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\SliderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Views\MainPageNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +172,10 @@
     <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
       <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
       <Name>PhotoStorm.Core.Portable.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\sergey.garnov\Downloads\RadialSlider-master\RadialSlider-master\RadialSlider\RadialSlider.csproj">
+      <Project>{F2B921EF-CDB4-4BFD-89DC-CE92121ABC27}</Project>
+      <Name>RadialSlider</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

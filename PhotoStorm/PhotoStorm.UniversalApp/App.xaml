@@ -6,18 +6,24 @@
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
     RequestedTheme="Light">
     <Application.Resources>
-        <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
-        <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
-        <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
-        <x:String x:Key="MapApiKey">uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G</x:String>
-        <x:String x:Key="OnSiteGlyph">&#xf007;</x:String>
-        <x:String x:Key="StartButtonGlyph">&#xf04b;</x:String>
-        <x:String x:Key="StopButtonGlyph">&#xf04d;</x:String>
-        <x:String x:Key="OnMapGlyph">&#xf276;</x:String>
-        <x:String x:Key="BottomPanelMapButtonGlyph">&#xf278;</x:String>
-        <x:String x:Key="BottomPanelGalleryButtonGlyph">&#xf03e;</x:String>
-        <x:String x:Key="GalleryModalForwardButtonGlyph">&#xf04e;</x:String>
-        <x:String x:Key="GalleryModalBackwardButtonGlyph">&#xf04a;</x:String>
-        <x:String x:Key="CloseButtonGlyph">&#xf00d;</x:String>
+        
+        <ResourceDictionary>
+            <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
+            <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
+            <x:String x:Key="MapApiKey">uhWN34e4LCVOVBNwA3ZI~bzzP9OY-SZ_ay7FVUskS-w~Art6O_89BNl-_04hlwpqkWl7zErWSJdwuw3kz47zxb9FZ-nyJQKESG87Mh4wvI_G</x:String>
+            <x:String x:Key="OnSiteGlyph">&#xf007;</x:String>
+            <x:String x:Key="StartButtonGlyph">&#xf04b;</x:String>
+            <x:String x:Key="StopButtonGlyph">&#xf04d;</x:String>
+            <x:String x:Key="OnMapGlyph">&#xf276;</x:String>
+            <x:String x:Key="BottomPanelMapButtonGlyph">&#xf278;</x:String>
+            <x:String x:Key="BottomPanelGalleryButtonGlyph">&#xf03e;</x:String>
+            <x:String x:Key="GalleryModalForwardButtonGlyph">&#xf04e;</x:String>
+            <x:String x:Key="GalleryModalBackwardButtonGlyph">&#xf04a;</x:String>
+            <x:String x:Key="CloseButtonGlyph">&#xf00d;</x:String>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/SliderStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

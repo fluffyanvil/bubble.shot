@@ -103,7 +103,7 @@
             <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
                 <Grid>
                    
-                    <FlipView x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}" UseTouchAnimationsForAllNavigation="True">
+                    <FlipView x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:VkPhotoWithUserLink">
                                 <Grid>

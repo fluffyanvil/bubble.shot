@@ -14,7 +14,7 @@ namespace PhotoStorm.UniversalApp.Extensions
             {
                 mapControl.MapElements.Clear();
 
-                var fill = Colors.LawnGreen;
+                var fill = Colors.LimeGreen;
                 var stroke = Colors.Green;
                 fill.A = 80;
                 stroke.A = 100;

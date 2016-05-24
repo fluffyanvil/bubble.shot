@@ -37,12 +37,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private string _searchAddress;
 	    private DelegateCommand _showLinkCommand;
 		private bool _isShowLink;
-		private DelegateCommand _nextVictimCommand;
-		private DelegateCommand _prevVictimCommand;
 		private double _dynamicPhotoSize;
 		private int _maximumColumns;
-		private DelegateCommand _goToSelectedItemAddress;
-		private Geopoint _selectedItemGeopoint;
 
 		private readonly IAdapterManager _adapterManager;
 		private DelegateCommand<object> _removeItemCommand;
@@ -58,6 +54,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private Geopoint _selectionRadiusGeopoint;
 	    private bool _detailsIsVisible;
 	    private ICommand _showDetails;
+	    private string _selectionAddress;
 
 	    public event EventHandler OnRaiseNeedToRedrawCircle;
 
@@ -180,20 +177,24 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    public ICommand SearchLocationCommand => _searchLocationCommand ?? (_searchLocationCommand = new DelegateCommand<Geopoint>(OnExecuteSearchLocationCommand));
 
-	    private void OnExecuteSearchLocationCommand(Geopoint point)
+	    private async void OnExecuteSearchLocationCommand(Geopoint point)
 	    {
 	        MapCenterGeopoint = point;
 	        SelectionRadiusGeopoint = point;
-	    }
+            SelectionAddress = await ReverseGeocoding(point.Position.Longitude,
+                   point.Position.Latitude);
+        }
 
 	    public ICommand MapDoubleTappedCommand => _mapDoubleTappedCommand ??
 	                                              (_mapDoubleTappedCommand = new DelegateCommand<MapInputEventArgs>(OnExecuteMapDoubleTappedCommand));
 
-	    private void OnExecuteMapDoubleTappedCommand(MapInputEventArgs mapInputEventArgs)
+	    private async void OnExecuteMapDoubleTappedCommand(MapInputEventArgs mapInputEventArgs)
 	    {
 	        MapCenterGeopoint = mapInputEventArgs.Location;
 	        SelectionRadiusGeopoint = mapInputEventArgs.Location;
-	    }
+            SelectionAddress = await ReverseGeocoding(SelectionRadiusGeopoint.Position.Longitude,
+                   SelectionRadiusGeopoint.Position.Latitude);
+        }
 
 	    #endregion
 
@@ -239,13 +240,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	            _selectionRadiusGeopoint = value;
                 OnPropertyChanged();
                 SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
-            }
+	        }
 	    }
 
 
 	    public Geopath SelectionAreaCirclePath
 	    {
-            //FillColor="#807CFC00" StrokeColor="#80008000"
 	        get { return _selectionAreaCirclePath; }
 	        set
             {
@@ -255,25 +255,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        }
 	    }
 
-	    public Geopoint SelectedItemGeopoint
-		{
-			get { return _selectedItemGeopoint; }
-			set
-			{
-				_selectedItemGeopoint = value ?? new Geopoint(new BasicGeoposition());
-				if (value != null)
-					OnGoToAddressEvent(_selectedItem.PositionGeopoint);
-				OnPropertyChanged();
-			}
-		}
-
 		public VkPhotoWithUserLink SelectedItem
 		{
 			get { return _selectedItem; }
 			set
 			{
 				_selectedItem = value;
-				SelectedItemGeopoint = _selectedItem?.PositionGeopoint;
 				OnPropertyChanged();
 			}
 		}
@@ -320,7 +307,13 @@ namespace PhotoStorm.UniversalApp.ViewModels
             }
 		}
 
-		public string SearchAddress
+	    public string SelectionAddress
+	    {
+	        get { return _selectionAddress; }
+	        set { _selectionAddress = value; OnPropertyChanged();}
+	    }
+
+	    public string SearchAddress
 		{
 			get { return _searchAddress; }
 			set
@@ -346,48 +339,25 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    #endregion
 
-        #region Delegates
-
-        public delegate void GetLocation();
-		public delegate void RadiusChanged();
-		public delegate void GoToAddress(Geopoint positionGeopoint);
-
-		public event GetLocation GetLocationEvent;
-		public event RadiusChanged RadiusChangedEvent;
-		public event GoToAddress GoToAddressEvent;
-
-		protected virtual void OnGoToAddressEvent(Geopoint positionGeopoint)
-		{
-			GoToAddressEvent?.Invoke(positionGeopoint);
-		}
-
-		protected virtual void OnOnGetLocation()
-		{
-			GetLocationEvent?.Invoke();
-		}
-
-		protected virtual void OnRadiusChangedEvent()
-		{
-			RadiusChangedEvent?.Invoke();
-		}
-
-		#endregion
-
 		#region Public methods
 
-		public async void GetPosition()
+		public async void GetUserLocation()
 		{
 			try
 			{
 				var geoposition = await _geolocator.GetGeopositionAsync();
 			    MapCenterGeopoint = geoposition.Coordinate.Point;
                 SelectionRadiusGeopoint = geoposition.Coordinate.Point;
-            }
+			    SelectionAddress =
+			        await
+			            ReverseGeocoding(geoposition.Coordinate.Point.Position.Longitude,
+			                geoposition.Coordinate.Point.Position.Latitude);
+			}
 			catch (Exception)
 			{
-				//var dialog = new MessageDialog("Надо было разрешить");
-				//await dialog.ShowAsync();
-			}
+                var dialog = new MessageDialog("Надо было разрешить");
+                await dialog.ShowAsync();
+            }
 
 		}
 
@@ -445,7 +415,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				var result =
 					  await MapLocationFinder.FindLocationsAtAsync(pointToReverseGeocode);
 
-				return result.Status == MapLocationFinderStatus.Success ? result.Locations[0].Address.FormattedAddress : string.Empty;
+				return result.Status == MapLocationFinderStatus.Success && result.Locations.Any() ? result.Locations[0].Address.FormattedAddress : string.Empty;
 			}
 			catch (Exception ex)
 			{
@@ -476,7 +446,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			var vkAdapter = new VkAdapter(vkAdapterConfig);
 			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
             _geolocator = new Geolocator();
-            GetPosition();
+            GetUserLocation();
 
             _adapterManager = new AdapterManager();
 			

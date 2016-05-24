@@ -10,13 +10,14 @@
     xmlns:maps1="using:Windows.Services.Maps"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
+    xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:galazzo="using:Galazzo"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     <UserControl.Resources>
         <converters:AutoSuggestQueryParameterConverter x:Key="AutoSuggestQueryParameterConverter" />
         <converters:MetersToKilometersConverter x:Key="MetersToKilometersConverter"/>
-
     </UserControl.Resources>
     <Grid>
         <maps:MapControl 
@@ -34,20 +35,13 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </maps:MapControl>
-        <Grid VerticalAlignment="Top" Background="DarkGray" Opacity="0.7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <AutoSuggestBox Margin="20,0" Grid.Column="0"
-                                        VerticalAlignment="Center" 
-                                        QueryIcon="Find" 
+        <Border Margin="20,20" VerticalAlignment="Top" BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="DarkGray" Background="#80FFFFFF">
+            <AutoSuggestBox x:Name="AutoSuggestBox"  
+                                        QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                         Text="{Binding SearchAddress, Mode=TwoWay}"
                                         PlaceholderText="Адрес" 
                                         ItemsSource="{Binding SearchedLocations, Mode=TwoWay}"
-                                        UpdateTextOnSelect="True">
+                                        UpdateTextOnSelect="True" >
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="QuerySubmitted">
                         <core:InvokeCommandAction 
@@ -61,29 +55,18 @@
                     </DataTemplate>
                 </AutoSuggestBox.ItemTemplate>
             </AutoSuggestBox>
-            <Slider Margin="10,0" Grid.Column="1" Value="{Binding Radius, Mode=TwoWay}" Minimum="1000" Maximum="50000">
-                <Slider.HeaderTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                                        <Run>Радиус</Run>
-                                        <Run Text="{Binding Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
-                                        <Run>км</Run>
+        </Border>
+        <Slider Style="{StaticResource SliderStyle}" Margin="10,0" Value="{Binding Radius, Mode=TwoWay}" Height="400" Minimum="1000" Maximum="50000" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Slider.HeaderTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="DarkGray" Background="#80F5F5DC" Margin="2">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+                        <Run Text="{Binding Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
+                        <Run>км</Run>
                         </TextBlock>
-                    </DataTemplate>
-                </Slider.HeaderTemplate>
-            </Slider>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <AppBarButton Label="Старт" Command="{Binding StartAdapterCommand}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StartButtonGlyph}"></FontIcon>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton Label="Стоп" Command="{Binding StopAdapterCommand}">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StopButtonGlyph}"></FontIcon>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
-        </Grid>
+                    </Border>
+                </DataTemplate>
+            </Slider.HeaderTemplate>
+        </Slider>
     </Grid>
 </UserControl>

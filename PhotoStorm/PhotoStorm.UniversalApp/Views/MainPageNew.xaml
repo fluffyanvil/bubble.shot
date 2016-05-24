@@ -8,6 +8,8 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:controls="using:PhotoStorm.UniversalApp.Controls"
+    xmlns:maps="using:Windows.Services.Maps"
+    xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
     x:Name="Page"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     
@@ -15,9 +17,30 @@
         <viewModels:MainPageViewModel ></viewModels:MainPageViewModel>
     </Page.DataContext>
     <Page.Resources>
-        
+
+       
     </Page.Resources>
-    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <TextBlock  VerticalAlignment="Stretch" Text="{Binding SelectionAddress}" TextTrimming="CharacterEllipsis">
+                    </TextBlock>
+                </Grid>
+            </CommandBar.Content>
+            <AppBarSeparator/>
+            <AppBarButton Label="Старт" Command="{Binding StartAdapterCommand}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StartButtonGlyph}"></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Стоп" Command="{Binding StopAdapterCommand}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StopButtonGlyph}"></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
     <interactivity:Interaction.Behaviors>
         <interactivity:BehaviorCollection>
             <core:EventTriggerBehavior EventName="SizeChanged">
@@ -25,35 +48,12 @@
             </core:EventTriggerBehavior>
         </interactivity:BehaviorCollection>
     </interactivity:Interaction.Behaviors>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Small">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Button1.Content"  
-                    Value="Narrow" />
-                    </VisualState.Setters>
-                </VisualState>
 
-                <VisualState x:Name="Big">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Button1.Content"  
-                    Value="Wide" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Pivot>
             <PivotItem Header="Карта">
-               <controls:MapView x:Name="MapView"/>
+                <controls:MapView x:Name="MapView"/>
             </PivotItem>
             <PivotItem Header="Галерея">
                 <controls:GalleryView/>
