@@ -134,8 +134,9 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    private void OnExecuteAdaptWindowSizeCommand(SizeChangedEventArgs e)
 	    {
+	        var borderWidth = 30;
             var isLandscape = e.NewSize.Width > e.NewSize.Height;
-            AvailableModalSize = isLandscape ? e.NewSize.Height - 125 : e.NewSize.Width - 125;
+            AvailableModalSize = isLandscape ? e.NewSize.Height - borderWidth : e.NewSize.Width - borderWidth;
 
         }
 
