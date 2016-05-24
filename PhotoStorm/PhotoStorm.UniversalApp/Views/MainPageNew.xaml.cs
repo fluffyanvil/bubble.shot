@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,12 +29,43 @@ namespace PhotoStorm.UniversalApp.Views
         public MainPageNew()
         {
             this.InitializeComponent();
+            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             ViewModel.OnRaiseNeedToRedrawCircle += ViewModelOnOnRaiseNeedToRedrawCircle;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs backRequestedEventArgs)
+        {
+            try
+            {
+                if (backRequestedEventArgs.Handled) return;
+
+                
+                if (ViewModel.DetailsIsVisible)
+                {
+                    ViewModel.CloseDetails.Execute(null);
+                    backRequestedEventArgs.Handled = true;
+                    return;
+                }
+
+                if (ViewModel.SelectedPivotIndex != 0)
+                {
+                    ViewModel.SelectedPivotIndex = 0;
+                    backRequestedEventArgs.Handled = true;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            
         }
 
         private void ViewModelOnOnRaiseNeedToRedrawCircle(object sender, EventArgs eventArgs)

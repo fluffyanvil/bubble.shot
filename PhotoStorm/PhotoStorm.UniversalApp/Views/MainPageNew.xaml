@@ -51,7 +51,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Pivot>
+        <Pivot SelectedIndex="{Binding SelectedPivotIndex,Mode=TwoWay}">
             <PivotItem Header="Карта">
                 <controls:MapView x:Name="MapView"/>
             </PivotItem>

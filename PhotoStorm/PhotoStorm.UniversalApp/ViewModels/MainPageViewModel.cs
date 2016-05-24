@@ -21,6 +21,7 @@ using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
+using Prism.Windows.Navigation;
 
 namespace PhotoStorm.UniversalApp.ViewModels
 {
@@ -55,6 +56,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private bool _detailsIsVisible;
 	    private ICommand _showDetails;
 	    private string _selectionAddress;
+	    private int _selectedPivotIndex;
 
 	    public event EventHandler OnRaiseNeedToRedrawCircle;
 
@@ -463,6 +465,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    {
 	        get { return _detailsIsVisible; }
 	        set { _detailsIsVisible = value; OnPropertyChanged();}
+	    }
+
+	    public int SelectedPivotIndex
+	    {
+	        get { return _selectedPivotIndex; }
+	        set { _selectedPivotIndex = value; OnPropertyChanged();}
 	    }
 	}
 }
