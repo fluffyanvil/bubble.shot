@@ -114,11 +114,12 @@
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
     <Compile Include="Converters\MetersToKilometersConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\SourceToIconConverter.cs" />
     <Compile Include="Extensions\MapControlExtensions.cs" />
     <Compile Include="Extensions\GetCoordinateExtensions.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Models\ViewModelCommands.cs" />
-    <Compile Include="Models\VkPhotoWithUserLink.cs" />
+    <Compile Include="Models\PhotoWithUserLink.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\MainPageNew.xaml.cs">

@@ -29,7 +29,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private DelegateCommand _startAdapterCommand;
 		private DelegateCommand _stopAdapterCommand;
 	    private int _radius;
-	    private VkPhotoWithUserLink _selectedItem;
+	    private PhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
 		private readonly Geolocator _geolocator;
 	    private double _availableModalSize;
@@ -104,7 +104,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private void OnExecuteRemoveItemCommand(object parameter)
 		{
-			var photo = parameter as VkPhotoWithUserLink;
+			var photo = parameter as PhotoWithUserLink;
 			if (SelectedItem != photo)
 			{
 				Photos.Remove(photo);
@@ -255,7 +255,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        }
 	    }
 
-		public VkPhotoWithUserLink SelectedItem
+		public PhotoWithUserLink SelectedItem
 		{
 			get { return _selectedItem; }
 			set
@@ -295,7 +295,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			}
 		}
 
-		public ObservableCollection<VkPhotoWithUserLink> Photos { get; set; }
+		public ObservableCollection<PhotoWithUserLink> Photos { get; set; }
 
 		public int Radius
 		{
@@ -387,13 +387,14 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				var bitmapImage = new BitmapImage(new Uri(photoItem.ImageLink));
 
-				var item = new VkPhotoWithUserLink
+				var item = new PhotoWithUserLink
 				{
 					Image = bitmapImage,
 					UserLink = photoItem.ProfileLink,
 					Longitude = photoItem.Longitude,
 					Latitude = photoItem.Latitude,
-					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude)
+					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude),
+                    Source = photoItem.Source
 				};
 				if (!Photos.Contains(item))
 				{
@@ -454,7 +455,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			_adapterManager.AddAdapter(instagramAdapter);
 			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
-			Photos = new ObservableCollection<VkPhotoWithUserLink> ();
+			Photos = new ObservableCollection<PhotoWithUserLink> ();
         }
 
 	    public bool DetailsIsVisible

@@ -10,10 +10,13 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
+    xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
-
+    <UserControl.Resources>
+        <converters:SourceToIconConverter x:Key="SourceToIconConverter"></converters:SourceToIconConverter>
+    </UserControl.Resources>
     <Grid>
         <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
@@ -24,7 +27,7 @@
                 </interactivity:BehaviorCollection>
             </interactivity:Interaction.Behaviors>
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                <DataTemplate x:DataType="models:PhotoWithUserLink">
                     <Grid x:Name="ItemGrid">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
@@ -70,7 +73,11 @@
                             </MenuFlyout>
                         </MenuFlyout.AttachedFlyout>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                                <TextBlock FontFamily="{StaticResource FontAwesome}" Text="{Binding Source, Converter={StaticResource SourceToIconConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" FontSize="16"></TextBlock>
+                            </Grid>
+                            
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -103,11 +110,14 @@
             <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
                 <Grid>
                    
-                    <FlipView x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
+                    <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>
-                            <DataTemplate x:DataType="models:VkPhotoWithUserLink">
+                            <DataTemplate x:DataType="models:PhotoWithUserLink">
                                 <Grid>
                                     <Image Stretch="UniformToFill" Source="{Binding Image}" ManipulationMode="TranslateY"/>
+                                    <TextBlock FontFamily="{StaticResource FontAwesome}" Text="{Binding Source, Converter={StaticResource SourceToIconConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" FontSize="20">
+                                        
+                                    </TextBlock>
                                 </Grid>
                             </DataTemplate>
                         </FlipView.ItemTemplate>

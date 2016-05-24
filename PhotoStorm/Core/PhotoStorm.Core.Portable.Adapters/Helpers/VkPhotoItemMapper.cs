@@ -15,13 +15,12 @@ namespace PhotoStorm.Core.Portable.Adapters.Helpers
 			{
 				return items?.Select(i => new PhotoItemModel
 				{
-					ChannelType = ChannelType.Vkontakte,
+					Source = ChannelType.Vkontakte,
 					ImageLink = i.Photo604,
 					Latitude = i.Latitude,
 					Longitude = i.Longitude,
 					TimeCreated = i.Date,
-					ProfileLink = i.OwnerId[0] == '-' ? "http://vk.com/club" + i.OwnerId.Substring(1) : "http://vk.com/id" + i.OwnerId,
-					Source = 0
+					ProfileLink = i.OwnerId[0] == '-' ? "http://vk.com/club" + i.OwnerId.Substring(1) : "http://vk.com/id" + i.OwnerId
 				});
 			}
 			catch (Exception)

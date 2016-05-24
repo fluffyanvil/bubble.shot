@@ -15,13 +15,12 @@ namespace PhotoStorm.Core.Portable.Adapters.Helpers
 			{
 				return items?.Select(i => new PhotoItemModel
 				{
-					ChannelType = ChannelType.Vkontakte,
+					Source = ChannelType.Instagram,
 					ProfileLink = i.Link,
 					ImageLink = i.Images.StandardResolution.Url,
 					Latitude = i.Location.Latitude,
 					Longitude = i.Location.Longitude,
-					TimeCreated = i.Date,
-					Source = 1
+					TimeCreated = i.Date
 
 				});
 			}

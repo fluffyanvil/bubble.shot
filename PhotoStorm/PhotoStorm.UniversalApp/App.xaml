@@ -6,7 +6,6 @@
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
     RequestedTheme="Light">
     <Application.Resources>
-        
         <ResourceDictionary>
             <converters:NullVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></converters1:BooleanToVisibilityConverter>
@@ -21,6 +20,9 @@
             <x:String x:Key="GalleryModalForwardButtonGlyph">&#xf04e;</x:String>
             <x:String x:Key="GalleryModalBackwardButtonGlyph">&#xf04a;</x:String>
             <x:String x:Key="CloseButtonGlyph">&#xf00d;</x:String>
+            <x:String x:Key="VkGlyph">&#xf189;</x:String>
+            <x:String x:Key="InstagramGlyph">&#xf16d;</x:String>
+            <x:String x:Key="UnknownGlyph">&#xf29c;</x:String>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
