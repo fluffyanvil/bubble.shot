@@ -174,10 +174,6 @@
       <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
       <Name>PhotoStorm.Core.Portable.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\sergey.garnov\Downloads\RadialSlider-master\RadialSlider-master\RadialSlider\RadialSlider.csproj">
-      <Project>{F2B921EF-CDB4-4BFD-89DC-CE92121ABC27}</Project>
-      <Name>RadialSlider</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

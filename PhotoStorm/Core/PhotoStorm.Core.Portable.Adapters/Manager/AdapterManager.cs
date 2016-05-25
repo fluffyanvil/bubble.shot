@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Instagram;
 using PhotoStorm.Core.Portable.Adapters.Rules;
+using PhotoStorm.Core.Portable.Adapters.Vkontakte;
 
 namespace PhotoStorm.Core.Portable.Adapters.Manager
 {
@@ -12,9 +14,18 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 		public AdapterManager()
 		{
 			_adapters = new List<IAdapter>();
+            ConfigureAddapterManager();
 		}
 
-		public void AddAdapter(IAdapter adapter)
+	    private void ConfigureAddapterManager()
+	    {
+            var vkAdapter = new VkAdapter(new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" });
+            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" });
+            this.AddAdapter(vkAdapter);
+            this.AddAdapter(instagramAdapter);
+        }
+
+	    public void AddAdapter(IAdapter adapter)
 		{
 			adapter.OnNewPhotosReceived += AdapterOnOnNewPhotosReceived;
 			_adapters.Add(adapter);
@@ -31,7 +42,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 			OnNewPhotosReceived?.Invoke(this, newPhotoAlertEventArgs);
 		}
 
-		public bool CanStart => _adapters.Any(a => a.IsActive == false);
+		public bool CanStart => _adapters.Any(a => !a.IsActive);
 		public bool CanStop => _adapters.Any(a => a.IsActive);
 
 		public void Start(IAdapterRule rule)

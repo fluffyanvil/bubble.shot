@@ -1,4 +1,6 @@
-﻿using PhotoStorm.Core.Portable.Adapters.Manager;
+﻿using System;
+using PhotoStorm.Core.Portable.Adapters.EventArgs;
+using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Works.Enums;
 
@@ -6,10 +8,11 @@ namespace PhotoStorm.Core.Portable.Works.Works
 {
     public interface IWork
     {
-        IAdapterManager AdapterManager { get; set; }
-        IAdapterRule AdapterRule { get; set; }
+        Guid Id { get; }
+        WorkCreatorDevice WorkCreatorDevice { get; set; }
         WorkState State { get; set; }
-        void Start();
-        void Stop();
+        Guid Start();
+        Guid Stop();
+        event EventHandler<NewPhotoAlertEventArgs> OnNewPhotosReceived;
     }
 }

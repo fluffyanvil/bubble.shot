@@ -74,10 +74,7 @@ namespace PhotoStorm.TelegramBot
 				return "You have work already";
 
 			var adapterManager = new AdapterManager();
-			var vkAdapter = new VkAdapter(new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" });
-			var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.9d287accaaab4830885735d53ccc6018" });
-			adapterManager.AddAdapter(vkAdapter);
-			adapterManager.AddAdapter(instagramAdapter);
+			
 			var work = new BotWork(chatId, adapterManager);
 			work.OnNewPhotosReceived += WorkOnNewPhotosReceived;
 			_works.Add(work);

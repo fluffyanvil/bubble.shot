@@ -443,19 +443,13 @@ namespace PhotoStorm.UniversalApp.ViewModels
         #endregion
 
         public MainPageViewModel()
-		{
-			var vkAdapterConfig = new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" };
-			var instagramAdapterConfig = new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" };
-
-			var vkAdapter = new VkAdapter(vkAdapterConfig);
-			var instagramAdapter = new InstagramAdapter(instagramAdapterConfig);
+        {
             _geolocator = new Geolocator();
             GetUserLocation();
 
             _adapterManager = new AdapterManager();
 			
-			_adapterManager.AddAdapter(vkAdapter);
-			_adapterManager.AddAdapter(instagramAdapter);
+			
 			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
 			Radius = 5000;
 			Photos = new ObservableCollection<PhotoWithUserLink> ();

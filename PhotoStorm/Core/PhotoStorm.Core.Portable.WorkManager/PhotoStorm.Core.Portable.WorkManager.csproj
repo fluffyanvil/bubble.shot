@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters\PhotoStorm.Core.Portable.Adapters.csproj">
+      <Project>{2D69114A-BA46-44D5-A39F-49A7F0E2ABD3}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoStorm.Core.Portable.Works\PhotoStorm.Core.Portable.Works.csproj">
       <Project>{60e28555-a960-45e0-8ebf-db94d0b4914b}</Project>
       <Name>PhotoStorm.Core.Portable.Works</Name>
@@ -43,6 +47,7 @@
   <ItemGroup>
     <Compile Include="IWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

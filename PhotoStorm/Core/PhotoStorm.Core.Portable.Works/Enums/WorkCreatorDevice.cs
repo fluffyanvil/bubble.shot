@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace PhotoStorm.Core.Portable.Works.Enums
 {
-    public enum WorkState
+    public enum WorkCreatorDevice
     {
-        New,
-        InProgress,
-        Stopped,
-        ToDelete,
-        Deleted,
-        Invalid
+        Unknown,
+        Apple,
+        Android,
+        Windows
     }
 }
