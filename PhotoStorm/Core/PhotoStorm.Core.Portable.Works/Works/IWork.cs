@@ -9,7 +9,7 @@ namespace PhotoStorm.Core.Portable.Works.Works
     public interface IWork
     {
         Guid Id { get; }
-        WorkCreatorDevice WorkCreatorDevice { get; set; }
+        Guid OwnerId { get; }
         WorkState State { get; set; }
         Guid Start();
         Guid Stop();

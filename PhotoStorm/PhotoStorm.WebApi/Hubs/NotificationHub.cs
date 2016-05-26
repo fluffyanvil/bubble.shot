@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
@@ -9,36 +7,37 @@ namespace PhotoStorm.WebApi.Hubs
 {
     public class NotificationHub : Hub
     {
+        private static readonly Dictionary<string, Guid> _connectionMapping = new Dictionary<string, Guid>();
+        public void Join(string connectionId, Guid id)
+        {
+            Console.WriteLine($"Joined [{connectionId}:{id}]\n");
+            _connectionMapping.Add(connectionId, id);
+            Clients.All.joined(connectionId, id);
+        }
+
         public void Notify(string connectionId, string message)
         {
-            Clients.Client(connectionId).Notify(message);
+            Clients.Client(connectionId).notify(message);
         }
-
-        public void Notify(string message)
-        {
-            Clients.All.Notify(message);
-        }
-
-        private NotificationHub()
-        {
-            
-        }
-
-        private static NotificationHub _instance;
-
-        public static NotificationHub Instance => _instance ?? (_instance = new NotificationHub());
 
         public override Task OnConnected()
         {
-            OnNewUserConnected?.Invoke(this, new NewUserConnectedEventArgs() {ConnectionId = Context.ConnectionId });
-            return base.OnConnected();
+            Console.WriteLine("Hub OnConnected {0}\n", Context.ConnectionId);
+            return (base.OnConnected());
         }
 
-        public event EventHandler<NewUserConnectedEventArgs> OnNewUserConnected;
-
-        public class NewUserConnectedEventArgs : EventArgs
+        public override Task OnDisconnected(bool stopCalled)
         {
-            public string ConnectionId { get; set; }
+            Console.WriteLine("Hub OnDisconnected {0}\n", Context.ConnectionId);
+            Clients.All.disconnected(Context.ConnectionId, _connectionMapping[Context.ConnectionId]);
+            return (base.OnDisconnected(stopCalled));
+        }
+
+        public override Task OnReconnected()
+        {
+            Console.WriteLine("Hub OnReconnected {0}\n", Context.ConnectionId);
+
+            return (base.OnReconnected());
         }
     }
 }

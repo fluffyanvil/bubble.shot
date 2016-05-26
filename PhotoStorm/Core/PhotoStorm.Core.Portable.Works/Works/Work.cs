@@ -16,20 +16,20 @@ namespace PhotoStorm.Core.Portable.Works.Works
         [JsonProperty("id")]
         public Guid Id { get; }
 
-        [JsonProperty("device")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public WorkCreatorDevice WorkCreatorDevice { get; set; }
+        [JsonProperty("ownerId")]
+        public Guid OwnerId { get; }
 
         [JsonProperty("state")]
         [JsonConverter(typeof(StringEnumConverter))]
         public WorkState State { get; set; }
 
-        public Work(double longitude, double latitude, int radius)
+        public Work(Guid ownerId, double longitude, double latitude, int radius)
         {
             _adapterManager = new AdapterManager();
             _adapterManager.OnNewPhotosReceived += AdapterManagerOnOnNewPhotosReceived;
             _adapterRule = new AdapterRule {Latitude = latitude, Longitude = longitude, Radius = radius};
             Id = System.Guid.NewGuid();
+            OwnerId = ownerId;
         }
 
         private Work()

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.WorkManager;
 using PhotoStorm.Core.Portable.Works.Enums;
@@ -14,27 +16,65 @@ namespace PhotoStorm.WebApi.Controllers
     public class WorksController : ApiController
     {
         private static readonly IWorkManager Manager = WorkManager.Instance;
-        private static readonly NotificationHub Hub = NotificationHub.Instance; 
+        private static readonly IHubProxy _proxy;
+        private static readonly HubConnection _hubConnection;
 
-        public WorksController()
+        private static readonly Dictionary<Guid, string> _connectionMapping = new Dictionary<Guid, string>();
+
+        static WorksController()
         {
             Manager.OnNewPhotosReceived += ManagerOnOnNewPhotosReceived;
-            Hub.OnNewUserConnected += HubOnOnNewUserConnected;
-        }
+            _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
 
-        private void HubOnOnNewUserConnected(object sender, NotificationHub.NewUserConnectedEventArgs newUserConnectedEventArgs)
-        {
-            Console.WriteLine(newUserConnectedEventArgs.ConnectionId);
-        }
+            _proxy = _hubConnection.CreateHubProxy("notificationHub");
 
-        private void ManagerOnOnNewPhotosReceived(object sender, NewPhotoAlertEventArgs newPhotoAlertEventArgs)
-        {
-            var work = (IWork) sender;
-            foreach (var photoItemModel in newPhotoAlertEventArgs.Photos)
+            _proxy.On<string, Guid>("joined", (s, guid) =>
             {
-                Console.WriteLine($"WorkId: {work.Id}, ImageLink: {photoItemModel.ImageLink}");
-                var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                context.Clients.All.Notify("stop the chat");
+                _connectionMapping.Add(guid, s);
+                Console.WriteLine("Mapping added");
+            });
+
+            _proxy.On<string,Guid>("disconnected", (s, guid) =>
+            {
+                _connectionMapping.Remove(guid);
+                var work = Manager.Works.FirstOrDefault(w => w.OwnerId == guid);
+                if (work != null)
+                {
+                    Manager.StopWork(work);
+                    Manager.DeleteWork(work);
+                }
+                Console.WriteLine("Client disconnected");
+            });
+
+            _hubConnection.Start().ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Console.WriteLine("There was an error opening the connection:{0}", task.Exception.GetBaseException());
+                }
+                else
+                {
+                    Console.WriteLine("Connected");
+                }
+            }).Wait();
+        }
+
+        private static void ManagerOnOnNewPhotosReceived(object sender, NewPhotoAlertEventArgs newPhotoAlertEventArgs)
+        {
+            try
+            {
+                var work = (IWork)sender;
+                var to = _connectionMapping[work.OwnerId];
+                if (to != null)
+                    _proxy.Invoke("Notify", to, JsonConvert.SerializeObject(newPhotoAlertEventArgs));
+                //foreach (var photoItemModel in newPhotoAlertEventArgs.Photos)
+                //{
+                //    Console.WriteLine($"WorkId: {work.Id}, ImageLink: {photoItemModel.ImageLink}");
+                //}
+            }
+            catch (Exception)
+            {
+                
             }
             
         }
@@ -49,7 +89,7 @@ namespace PhotoStorm.WebApi.Controllers
         {
             if (!model.IsValid)
                 return Work.EmptyWork;
-            var newWork = new Work(model.Longitude, model.Latitude, model.Radius) {WorkCreatorDevice = model.Device};
+            var newWork = new Work(model.OwnerId, model.Longitude, model.Latitude, model.Radius);
             Manager.AddWork(newWork);
             return newWork;
         }
