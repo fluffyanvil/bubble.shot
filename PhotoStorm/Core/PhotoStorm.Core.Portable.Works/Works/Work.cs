@@ -14,7 +14,7 @@ namespace PhotoStorm.Core.Portable.Works.Works
         private readonly IAdapterRule _adapterRule;
 
         [JsonProperty("workId")]
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         [JsonProperty("ownerId")]
         public Guid OwnerId { get; }
@@ -34,11 +34,14 @@ namespace PhotoStorm.Core.Portable.Works.Works
 
         private Work()
         {
-            Id = Guid.Empty;
-            State = WorkState.Invalid;
+            
         }
 
-        public static Work EmptyWork => new Work();
+        public static Work EmptyWork => new Work
+        {
+            Id = Guid.Empty,
+            State = WorkState.Invalid
+        };
 
         private void AdapterManagerOnOnNewPhotosReceived(object sender, NewPhotoAlertEventArgs newPhotoAlertEventArgs)
         {

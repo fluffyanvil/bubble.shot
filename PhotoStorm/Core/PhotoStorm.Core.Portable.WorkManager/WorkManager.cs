@@ -42,21 +42,8 @@ namespace PhotoStorm.Core.Portable.WorkManager
             try
             {
                 if (work.State == WorkState.InProgress)
-                    work.Stop();
-            }
-            catch (Exception)
-            {
-                
-            }
-        }
-
-        public void DeleteWork(IWork work)
-        {
-            try
-            {
-                if (work.State == WorkState.ToDelete)
                 {
-                    StopWork(work);
+                    work.Stop();
                     _works.Remove(work);
                 }
             }

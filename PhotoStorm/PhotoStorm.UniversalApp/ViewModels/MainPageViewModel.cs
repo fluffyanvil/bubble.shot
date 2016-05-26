@@ -12,15 +12,16 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Common.Models;
+using PhotoStorm.Core.Portable.Works.Works;
 using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
-
 
 
 
@@ -67,21 +68,45 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private bool CanExecuteStopManagerCommand()
 		{
+#if !Signalr
 			return _adapterManager.CanStop;
-		}
+#endif
+#if Signalr
+            return _work != null;
+#endif
+        }
 
 		private void OnExecuteStopManagerCommand()
 		{
-			_adapterManager.Stop();
-			UpdateCommandAvailability();
+#if !Signalr
+            _adapterManager.Stop();
+#endif
+#if Signalr
+            _hubProxy.Invoke("StopWork", _work).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+
+                }
+
+            }).Wait();
+		    _work = null;
+#endif
+            UpdateCommandAvailability();
 		}
 
 		public ICommand StartManagerCommand => _startManagerCommand ?? (_startManagerCommand = new DelegateCommand(OnExecuteStartManager, CanExecuteStartManager));
 
 		private bool CanExecuteStartManager()
 		{
-			return _adapterManager.CanStart;
-		}
+#if !Signalr
+            return _adapterManager.CanStart;
+#endif
+
+#if Signalr
+            return _work == null;
+#endif
+        }
 
 		private IAdapterRule AdapterRule => new AdapterRule()
 		{
@@ -92,8 +117,22 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private void OnExecuteStartManager()
 		{
-			_adapterManager.Start(AdapterRule);
-			UpdateCommandAvailability();
+#if !Signalr
+            _adapterManager.Start(AdapterRule);
+#endif
+
+#if Signalr
+            var work = new CreateWorkModel() {Longitude = MapCenterGeopoint.Position.Longitude, Latitude = MapCenterGeopoint.Position.Latitude, Radius = Radius };
+            _hubProxy.Invoke("AddWork", work).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    
+                }
+
+            }).Wait();
+#endif
+            UpdateCommandAvailability();
 		}
 
 		private void UpdateCommandAvailability()
@@ -200,9 +239,9 @@ namespace PhotoStorm.UniversalApp.ViewModels
                    SelectionRadiusGeopoint.Position.Latitude);
         }
 
-	    #endregion
+#endregion
 
-		#region Public fields
+#region Public fields
 
 	    public int ZoomLevel
 	    {
@@ -341,9 +380,9 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        }
 	    }
 
-	    #endregion
+#endregion
 
-		#region Public methods
+#region Public methods
 
 		public async void GetUserLocation()
 		{
@@ -365,9 +404,9 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		}
 
-		#endregion
+#endregion
 
-		#region Private methods
+#region Private methods
 
 		private async void AdapterOnNewPhotoAlertEventHandler(object sender, NewPhotoAlertEventArgs e)
 		{
@@ -387,12 +426,17 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private async Task DownloadPhoto(PhotoItemModel photoItem)
 		{
+		    if (Photos.Any(p => p.ImageLink.Equals(photoItem.ImageLink)))
+		    {
+		        return;
+		    }
 			await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
 			{
 				var bitmapImage = new BitmapImage(new Uri(photoItem.ImageLink));
 
 				var item = new PhotoWithUserLink
 				{
+                    ImageLink = photoItem.ImageLink,
 					Image = bitmapImage,
 					UserLink = photoItem.ProfileLink,
 					Longitude = photoItem.Longitude,
@@ -441,25 +485,84 @@ namespace PhotoStorm.UniversalApp.ViewModels
             var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, MapCenterGeopoint, 10);
             SearchedLocations = mapLocationFinderResult.Status == MapLocationFinderStatus.Success ?  mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
         }
-        #endregion
+#endregion
 
         public MainPageViewModel()
         {
             _geolocator = new Geolocator();
             GetUserLocation();
-
-
+#if !Signalr
+            // автономное
             _adapterManager = new AdapterManager();
             _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
-
+#endif
+            // привязанное к серверу
+#if Signalr
             _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
             _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
-
+            _hubProxy.On<string>("notify", OnNotify);
+            _hubProxy.On<string>("workAdded", OnWorkAdded);
+            _hubConnection.Start().ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    
+                }
+                else
+                {
+                   
+                }
+            }).Wait();
+#endif
             Radius = 5000;
 			Photos = new ObservableCollection<PhotoWithUserLink> ();
         }
 
-	    public bool DetailsIsVisible
+
+
+#if Signalr
+	    private IWork _work;
+        private void OnWorkAdded(string s)
+        {
+            try
+            {
+                var work = JsonConvert.DeserializeObject<Work>(s);
+                if (work != null)
+                {
+                    _work = work;
+                    //UpdateCommandAvailability();
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        private async void OnNotify(string s)
+	    {
+	        try
+	        {
+                var data = JsonConvert.DeserializeObject<NewPhotoAlertEventArgs>(s);
+	            if (data != null)
+	            {
+                    var imageLinks = data.Photos;
+                    foreach (var imageLink in imageLinks)
+                    {
+                        await DownloadPhoto(imageLink);
+                    }
+                }
+            }
+	        catch (Exception ex)
+	        {
+	            
+	        }
+	        
+	    }
+#endif
+
+        public bool DetailsIsVisible
 	    {
 	        get { return _detailsIsVisible; }
 	        set { _detailsIsVisible = value; OnPropertyChanged();}

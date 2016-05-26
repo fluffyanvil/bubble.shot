@@ -174,6 +174,10 @@
       <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
       <Name>PhotoStorm.Core.Portable.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Works\PhotoStorm.Core.Portable.Works.csproj">
+      <Project>{60E28555-A960-45E0-8EBF-DB94D0B4914B}</Project>
+      <Name>PhotoStorm.Core.Portable.Works</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
@@ -181,7 +185,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignalR_Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\SignalR_Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;CODE_ANALYSIS;Signalr</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>

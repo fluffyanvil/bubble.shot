@@ -8,6 +8,7 @@ namespace PhotoStorm.UniversalApp.Models
 	{
 		public ImageSource Image { get; set; }
 		public string UserLink { get; set; }
+        public string ImageLink { get; set; }
 		public string ImageDescription { get; set; }
 		public double Longitude { get; set; }
 		public double Latitude { get; set; }
