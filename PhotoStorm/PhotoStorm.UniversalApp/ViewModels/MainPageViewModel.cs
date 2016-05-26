@@ -11,17 +11,18 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.AspNet.SignalR.Client;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
-using PhotoStorm.Core.Portable.Adapters.Instagram;
 using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
-using PhotoStorm.Core.Portable.Adapters.Vkontakte;
 using PhotoStorm.Core.Portable.Common.Models;
 using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
-using Prism.Windows.Navigation;
+
+
+
 
 namespace PhotoStorm.UniversalApp.ViewModels
 {
@@ -447,11 +448,14 @@ namespace PhotoStorm.UniversalApp.ViewModels
             _geolocator = new Geolocator();
             GetUserLocation();
 
+
             _adapterManager = new AdapterManager();
-			
-			
-			_adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
-			Radius = 5000;
+            _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
+
+            _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
+            _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
+
+            Radius = 5000;
 			Photos = new ObservableCollection<PhotoWithUserLink> ();
         }
 
@@ -466,5 +470,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        get { return _selectedPivotIndex; }
 	        set { _selectedPivotIndex = value; OnPropertyChanged();}
 	    }
+
+	    private HubConnection _hubConnection;
+	    private IHubProxy _hubProxy;
 	}
 }

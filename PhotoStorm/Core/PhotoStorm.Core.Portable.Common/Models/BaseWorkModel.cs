@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace PhotoStorm.WebApi.Models
+namespace PhotoStorm.Core.Portable.Common.Models
 {
     [JsonObject("work")]
     public class BaseWorkModel

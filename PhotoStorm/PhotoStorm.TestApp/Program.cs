@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
+using PhotoStorm.Core.Portable.Common.Models;
 
 namespace PhotoStorm.TestApp
 {
@@ -11,7 +12,8 @@ namespace PhotoStorm.TestApp
 		{
             var hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
             var hubProxy = hubConnection.CreateHubProxy("notificationHub");
-            hubProxy.On<string>("notify", (message) => Console.Write("Recieved: {0}", message));
+            hubProxy.On<string>("notify", (message) => Console.WriteLine("Recieved: {0}", message));
+            hubProxy.On<string>("workAdded", (message) => Console.WriteLine("Recieved: {0}", message));
             hubConnection.Start().ContinueWith(task =>
             {
                 if (task.IsFaulted)
@@ -23,7 +25,9 @@ namespace PhotoStorm.TestApp
                     Console.WriteLine("Connected");
                 }
             }).Wait();
-            hubProxy.Invoke("Join", hubConnection.ConnectionId, _id).ContinueWith(task =>
+
+            CreateWorkModel model = new CreateWorkModel() {Latitude = 53.891407, Longitude = 27.562178, Radius = 40000};
+            hubProxy.Invoke("AddWork", model).ContinueWith(task =>
             {
                 if (task.IsFaulted)
                 {

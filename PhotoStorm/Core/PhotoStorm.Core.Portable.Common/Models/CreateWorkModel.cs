@@ -1,16 +1,10 @@
-﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using PhotoStorm.Core.Portable.Works.Enums;
+﻿using Newtonsoft.Json;
 
-namespace PhotoStorm.WebApi.Models
+namespace PhotoStorm.Core.Portable.Common.Models
 {
     [JsonObject("work")]
     public class CreateWorkModel
     {
-        [JsonProperty("ownerId")]
-        public Guid OwnerId { get; set; }
-
         [JsonProperty("latitude")]
         public double Latitude { get; set; }
 
@@ -21,6 +15,6 @@ namespace PhotoStorm.WebApi.Models
         public int Radius { get; set; }
 
         [JsonIgnore]
-        public bool IsValid => !OwnerId.Equals(Guid.Empty);
+        public bool IsValid => Radius > 1000;
     }
 }

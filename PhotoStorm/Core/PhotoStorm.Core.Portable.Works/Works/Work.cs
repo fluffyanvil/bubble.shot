@@ -13,7 +13,7 @@ namespace PhotoStorm.Core.Portable.Works.Works
         private readonly IAdapterManager _adapterManager;
         private readonly IAdapterRule _adapterRule;
 
-        [JsonProperty("id")]
+        [JsonProperty("workId")]
         public Guid Id { get; }
 
         [JsonProperty("ownerId")]
@@ -28,7 +28,7 @@ namespace PhotoStorm.Core.Portable.Works.Works
             _adapterManager = new AdapterManager();
             _adapterManager.OnNewPhotosReceived += AdapterManagerOnOnNewPhotosReceived;
             _adapterRule = new AdapterRule {Latitude = latitude, Longitude = longitude, Radius = radius};
-            Id = System.Guid.NewGuid();
+            Id = Guid.NewGuid();
             OwnerId = ownerId;
         }
 
