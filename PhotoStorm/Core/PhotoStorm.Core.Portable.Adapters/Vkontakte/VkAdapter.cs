@@ -16,7 +16,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
 		public VkAdapter(VkAdapterConfig c) : base(c)
 		{
 			_vkPhotosSearchHttpRequest = new VkPhotosSearchHttpRequest(c.ApiAddress);
-		}
+            _mapper = new VkPhotoItemMapper();
+        }
 
 		public void Start(IAdapterRule rule)
 		{
@@ -34,14 +35,15 @@ namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
 				};
 				var result = await _vkPhotosSearchHttpRequest.Execute(_vkPhotosSearchRequestParameters);
 				if (!(result.Response.Images.Count > 0)) return;
-				var mapper = new VkPhotoItemMapper();
-				var genericResult = mapper.MapVkPhotoItems(result.Response.Images).ToList();
-				if (OnNewPhotosReceived != null)
-					OnNewPhotosReceived(this, new NewPhotoAlertEventArgs { Count = result.Response.Images.Count, Photos = genericResult });
-			});
+				
+				var genericResult = _mapper.MapVkPhotoItems(result.Response.Images).ToList();
+                OnNewPhotosReceived?.Invoke(this, new NewPhotoAlertEventArgs { Count = result.Response.Images.Count, Photos = genericResult });
+            });
 		}
 
-		public void Stop()
+	    private VkPhotoItemMapper _mapper;
+
+        public void Stop()
 		{
 			Active = false;
 			PollingManager.Stop();

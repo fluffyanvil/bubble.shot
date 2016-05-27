@@ -9,7 +9,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Helpers
 {
     public class InstagramPhotoItemMapper
 	{
-		public IEnumerable<PhotoItemModel> MapVkPhotoItems(List<InstagramPhotosSearchResultPhotoItem> items)
+		public IEnumerable<PhotoItemModel> MapInstagramPhotoItems(List<InstagramPhotosSearchResultPhotoItem> items)
 		{
 			try
 			{

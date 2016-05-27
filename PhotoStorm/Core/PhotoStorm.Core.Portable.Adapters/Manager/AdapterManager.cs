@@ -20,8 +20,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 	    private void ConfigureAddapterManager()
 	    {
             var vkAdapter = new VkAdapter(new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" });
-            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" });
             this.AddAdapter(vkAdapter);
+            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig() { ApiAddress = "https://api.instagram.com/v1/media/search", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" });
             this.AddAdapter(instagramAdapter);
         }
 
@@ -37,10 +37,11 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 			_adapters.Remove(adapter);
 		}
 
+
 		private void AdapterOnOnNewPhotosReceived(object sender, NewPhotoAlertEventArgs newPhotoAlertEventArgs)
 		{
-			OnNewPhotosReceived?.Invoke(this, newPhotoAlertEventArgs);
-		}
+            OnNewPhotosReceived?.Invoke(this, newPhotoAlertEventArgs);
+        }
 
 		public bool CanStart => _adapters.Any(a => !a.IsActive);
 		public bool CanStop => _adapters.Any(a => a.IsActive);

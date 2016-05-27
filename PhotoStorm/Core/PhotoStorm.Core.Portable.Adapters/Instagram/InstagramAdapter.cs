@@ -20,7 +20,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 		{
 			_accessToken = c.AccessToken;
 			_instagramPhotosSearchHttpRequest = new InstagramPhotosSearchHttpRequest(c.ApiAddress);
-		}
+            _mapper = new InstagramPhotoItemMapper();
+        }
 
 		public void Start(IAdapterRule rule)
 		{
@@ -49,13 +50,15 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 				}
 				if (result?.Result?.Images.Count > 0)
 				{
-					var mapper = new InstagramPhotoItemMapper();
-					var genericResult = mapper.MapVkPhotoItems(result.Result.Images).ToList();
+					
+					var genericResult = _mapper.MapInstagramPhotoItems(result.Result.Images).ToList();
 					OnNewPhotosReceived?.Invoke(this, new NewPhotoAlertEventArgs { Count = result.Result.Images.Count, Photos = genericResult });
 				}
 
 			});
 		}
+
+	    private readonly InstagramPhotoItemMapper _mapper;
 
 		public void Stop()
 		{
