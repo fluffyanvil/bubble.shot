@@ -34,7 +34,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private int _radius;
 	    private PhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
-		private readonly Geolocator _geolocator;
+		private Geolocator _geolocator;
 	    private double _availableModalSize;
 		private Geopoint _mapCenterGeopoint;
 		private string _searchAddress;
@@ -43,7 +43,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private double _dynamicPhotoSize;
 		private int _maximumColumns;
 
-		private readonly IAdapterManager _adapterManager;
+		private IAdapterManager _adapterManager;
 		private DelegateCommand<object> _removeItemCommand;
 		private DelegateCommand _removeAllItemsCommand;
 		private bool _showOnMap;
@@ -66,32 +66,38 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public ICommand StopManagerCommand => _stopManagerCommand ?? (_stopManagerCommand = new DelegateCommand(OnExecuteStopManagerCommand, CanExecuteStopManagerCommand));
 
-		private bool CanExecuteStopManagerCommand()
+	    public bool IsStandalone
+	    {
+	        get { return _isStandalone; }
+	        set { _isStandalone = value; OnPropertyChanged();}
+	    }
+
+	    private bool CanExecuteStopManagerCommand()
 		{
-#if !Signalr
-			return _adapterManager.CanStop;
-#endif
-#if Signalr
-            return _work != null;
-#endif
+	        if (IsStandalone)
+	            return _adapterManager.CanStop;
+	        else
+	        {
+                return _work != null;
+            }
         }
 
 		private void OnExecuteStopManagerCommand()
 		{
-#if !Signalr
-            _adapterManager.Stop();
-#endif
-#if Signalr
-            _hubProxy.Invoke("StopWork", _work).ContinueWith(task =>
-            {
-                if (task.IsFaulted)
+		    if (IsStandalone)
+		        _adapterManager.Stop();
+		    else
+		    {
+                _hubProxy.Invoke("StopWork", _work).ContinueWith(task =>
                 {
+                    if (task.IsFaulted)
+                    {
 
-                }
+                    }
 
-            }).Wait();
-		    _work = null;
-#endif
+                }).Wait();
+                _work = null;
+            }
             UpdateCommandAvailability();
 		}
 
@@ -99,13 +105,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private bool CanExecuteStartManager()
 		{
-#if !Signalr
-            return _adapterManager.CanStart;
-#endif
-
-#if Signalr
-            return _work == null;
-#endif
+            if(IsStandalone)
+                return _adapterManager.CanStart;
+            else
+            {
+                return _work == null;
+            }
         }
 
 		private IAdapterRule AdapterRule => new AdapterRule()
@@ -117,21 +122,23 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private void OnExecuteStartManager()
 		{
-#if !Signalr
-            _adapterManager.Start(AdapterRule);
-#endif
-
-#if Signalr
-            var work = new CreateWorkModel() {Longitude = MapCenterGeopoint.Position.Longitude, Latitude = MapCenterGeopoint.Position.Latitude, Radius = Radius };
-            _hubProxy.Invoke("AddWork", work).ContinueWith(task =>
-            {
-                if (task.IsFaulted)
+		    if (IsStandalone)
+		        _adapterManager.Start(AdapterRule);
+		    else
+		    {
+                var work = new CreateWorkModel() { Longitude = MapCenterGeopoint.Position.Longitude, Latitude = MapCenterGeopoint.Position.Latitude, Radius = Radius };
+                if (_hubConnection.State == ConnectionState.Connected)
                 {
-                    
-                }
+                    _hubProxy.Invoke("AddWork", work).ContinueWith(task =>
+                    {
+                        if (task.IsFaulted)
+                        {
 
-            }).Wait();
-#endif
+                        }
+                    }).Wait();
+                }
+            }
+
             UpdateCommandAvailability();
 		}
 
@@ -489,39 +496,52 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
         public MainPageViewModel()
         {
-            _geolocator = new Geolocator();
-            GetUserLocation();
-#if !Signalr
             // автономное
-            _adapterManager = new AdapterManager();
-            _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
-#endif
-            // привязанное к серверу
-#if Signalr
-            _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
-            _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
-            _hubProxy.On<string>("notify", OnNotify);
-            _hubProxy.On<string>("workAdded", OnWorkAdded);
-            _hubConnection.Start().ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                {
-                    
-                }
-                else
-                {
-                   
-                }
-            }).Wait();
-#endif
-            Radius = 5000;
-			Photos = new ObservableCollection<PhotoWithUserLink> ();
+            TryConnectToHub();
+            InitViewModel(IsStandalone);
         }
 
+	    void InitViewModel(bool isStandalone)
+	    {
+            _geolocator = new Geolocator();
+            GetUserLocation();
+            if (isStandalone)
+	        {
+                _adapterManager = new AdapterManager();
+                _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
+            }
+            Radius = 5000;
+            Photos = new ObservableCollection<PhotoWithUserLink>();
+        }
 
-
-#if Signalr
-	    private IWork _work;
+        private void TryConnectToHub()
+        {
+            try
+            {
+                _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
+                _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
+                _hubProxy.On<string>("notify", OnNotify);
+                _hubProxy.On<string>("workAdded", OnWorkAdded);
+               
+                    _hubConnection.Start().ContinueWith(task =>
+                    {
+                        if (task.IsFaulted)
+                        {
+                            IsStandalone = true;
+                        }
+                        else
+                        {
+                            IsStandalone = false;
+                        }
+                    }).Wait();
+                
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+        private IWork _work;
         private void OnWorkAdded(string s)
         {
             try
@@ -560,7 +580,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        }
 	        
 	    }
-#endif
 
         public bool DetailsIsVisible
 	    {
@@ -576,5 +595,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
         private HubConnection _hubConnection;
 	    private IHubProxy _hubProxy;
-    }
+	    private bool _isStandalone;
+	}
 }

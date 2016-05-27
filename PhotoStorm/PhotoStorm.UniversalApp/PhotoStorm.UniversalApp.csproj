@@ -19,7 +19,7 @@
     <PackageCertificateKeyFile>BubbleShot.UniversalApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Auto</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <HockeyAppResourceId>3637cc5bf0374bada4857db26c0ad52e</HockeyAppResourceId>
   </PropertyGroup>
@@ -112,6 +112,7 @@
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
+    <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\MetersToKilometersConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SourceToIconConverter.cs" />
@@ -198,7 +199,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignalR_Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\SignalR_Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;CODE_ANALYSIS;Signalr</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>

@@ -10,8 +10,9 @@ namespace PhotoStorm.WebApi
 
         static void Main(string[] args)
         {
-            var baseAddress = "http://localhost:9000/";
-            WebApp.Start<Startup>(url: baseAddress);
+            var baseAddress = "http://+:9000/";
+
+            WebApp.Start<Startup>(baseAddress);
             // Start OWIN host 
             while (true)
             {

@@ -16,11 +16,11 @@ namespace PhotoStorm.WebApi.Hubs
     [HubName("notificationHub")]
     public class NotificationHub : Hub
     {
-        private readonly IWorkManager _workManager;
+        private readonly IWorkManager _workManager = new WorkManager();
         public NotificationHub()
         {
             System.Console.WriteLine("NotificationHub started");
-            _workManager = new WorkManager();
+            
             _workManager.OnNewPhotosReceived -= ManagerOnOnNewPhotosReceived;
             _workManager.OnNewPhotosReceived += ManagerOnOnNewPhotosReceived;
         }
@@ -118,8 +118,5 @@ namespace PhotoStorm.WebApi.Hubs
             return (base.OnReconnected());
         }
     }
-    public static class UserHandler
-    {
-        public static HashSet<string> ConnectedIds = new HashSet<string>();
-    }
+   
 }

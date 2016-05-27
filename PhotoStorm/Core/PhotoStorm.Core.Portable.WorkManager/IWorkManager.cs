@@ -7,7 +7,7 @@ namespace PhotoStorm.Core.Portable.WorkManager
 {
     public interface IWorkManager
     {
-        List<IWork> Works { get; }
+        HashSet<IWork> Works { get; }
         void StartWork(IWork work);
         void StopWork(IWork work);
         void AddWork(IWork work);

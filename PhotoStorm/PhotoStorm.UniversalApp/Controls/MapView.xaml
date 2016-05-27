@@ -10,8 +10,6 @@
     xmlns:maps1="using:Windows.Services.Maps"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
-    xmlns:controls="using:WinRTXamlToolkit.Controls"
-    xmlns:galazzo="using:Galazzo"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
@@ -35,7 +33,7 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </maps:MapControl>
-        <Border Margin="20,20" VerticalAlignment="Top" BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="DarkGray" Background="#80FFFFFF">
+        <Border Margin="5,5" VerticalAlignment="Top" BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="DarkGray" Background="#80FFFFFF">
             <AutoSuggestBox x:Name="AutoSuggestBox"  
                                         QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                         Text="{Binding SearchAddress, Mode=TwoWay}"
@@ -68,5 +66,12 @@
                 </DataTemplate>
             </Slider.HeaderTemplate>
         </Slider>
+        <Border Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Opacity="0.8" Padding="1">
+            <Grid>
+                <ContentControl Template="{StaticResource CloudNotAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource BooleanToVisibilityConverter}}"></ContentControl>
+                <ContentControl Template="{StaticResource CloudAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"></ContentControl>
+            </Grid>
+
+        </Border>
     </Grid>
 </UserControl>
