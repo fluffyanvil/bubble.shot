@@ -574,7 +574,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	        set { _selectedPivotIndex = value; OnPropertyChanged();}
 	    }
 
-	    private HubConnection _hubConnection;
+        private HubConnection _hubConnection;
 	    private IHubProxy _hubProxy;
-	}
+    }
 }

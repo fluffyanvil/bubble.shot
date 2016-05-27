@@ -29,9 +29,6 @@ namespace PhotoStorm.WebApi
                     // versions of IE) require JSONP to work cross domain
                     // EnableJSONP = true
                 };
-                // Run the SignalR pipeline. We're not using MapSignalR
-                // since this branch already runs under the "/signalr"
-                // path.
 
                 hubConfiguration.EnableDetailedErrors = true;
                 map.RunSignalR(hubConfiguration);

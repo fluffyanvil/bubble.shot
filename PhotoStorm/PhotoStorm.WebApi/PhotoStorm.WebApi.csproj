@@ -139,6 +139,10 @@
       <Project>{60E28555-A960-45E0-8EBF-DB94D0B4914B}</Project>
       <Name>PhotoStorm.Core.Portable.Works</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Console.Extensions\PhotoStorm.Console.Extensions.csproj">
+      <Project>{A4E9E98B-AFDA-4FDF-8D3F-68EE5A843FB6}</Project>
+      <Name>PhotoStorm.Console.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />

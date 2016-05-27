@@ -48,6 +48,10 @@
       <Project>{2D69114A-BA46-44D5-A39F-49A7F0E2ABD3}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
+      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
+      <Name>PhotoStorm.Core.Portable.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\WorkState.cs" />

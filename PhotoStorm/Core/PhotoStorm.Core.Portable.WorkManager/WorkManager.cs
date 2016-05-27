@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Works.Enums;
 using PhotoStorm.Core.Portable.Works.Works;
@@ -13,14 +10,10 @@ namespace PhotoStorm.Core.Portable.WorkManager
     {
         private List<IWork> _works;
 
-        private static WorkManager _instance;
-
-        private WorkManager()
+        public WorkManager()
         {
             _works = new List<IWork>();
         }
-
-        public static WorkManager Instance => _instance ?? (_instance = new WorkManager());
 
         public List<IWork> Works => _works;
 
