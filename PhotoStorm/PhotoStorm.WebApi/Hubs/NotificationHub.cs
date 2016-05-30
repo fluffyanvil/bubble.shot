@@ -32,15 +32,14 @@ namespace PhotoStorm.WebApi.Hubs
                 var work = (IWork) sender;
                 if (UserHandler.ConnectedIds.Contains(work.OwnerId.ToString()))
                 {
+                    XConsole.WriteLine("Received {0} new items for work {1}", ConsoleColor.Cyan, newPhotoAlertEventArgs.Count, JsonConvert.SerializeObject(work));
                     var json = JsonConvert.SerializeObject(newPhotoAlertEventArgs);
                     var ownerConnectionId = work.OwnerId.ToString();
                     Clients.Client(ownerConnectionId).notify(json);
                 }
-                    
                 else
                 {
                     var toDelete = _workManager.Works.FirstOrDefault(w => w.Id == work.Id);
-
                     if (toDelete != null)
                     {
                         _workManager.StopWork(toDelete);
