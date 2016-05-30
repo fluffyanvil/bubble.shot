@@ -50,7 +50,6 @@
     </interactivity:Interaction.Behaviors>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
         <Pivot SelectedIndex="{Binding SelectedPivotIndex,Mode=TwoWay}">
             <PivotItem Header="Карта">
                 <controls:MapView x:Name="MapView"/>

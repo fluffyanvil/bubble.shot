@@ -20,10 +20,12 @@ namespace PhotoStorm.Core.Portable.Adapters.Helpers
 					Latitude = i.Latitude,
 					Longitude = i.Longitude,
 					TimeCreated = i.Date,
-					ProfileLink = i.OwnerId[0] == '-' ? "http://vk.com/club" + i.OwnerId.Substring(1) : "http://vk.com/id" + i.OwnerId
+					ProfileLink = i.OwnerId[0].Equals('-')
+                        ? $"http://vk.com/club{i.OwnerId.Substring(1)}"
+					    : $"http://vk.com/id{i.OwnerId}"
 				});
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 			}
 			return null;
