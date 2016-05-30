@@ -86,7 +86,7 @@ namespace PhotoStorm.WebApi.Hubs
                     if (!_workManager.Works.Contains(toStop))
                     {
                         XConsole.WriteLine("Work deleted: {0}", ConsoleColor.Green, JsonConvert.SerializeObject(toStop));
-                        Clients.Client(Context.ConnectionId).workDeleted();
+                        Clients.Client(Context.ConnectionId).workDeleted(JsonConvert.SerializeObject(work));
                         return;
                     }
                     XConsole.WriteLine("Work not deleted: {0}", ConsoleColor.Red, JsonConvert.SerializeObject(toStop));

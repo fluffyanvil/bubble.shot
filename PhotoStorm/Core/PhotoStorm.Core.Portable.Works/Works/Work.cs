@@ -23,6 +23,10 @@ namespace PhotoStorm.Core.Portable.Works.Works
         [JsonConverter(typeof(StringEnumConverter))]
         public WorkState State { get; set; }
 
+        private Work()
+        {
+
+        }
         public Work(Guid ownerId, double longitude, double latitude, int radius)
         {
             _adapterManager = new AdapterManager();
@@ -32,10 +36,7 @@ namespace PhotoStorm.Core.Portable.Works.Works
             OwnerId = ownerId;
         }
 
-        private Work()
-        {
-            
-        }
+        
 
         public static Work EmptyWork => new Work
         {
