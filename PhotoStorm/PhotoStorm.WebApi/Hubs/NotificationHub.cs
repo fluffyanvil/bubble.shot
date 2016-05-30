@@ -19,8 +19,6 @@ namespace PhotoStorm.WebApi.Hubs
         private readonly IWorkManager _workManager = new WorkManager();
         public NotificationHub()
         {
-            System.Console.WriteLine("NotificationHub started");
-            
             _workManager.OnNewPhotosReceived -= ManagerOnOnNewPhotosReceived;
             _workManager.OnNewPhotosReceived += ManagerOnOnNewPhotosReceived;
         }
@@ -99,21 +97,21 @@ namespace PhotoStorm.WebApi.Hubs
 
         public override Task OnConnected()
         {
-            XConsole.WriteLine("Connected: {0}", ConsoleColor.Green, Context.ConnectionId);
+            XConsole.WriteLine("New client connected: {0}", ConsoleColor.Green, Context.ConnectionId);
             UserHandler.ConnectedIds.Add(Context.ConnectionId);
             return (base.OnConnected());
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            XConsole.WriteLine("Disconnected: {0}", ConsoleColor.Red, Context.ConnectionId);
+            XConsole.WriteLine("Client disconnected: {0}", ConsoleColor.Red, Context.ConnectionId);
             UserHandler.ConnectedIds.Remove(Context.ConnectionId);
             return (base.OnDisconnected(stopCalled));
         }
 
         public override Task OnReconnected()
         {
-            XConsole.WriteLine("Reconnected: {0}", ConsoleColor.Yellow, Context.ConnectionId);
+            XConsole.WriteLine("Client reconnected: {0}", ConsoleColor.Yellow, Context.ConnectionId);
             return (base.OnReconnected());
         }
     }

@@ -2,7 +2,6 @@
     x:Class="PhotoStorm.UniversalApp.Controls.GalleryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:PhotoStorm.UniversalApp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:PhotoStorm.UniversalApp.Models"
@@ -75,7 +74,9 @@
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Image Source="{Binding Image}" Stretch="UniformToFill"/>
-                                <TextBlock FontFamily="{StaticResource FontAwesome}" Text="{Binding Source, Converter={StaticResource SourceToIconConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" FontSize="16"></TextBlock>
+                               <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                                    <ContentControl ContentTemplate="{Binding Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                                </Border>
                             </Grid>
                             
                         </Border>
@@ -109,15 +110,14 @@
         <Grid HorizontalAlignment="Stretch" Visibility="{Binding DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
             <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
                 <Grid>
-                   
                     <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:PhotoWithUserLink">
                                 <Grid>
                                     <Image Stretch="UniformToFill" Source="{Binding Image}" ManipulationMode="TranslateY"/>
-                                    <TextBlock FontFamily="{StaticResource FontAwesome}" Text="{Binding Source, Converter={StaticResource SourceToIconConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" FontSize="20">
-                                        
-                                    </TextBlock>
+                                    <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                                        <ContentControl ContentTemplate="{Binding Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                                    </Border>
                                 </Grid>
                             </DataTemplate>
                         </FlipView.ItemTemplate>

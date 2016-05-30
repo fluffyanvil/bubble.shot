@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using PhotoStorm.Core.Portable.Common.Enums;
-using ResourceManager = System.Resources.ResourceManager;
 
 namespace PhotoStorm.UniversalApp.Converters
 {
@@ -19,15 +13,15 @@ namespace PhotoStorm.UniversalApp.Converters
             switch (source)
             {
                 case ChannelType.Unknown:
-                    return Application.Current.Resources["UnknownGlyph"] as string;
+                    return Application.Current.Resources["UnknownSourceIcon"] as DataTemplate;
                 case ChannelType.Vkontakte:
-                    return Application.Current.Resources["VkGlyph"] as string;
+                    return Application.Current.Resources["VkSourceIcon"] as DataTemplate;
                 case ChannelType.Instagram:
-                    return Application.Current.Resources["InstagramGlyph"] as string;
+                    return Application.Current.Resources["InstagramSourceIcon"] as DataTemplate;
                 case ChannelType.Facebook:
-                    return Application.Current.Resources["UnknownGlyph"] as string;
+                    return Application.Current.Resources["UnknownSourceIcon"] as DataTemplate;
                 default:
-                    return Application.Current.Resources["UnknownGlyph"] as string;
+                    return Application.Current.Resources["UnknownSourceIcon"] as DataTemplate;
             }
         }
 
