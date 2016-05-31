@@ -17,7 +17,8 @@ namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
 		public DateTime EndTime { get; set; }
 		public long EndTimeUnixStyle => EndTime.ToUnixStyle();
 		public int Distance { get; set; }
-		public string AccessToken { get; set; }
+        public string ClientId { get; set; }
+        public string AccessToken { get; set; } // пока без него
 		public string Type => "image";
 
 		public InstagramPhotosSearchRequestParameters()
@@ -40,8 +41,8 @@ namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
 					{"MIN_TIMESTAMP", StartTimeUnixStyle.ToString()},
 					{"MAX_TIMESTAMP", EndTimeUnixStyle.ToString()},
 					{"distance", Distance.ToString()},
-					{"access_token", AccessToken},
-					{ "type", Type}
+					{"client_id", ClientId},
+					{"type", Type}
 				};
 
 				return result;

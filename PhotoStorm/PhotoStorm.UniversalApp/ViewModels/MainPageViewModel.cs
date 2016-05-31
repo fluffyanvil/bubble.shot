@@ -396,7 +396,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 #endregion
 
 #region Public methods
-
 		Task
 GetUserLocation()
 		{
@@ -501,8 +500,7 @@ GetUserLocation()
         }
 #endregion
 
-	    private string _ipAddress;
-        public MainPageViewModel()
+	    public MainPageViewModel()
         {
             ShowStartDialog();
             // автономное
@@ -526,12 +524,10 @@ GetUserLocation()
 	            default:
 	                throw new ArgumentOutOfRangeException();
 	        }
-
-            
             await InitViewModel(IsStandalone);
         }
 
-        async Task InitViewModel(bool isStandalone)
+	    private async Task InitViewModel(bool isStandalone)
         {
             _geolocator = new Geolocator();
             await GetUserLocation();
@@ -544,10 +540,9 @@ GetUserLocation()
             Photos = new ObservableCollection<PhotoWithUserLink>();
         }
 
-        private async 
-        Task<bool>
-TryConnectToHub(string url)
-	    {
+        private async Task<bool> TryConnectToHub(string url)
+        {
+            bool isStandalone = false;
 	        try
 	        {
 	            _hubConnection = new HubConnection($"http://{url}:9000/signalr/hubs");
@@ -555,22 +550,12 @@ TryConnectToHub(string url)
 	            _hubProxy.On<NewPhotoAlertEventArgs>("notify", OnNotify);
 	            _hubProxy.On<Work>("workAdded", OnWorkAdded);
 
-	            await _hubConnection.Start().ContinueWith(task =>
-	            {
-	                if (task.IsFaulted)
-	                {
-	                    return true;
-	                }
-	                else
-	                {
-	                    return false;
-	                }
-	            });
+	            isStandalone = await _hubConnection.Start().ContinueWith(task => task.IsFaulted);
 	        }
 	        catch (Exception ex)
 	        {
 	        }
-            return true;
+            return isStandalone;
 	    }
 
 	    private IWork _work;
@@ -585,9 +570,8 @@ TryConnectToHub(string url)
 	                //UpdateCommandAvailability();
 	            }
 	        }
-	        catch (Exception)
+	        catch (Exception ex)
 	        {
-	            throw;
 	        }
 	    }
 

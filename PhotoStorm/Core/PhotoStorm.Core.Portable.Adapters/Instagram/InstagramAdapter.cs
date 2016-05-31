@@ -14,11 +14,13 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 		private InstagramPhotosSearchRequestParameters  _instagramPhotosSearchRequestParameters;
 		private readonly InstagramPhotosSearchHttpRequest _instagramPhotosSearchHttpRequest;
 
-		private readonly string _accessToken;
+	    private readonly string _clientId;
+	    private readonly string _accessToken;
 
 		public InstagramAdapter(InstagramAdapterConfig c) : base(c)
 		{
-			_accessToken = c.AccessToken;
+		    _clientId = c.ClientId;
+		    _accessToken = c.AccessToken;
 			_instagramPhotosSearchHttpRequest = new InstagramPhotosSearchHttpRequest(c.ApiAddress);
             _mapper = new InstagramPhotoItemMapper();
         }
@@ -38,7 +40,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 					Latitude = rule.Latitude,
 					Longitude = rule.Longitude,
 					Distance = rule.Radius,
-					AccessToken = _accessToken
+					ClientId = _clientId
 				};
 				var result = _instagramPhotosSearchHttpRequest.Execute(_instagramPhotosSearchRequestParameters);
 				if (result?.Result?.Images.Count > 0)
