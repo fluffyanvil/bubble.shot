@@ -422,16 +422,16 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				var imageLinks = e.Photos;
 				foreach (var imageLink in imageLinks)
 				{
-					await DownloadPhoto(imageLink);
+					await AddNewPhoto(imageLink);
 				}
 
 			}
-			catch (Exception exception)
+			catch (Exception )
 			{
 			}
 		}
 
-		private async Task DownloadPhoto(PhotoItemModel photoItem)
+		private async Task AddNewPhoto(PhotoItemModel photoItem)
 		{
 		    if (Photos.Any(p => p.ImageLink.Equals(photoItem.ImageLink)))
 		    {
@@ -520,8 +520,8 @@ namespace PhotoStorm.UniversalApp.ViewModels
             {
                 _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
                 _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
-                _hubProxy.On<string>("notify", OnNotify);
-                _hubProxy.On<string>("workAdded", OnWorkAdded);
+                _hubProxy.On<NewPhotoAlertEventArgs>("notify", OnNotify);
+                _hubProxy.On<Work>("workAdded", OnWorkAdded);
                
                     _hubConnection.Start().ContinueWith(task =>
                     {
@@ -542,11 +542,10 @@ namespace PhotoStorm.UniversalApp.ViewModels
             }
         }
         private IWork _work;
-        private void OnWorkAdded(string s)
+        private void OnWorkAdded(Work work)
         {
             try
             {
-                var work = JsonConvert.DeserializeObject<Work>(s);
                 if (work != null)
                 {
                     _work = work;
@@ -560,17 +559,17 @@ namespace PhotoStorm.UniversalApp.ViewModels
             }
         }
 
-        private async void OnNotify(string s)
+        private async void OnNotify(NewPhotoAlertEventArgs args)
 	    {
 	        try
 	        {
-                var data = JsonConvert.DeserializeObject<NewPhotoAlertEventArgs>(s);
+                var data = args;
 	            if (data != null)
 	            {
                     var imageLinks = data.Photos;
                     foreach (var imageLink in imageLinks)
                     {
-                        await DownloadPhoto(imageLink);
+                        await AddNewPhoto(imageLink);
                     }
                 }
             }

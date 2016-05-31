@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="IWorkManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserHandler.cs" />
+    <Compile Include="WorkManagerStaticFields.cs" />
     <Compile Include="WorkManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

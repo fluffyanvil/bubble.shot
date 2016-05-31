@@ -28,12 +28,12 @@ namespace PhotoStorm.WebApi.Hubs
             try
             {
                 var work = (IWork) sender;
-                if (UserHandler.ConnectedIds.Contains(work.OwnerId.ToString()))
+                if (WorkManagerStaticFields.ConnectedIds.Contains(work.OwnerId.ToString()))
                 {
                     XConsole.WriteLine("Received {0} new items for work {1}", ConsoleColor.Cyan, newPhotoAlertEventArgs.Count, JsonConvert.SerializeObject(work));
                     var json = JsonConvert.SerializeObject(newPhotoAlertEventArgs);
                     var ownerConnectionId = work.OwnerId.ToString();
-                    Clients.Client(ownerConnectionId).notify(json);
+                    Clients.Client(ownerConnectionId).notify(newPhotoAlertEventArgs);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace PhotoStorm.WebApi.Hubs
                     return;
 
                 _workManager.AddWork(newWork);
-                Clients.Client(Context.ConnectionId).workAdded(JsonConvert.SerializeObject(newWork));
+                Clients.Client(Context.ConnectionId).workAdded(newWork);
             }
             catch (Exception ex)
             {
@@ -95,17 +95,27 @@ namespace PhotoStorm.WebApi.Hubs
             }
         }
 
+        public void GetWorks()
+        {
+            Clients.Client(Context.ConnectionId).getWorks(_workManager.Works);
+        }
+
+        public void GetConnections()
+        {
+            Clients.Client(Context.ConnectionId).getConnections(WorkManagerStaticFields.ConnectedIds);
+        }
+
         public override Task OnConnected()
         {
             XConsole.WriteLine("New client connected: {0}", ConsoleColor.Green, Context.ConnectionId);
-            UserHandler.ConnectedIds.Add(Context.ConnectionId);
+            WorkManagerStaticFields.ConnectedIds.Add(Context.ConnectionId);
             return (base.OnConnected());
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
             XConsole.WriteLine("Client disconnected: {0}", ConsoleColor.Red, Context.ConnectionId);
-            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
+            WorkManagerStaticFields.ConnectedIds.Remove(Context.ConnectionId);
             return (base.OnDisconnected(stopCalled));
         }
 

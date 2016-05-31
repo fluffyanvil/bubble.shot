@@ -12,7 +12,7 @@ namespace PhotoStorm.Core.Portable.WorkManager
         {
         }
 
-        public HashSet<IWork> Works => UserHandler.Works;
+        public HashSet<IWork> Works => WorkManagerStaticFields.Works;
 
         public void StartWork(IWork work)
         {
@@ -34,7 +34,7 @@ namespace PhotoStorm.Core.Portable.WorkManager
                 if (work.State == WorkState.InProgress)
                 {
                     work.Stop();
-                    UserHandler.Works.Remove(work);
+                    WorkManagerStaticFields.Works.Remove(work);
                 }
             }
             catch (Exception)
@@ -47,10 +47,10 @@ namespace PhotoStorm.Core.Portable.WorkManager
         {
             try
             {
-                if (UserHandler.Works.Contains(work))
+                if (WorkManagerStaticFields.Works.Contains(work))
                     return;
                 work.OnNewPhotosReceived += WorkOnOnNewPhotosReceived;
-                UserHandler.Works.Add(work);
+                WorkManagerStaticFields.Works.Add(work);
                 StartWork(work);
             }
             catch (Exception)
