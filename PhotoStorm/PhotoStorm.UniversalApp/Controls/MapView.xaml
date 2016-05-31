@@ -77,8 +77,8 @@
         </Slider>
         <Border Grid.Column="1" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Opacity="0.8" Padding="1">
             <Grid>
-                <ContentControl Template="{StaticResource CloudNotAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource BooleanToVisibilityConverter}}"></ContentControl>
-                <ContentControl Template="{StaticResource CloudAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"></ContentControl>
+                <ContentControl Template="{StaticResource CloudNotAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}"></ContentControl>
+                <ContentControl Template="{StaticResource CloudAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=TwoWay}"></ContentControl>
             </Grid>
         </Border>
     </Grid>

@@ -9,15 +9,16 @@ using Windows.Services.Maps;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.AspNet.SignalR.Client;
-using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Common.Models;
 using PhotoStorm.Core.Portable.Works.Works;
+using PhotoStorm.UniversalApp.Controls;
 using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
@@ -391,7 +392,13 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 #region Public methods
 
-		public async void GetUserLocation()
+		public async 
+#endregion
+
+#region Public methods
+
+		Task
+GetUserLocation()
 		{
 			try
 			{
@@ -494,19 +501,42 @@ namespace PhotoStorm.UniversalApp.ViewModels
         }
 #endregion
 
+	    private string _ipAddress;
         public MainPageViewModel()
         {
+            ShowStartDialog();
             // автономное
-            TryConnectToHub();
-            InitViewModel(IsStandalone);
+            
         }
 
-	    void InitViewModel(bool isStandalone)
+	    private async void ShowStartDialog()
 	    {
-            _geolocator = new Geolocator();
-            GetUserLocation();
-            if (isStandalone)
+	        var dialog = new StartContentDialog();
+            var result = await dialog.ShowAsync();
+	        switch (result)
 	        {
+	            case ContentDialogResult.None:
+	                break;
+	            case ContentDialogResult.Primary:
+	                IsStandalone = await TryConnectToHub(dialog.Url);
+                    break;
+	            case ContentDialogResult.Secondary:
+	                IsStandalone = true;
+                    break;
+	            default:
+	                throw new ArgumentOutOfRangeException();
+	        }
+
+            
+            await InitViewModel(IsStandalone);
+        }
+
+        async Task InitViewModel(bool isStandalone)
+        {
+            _geolocator = new Geolocator();
+            await GetUserLocation();
+            if (isStandalone)
+            {
                 _adapterManager = new AdapterManager();
                 _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
             }
@@ -514,85 +544,93 @@ namespace PhotoStorm.UniversalApp.ViewModels
             Photos = new ObservableCollection<PhotoWithUserLink>();
         }
 
-        private void TryConnectToHub()
-        {
-            try
-            {
-                _hubConnection = new HubConnection("http://localhost:9000/signalr/hubs");
-                _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
-                _hubProxy.On<NewPhotoAlertEventArgs>("notify", OnNotify);
-                _hubProxy.On<Work>("workAdded", OnWorkAdded);
-               
-                    _hubConnection.Start().ContinueWith(task =>
-                    {
-                        if (task.IsFaulted)
-                        {
-                            IsStandalone = true;
-                        }
-                        else
-                        {
-                            IsStandalone = false;
-                        }
-                    }).Wait();
-                
-            }
-            catch (Exception ex)
-            {
-                
-            }
-        }
-        private IWork _work;
-        private void OnWorkAdded(Work work)
-        {
-            try
-            {
-                if (work != null)
-                {
-                    _work = work;
-                    //UpdateCommandAvailability();
-                }
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
-        }
-
-        private async void OnNotify(NewPhotoAlertEventArgs args)
+        private async 
+        Task<bool>
+TryConnectToHub(string url)
 	    {
 	        try
 	        {
-                var data = args;
-	            if (data != null)
+	            _hubConnection = new HubConnection($"http://{url}:9000/signalr/hubs");
+	            _hubProxy = _hubConnection.CreateHubProxy("notificationHub");
+	            _hubProxy.On<NewPhotoAlertEventArgs>("notify", OnNotify);
+	            _hubProxy.On<Work>("workAdded", OnWorkAdded);
+
+	            await _hubConnection.Start().ContinueWith(task =>
 	            {
-                    var imageLinks = data.Photos;
-                    foreach (var imageLink in imageLinks)
-                    {
-                        await AddNewPhoto(imageLink);
-                    }
-                }
-            }
+	                if (task.IsFaulted)
+	                {
+	                    return true;
+	                }
+	                else
+	                {
+	                    return false;
+	                }
+	            });
+	        }
 	        catch (Exception ex)
 	        {
-	            
 	        }
-	        
+            return true;
 	    }
 
-        public bool DetailsIsVisible
+	    private IWork _work;
+
+	    private void OnWorkAdded(Work work)
+	    {
+	        try
+	        {
+	            if (work != null)
+	            {
+	                _work = work;
+	                //UpdateCommandAvailability();
+	            }
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+	    }
+
+	    private async void OnNotify(NewPhotoAlertEventArgs args)
+	    {
+	        try
+	        {
+	            var data = args;
+	            if (data != null)
+	            {
+	                var imageLinks = data.Photos;
+	                foreach (var imageLink in imageLinks)
+	                {
+	                    await AddNewPhoto(imageLink);
+	                }
+	            }
+	        }
+	        catch (Exception ex)
+	        {
+	        }
+	    }
+
+	    public bool DetailsIsVisible
 	    {
 	        get { return _detailsIsVisible; }
-	        set { _detailsIsVisible = value; OnPropertyChanged();}
+	        set
+	        {
+	            _detailsIsVisible = value;
+	            OnPropertyChanged();
+	        }
 	    }
 
 	    public int SelectedPivotIndex
 	    {
 	        get { return _selectedPivotIndex; }
-	        set { _selectedPivotIndex = value; OnPropertyChanged();}
+	        set
+	        {
+	            _selectedPivotIndex = value;
+	            OnPropertyChanged();
+	        }
 	    }
 
-        private HubConnection _hubConnection;
+	    private HubConnection _hubConnection;
 	    private IHubProxy _hubProxy;
 	    private bool _isStandalone;
 	}
