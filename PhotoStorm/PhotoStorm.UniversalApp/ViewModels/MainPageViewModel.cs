@@ -614,7 +614,7 @@ GetUserLocation()
 	        }
 	    }
 
-	    private HubConnection _hubConnection;
+        private HubConnection _hubConnection;
 	    private IHubProxy _hubProxy;
 	    private bool _isStandalone;
 	}

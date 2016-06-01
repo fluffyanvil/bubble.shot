@@ -43,7 +43,7 @@
             </interactivity:Interaction.Behaviors>
         </maps:MapControl>
         <Border Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Margin="5,5" VerticalAlignment="Top" BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="DarkGray" Background="#80FFFFFF">
-            <AutoSuggestBox x:Name="AutoSuggestBox"  
+            <AutoSuggestBox x:Uid="AutoSuggestBox" 
                                         QueryIcon="Find" AutoMaximizeSuggestionArea="True"
                                         Text="{Binding SearchAddress, Mode=TwoWay}"
                                         PlaceholderText="Адрес" 

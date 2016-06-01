@@ -29,12 +29,12 @@
                 </Grid>
             </CommandBar.Content>
             <AppBarSeparator/>
-            <AppBarButton Label="Старт" Command="{Binding StartManagerCommand}">
+            <AppBarButton x:Uid="StartButton" Label="Старт" Command="{Binding StartManagerCommand}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StartButtonGlyph}"></FontIcon>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="Стоп" Command="{Binding StopManagerCommand}">
+            <AppBarButton x:Uid="StopButton" Label="Стоп" Command="{Binding StopManagerCommand}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="{StaticResource FontAwesome}" Glyph="{StaticResource StopButtonGlyph}"></FontIcon>
                 </AppBarButton.Icon>
@@ -51,10 +51,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot SelectedIndex="{Binding SelectedPivotIndex,Mode=TwoWay}">
-            <PivotItem Header="Карта">
+            <PivotItem x:Uid="MapPivotItem" Header="Карта">
                 <controls:MapView x:Name="MapView"/>
             </PivotItem>
-            <PivotItem Header="Галерея">
+            <PivotItem x:Uid="GalleryPivotItem" Header="Галерея">
                 <controls:GalleryView/>
             </PivotItem>
         </Pivot>

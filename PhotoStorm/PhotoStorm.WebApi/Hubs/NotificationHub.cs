@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
@@ -31,7 +30,6 @@ namespace PhotoStorm.WebApi.Hubs
                 if (WorkManagerStaticFields.ConnectedIds.Contains(work.OwnerId.ToString()))
                 {
                     XConsole.WriteLine("Received {0} new items for work {1}", ConsoleColor.Cyan, newPhotoAlertEventArgs.Count, JsonConvert.SerializeObject(work));
-                    var json = JsonConvert.SerializeObject(newPhotoAlertEventArgs);
                     var ownerConnectionId = work.OwnerId.ToString();
                     Clients.Client(ownerConnectionId).notify(newPhotoAlertEventArgs);
                 }
@@ -41,7 +39,7 @@ namespace PhotoStorm.WebApi.Hubs
                     if (toDelete != null)
                     {
                         _workManager.StopWork(toDelete);
-                        XConsole.WriteLine("Estimating work deleted: {0}", ConsoleColor.Yellow, JsonConvert.SerializeObject(toDelete));
+                        XConsole.WriteLine("Unchained work deleted: {0}", ConsoleColor.Yellow, JsonConvert.SerializeObject(toDelete));
                     }
                 }
             }

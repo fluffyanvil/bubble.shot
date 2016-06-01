@@ -45,7 +45,7 @@
                                         <Setter Property="Padding" Value="5"></Setter>
                                     </Style>
                                 </MenuFlyout.MenuFlyoutPresenterStyle>
-                                <MenuFlyoutItem Text="Удалить" 
+                                <MenuFlyoutItem x:Uid="MenuFlyoutItemRemove" Text="Удалить" 
                                                             Command="{Binding ElementName=GridView, Path=DataContext.RemoveItemCommand}"
                                                             CommandParameter="{Binding}">
                                     <MenuFlyoutItem.Template>
@@ -58,7 +58,7 @@
                                     </MenuFlyoutItem.Template>
                                 </MenuFlyoutItem>
 
-                                <MenuFlyoutItem Text="Очистить все" 
+                                <MenuFlyoutItem x:Uid="MenuFlyoutItemRemoveAll" Text="Очистить все" 
                                                             Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}">
                                     <MenuFlyoutItem.Template>
                                         <ControlTemplate TargetType="MenuFlyoutItem">
