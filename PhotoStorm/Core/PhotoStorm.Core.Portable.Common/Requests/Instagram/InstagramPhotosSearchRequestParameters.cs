@@ -41,7 +41,7 @@ namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
 					{"MIN_TIMESTAMP", StartTimeUnixStyle.ToString()},
 					{"MAX_TIMESTAMP", EndTimeUnixStyle.ToString()},
 					{"distance", Distance.ToString()},
-					{"client_id", ClientId},
+					{"access_token", AccessToken},
 					{"type", Type}
 				};
 

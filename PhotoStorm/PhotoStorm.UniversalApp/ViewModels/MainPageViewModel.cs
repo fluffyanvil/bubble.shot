@@ -39,8 +39,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    private double _availableModalSize;
 		private Geopoint _mapCenterGeopoint;
 		private string _searchAddress;
-	    private DelegateCommand _showLinkCommand;
-		private bool _isShowLink;
 		private double _dynamicPhotoSize;
 		private int _maximumColumns;
 
@@ -169,8 +167,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			Photos.Clear();
 		}
 
-		public ICommand ShowLinkCommand => _showLinkCommand ?? (_showLinkCommand = new DelegateCommand(OnExecuteShowLinkCommand, CanExecuteShowLinkCommand));
-
 	    public ICommand AdaptWindowSizeCommand => _adaptWindowSizeCommand ?? (_adaptWindowSizeCommand = new DelegateCommand<SizeChangedEventArgs>(OnExecuteAdaptWindowSizeCommand));
 
 	    public ICommand AdaptWrapGridSizeCommand => _adaptWrapGridSizeCommand ?? (_adaptWrapGridSizeCommand = new DelegateCommand<SizeChangedEventArgs>(OnExecuteAdaptWrapGridSizeCommand));
@@ -190,25 +186,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
         }
 
-	    private bool CanExecuteShowLinkCommand()
-		{
-			return SelectedItem != null;
-		}
-
-		public bool IsShowLink
-		{
-			get { return _isShowLink; }
-			set
-			{
-				_isShowLink = value;
-				OnPropertyChanged();
-			}
-		}
-
-		private void OnExecuteShowLinkCommand()
-		{
-			IsShowLink = !IsShowLink;
-		}
+	    public bool IsShowLink => true;
 
 		public ICommand CloseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
 

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using PhotoStorm.Core.Portable.Common.Serializers;
 
@@ -11,7 +12,7 @@ namespace PhotoStorm.Core.Portable.Common.Base
 		where TRequest : BaseRequestParameters
 		where TResponse : BaseHttpResponse
 	{
-		private HttpWebRequest _request;
+	    private readonly HttpClient _httpClient;
 		private readonly string _address;
 		private readonly string _method;
 		private string _responseJson;
@@ -19,6 +20,7 @@ namespace PhotoStorm.Core.Portable.Common.Base
 		private TResponse _result;
 		protected BaseHttpRequest(string address, string method = "GET")
 		{
+            _httpClient = new HttpClient();
 			_address = address;
 			_method = method;
 			_serializer = new Serializer<TResponse>();
@@ -29,13 +31,7 @@ namespace PhotoStorm.Core.Portable.Common.Base
 			{
 				var parameters = request.Parameters;
 				var url = $"{_address}?{string.Join("&", parameters.Select(kvp => $"{kvp.Key}={kvp.Value}"))}";
-
-				_request = (HttpWebRequest) WebRequest.Create(url);
-				_request.Method = _method;
-				
-				var response = await _request.GetResponseAsync();
-				var responseStream = response.GetResponseStream();
-
+			    var responseStream = await _httpClient.GetStreamAsync(url);
 				if (responseStream != null)
 					using (var sr = new StreamReader(responseStream))
 					{

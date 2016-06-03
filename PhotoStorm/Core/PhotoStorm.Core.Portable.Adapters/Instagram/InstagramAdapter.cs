@@ -40,7 +40,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 					Latitude = rule.Latitude,
 					Longitude = rule.Longitude,
 					Distance = rule.Radius,
-					ClientId = _clientId
+					AccessToken = _accessToken
 				};
 				var result = _instagramPhotosSearchHttpRequest.Execute(_instagramPhotosSearchRequestParameters);
 				if (result?.Result?.Images.Count > 0)
