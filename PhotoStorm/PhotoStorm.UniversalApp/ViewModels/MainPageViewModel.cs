@@ -20,6 +20,7 @@ using PhotoStorm.Core.Portable.Common.Models;
 using PhotoStorm.Core.Portable.Works.Works;
 using PhotoStorm.UniversalApp.Controls;
 using PhotoStorm.UniversalApp.Extensions;
+using PhotoStorm.UniversalApp.Helpers;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
@@ -46,7 +47,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private DelegateCommand<object> _removeItemCommand;
 		private DelegateCommand _removeAllItemsCommand;
 		private bool _showOnMap;
-	    private List<MapLocation> _searchedLocations;
+	    private IEnumerable<MapLocation> _searchedLocations;
 	    private DelegateCommand<Geopoint> _searchLocationCommand;
 	    private int _zoomLevel;
 	    private Geopath _selectionAreaCirclePath;
@@ -182,11 +183,17 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    {
 	        var borderWidth = 30;
             var isLandscape = e.NewSize.Width > e.NewSize.Height;
-            AvailableModalSize = isLandscape ? e.NewSize.Height - borderWidth : e.NewSize.Width - borderWidth;
+            AvailableModalSize = isLandscape ? e.NewSize.Height - 3 * borderWidth : e.NewSize.Width - borderWidth;
 
         }
 
-	    public bool IsShowLink => true;
+		public int AppBarHeight
+		{
+			get { return _appBarHeight; }
+			set { _appBarHeight = value; OnPropertyChanged();}
+		}
+
+		public bool IsShowLink => true;
 
 		public ICommand CloseDetails => _cLoseDetails ?? (_cLoseDetails = new DelegateCommand(OnExecuteCloseDetails));
 
@@ -210,8 +217,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    {
 	        MapCenterGeopoint = point;
 	        SelectionRadiusGeopoint = point;
-            SelectionAddress = await ReverseGeocoding(point.Position.Longitude,
-                   point.Position.Latitude);
+            SelectionAddress = await GeocodingHelper.GetAddressByCoordinates(point);
         }
 
 	    public ICommand MapDoubleTappedCommand => _mapDoubleTappedCommand ??
@@ -221,8 +227,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	    {
 	        MapCenterGeopoint = mapInputEventArgs.Location;
 	        SelectionRadiusGeopoint = mapInputEventArgs.Location;
-            SelectionAddress = await ReverseGeocoding(SelectionRadiusGeopoint.Position.Longitude,
-                   SelectionRadiusGeopoint.Position.Latitude);
+            SelectionAddress = await GeocodingHelper.GetAddressByCoordinates(mapInputEventArgs.Location);
         }
 
 #endregion
@@ -349,11 +354,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				_searchAddress = value;
 				OnPropertyChanged();
-			    DirectGeocoding(SearchAddress);
+			    GetAddresses();
 			}
 		}
 
-	    public List<MapLocation> SearchedLocations
+	    public IEnumerable<MapLocation> SearchedLocations
 	    {
 	        get
 	        {
@@ -365,6 +370,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	            OnPropertyChanged();
 	        }
 	    }
+
+		private async void GetAddresses()
+		{
+			SearchedLocations = await GeocodingHelper.DirectGeocoding(SearchAddress, MapCenterGeopoint);
+		}
 
 #endregion
 
@@ -384,8 +394,7 @@ GetUserLocation()
                 SelectionRadiusGeopoint = geoposition.Coordinate.Point;
 			    SelectionAddress =
 			        await
-			            ReverseGeocoding(geoposition.Coordinate.Point.Position.Longitude,
-			                geoposition.Coordinate.Point.Position.Latitude);
+			            GeocodingHelper.GetAddressByCoordinates(geoposition.Coordinate.Point);
 			}
 			catch (Exception)
 			{
@@ -432,7 +441,7 @@ GetUserLocation()
 					UserLink = photoItem.ProfileLink,
 					Longitude = photoItem.Longitude,
 					Latitude = photoItem.Latitude,
-					FormattedAddress = await ReverseGeocoding(photoItem.Longitude, photoItem.Latitude),
+					FormattedAddress = await GeocodingHelper.GetAddressByCoordinates(photoItem.Longitude, photoItem.Latitude),
                     Source = photoItem.Source
 				};
 				if (!Photos.Contains(item))
@@ -441,51 +450,14 @@ GetUserLocation()
 				}
 			});
 		}
-
-		private async Task<string> ReverseGeocoding(double longitude, double latitude)
-		{
-			try
-			{
-				var location = new BasicGeoposition
-				{
-					Latitude = latitude,
-					Longitude = longitude
-				};
-				var pointToReverseGeocode = new Geopoint(location);
-				var result =
-					  await MapLocationFinder.FindLocationsAtAsync(pointToReverseGeocode);
-
-				return result.Status == MapLocationFinderStatus.Success && result.Locations.Any() ? result.Locations[0].Address.FormattedAddress : string.Empty;
-			}
-			catch (Exception ex)
-			{
-				var message = new MessageDialog(ex.Message);
-				await message.ShowAsync();
-			}
-			return string.Empty;
-		}
-
-        private async void DirectGeocoding(string address)
-        {
-            if (string.IsNullOrEmpty(address))
-            {
-                SearchedLocations = new List<MapLocation>();
-                return;
-            }
-                
-            var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, MapCenterGeopoint, 10);
-            SearchedLocations = mapLocationFinderResult.Status == MapLocationFinderStatus.Success ?  mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
-        }
 #endregion
 
 	    public MainPageViewModel()
         {
-            ShowStartDialog();
-            // автономное
-            
+            StartViewModel();
         }
 
-	    private async void ShowStartDialog()
+	    private async void StartViewModel()
 	    {
 	        var dialog = new StartContentDialog();
             var result = await dialog.ShowAsync();
@@ -520,7 +492,7 @@ GetUserLocation()
 
         private async Task<bool> TryConnectToHub(string url)
         {
-            bool isStandalone = false;
+            var isStandalone = false;
 	        try
 	        {
 	            _hubConnection = new HubConnection($"http://{url}:9000/signalr/hubs");
@@ -558,14 +530,12 @@ GetUserLocation()
 	        try
 	        {
 	            var data = args;
-	            if (data != null)
-	            {
-	                var imageLinks = data.Photos;
-	                foreach (var imageLink in imageLinks)
-	                {
-	                    await AddNewPhoto(imageLink);
-	                }
-	            }
+		        if (data == null) return;
+		        var imageLinks = data.Photos;
+		        foreach (var imageLink in imageLinks)
+		        {
+			        await AddNewPhoto(imageLink);
+		        }
 	        }
 	        catch (Exception ex)
 	        {
@@ -595,5 +565,6 @@ GetUserLocation()
         private HubConnection _hubConnection;
 	    private IHubProxy _hubProxy;
 	    private bool _isStandalone;
+		private int _appBarHeight;
 	}
 }

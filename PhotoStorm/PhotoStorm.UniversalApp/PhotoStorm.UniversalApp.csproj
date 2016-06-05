@@ -123,6 +123,7 @@
     <Compile Include="Extensions\MapControlExtensions.cs" />
     <Compile Include="Extensions\GetCoordinateExtensions.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Helpers\GeocodingHelper.cs" />
     <Compile Include="Models\ViewModelCommands.cs" />
     <Compile Include="Models\PhotoWithUserLink.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />

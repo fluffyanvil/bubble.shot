@@ -107,8 +107,8 @@
             </GridView.ItemContainerStyle>
         </GridView>
 
-        <Grid HorizontalAlignment="Stretch" Visibility="{Binding DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
-            <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
+            <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Margin="5,5">
                 <Grid>
                     <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>

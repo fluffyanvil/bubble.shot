@@ -8,13 +8,11 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:controls="using:PhotoStorm.UniversalApp.Controls"
-    xmlns:maps="using:Windows.Services.Maps"
-    xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
     x:Name="Page"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     
     <Page.DataContext>
-        <viewModels:MainPageViewModel ></viewModels:MainPageViewModel>
+        <viewModels:MainPageViewModel></viewModels:MainPageViewModel>
     </Page.DataContext>
     <Page.Resources>
 
