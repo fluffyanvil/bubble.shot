@@ -6,6 +6,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 {
 	public interface IAdapterManager
 	{
+		string InstagramAccessToken { get; set; }
 		void AddAdapter(IAdapter adapter);
 		void RemoveAdapter(IAdapter adapter);
 		bool CanStart { get; }

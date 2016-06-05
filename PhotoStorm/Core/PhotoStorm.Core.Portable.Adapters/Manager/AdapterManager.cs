@@ -11,23 +11,26 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
 	public class AdapterManager : IAdapterManager
 	{
 		private readonly List<IAdapter> _adapters;
+
 		public AdapterManager()
 		{
 			_adapters = new List<IAdapter>();
-            ConfigureAddapterManager();
+            ConfigureAddapterManager(InstagramAccessToken);
 		}
 
-	    private void ConfigureAddapterManager()
+	    private void ConfigureAddapterManager(string instagramAccessToken)
 	    {
 
             var vkAdapter = new VkAdapter(new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" });
             AddAdapter(vkAdapter);
 
-            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig { ApiAddress = "https://api.instagram.com/v1/media/search", ClientId = "1677ed07ddd54db0a70f14f9b1435579", AccessToken = "241559688.1677ed0.4b7b8ad7ea8249a39e94fde279cca059" });
+            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig { ApiAddress = "https://api.instagram.com/v1/media/search", ClientId = "1677ed07ddd54db0a70f14f9b1435579", AccessToken = InstagramAccessToken });
             AddAdapter(instagramAdapter);
         }
 
-	    public void AddAdapter(IAdapter adapter)
+		public string InstagramAccessToken { get; set; }
+
+		public void AddAdapter(IAdapter adapter)
 		{
 			adapter.OnNewPhotosReceived += AdapterOnOnNewPhotosReceived;
 			_adapters.Add(adapter);

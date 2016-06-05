@@ -453,9 +453,10 @@ GetUserLocation()
 #endregion
 
 	    public MainPageViewModel()
-        {
-            StartViewModel();
-        }
+	    {
+		    AuthInstagram().Wait(); // TODO: сделать заебись вход с инстаграмом
+		    StartViewModel();
+	    }
 
 	    private async void StartViewModel()
 	    {
@@ -483,7 +484,7 @@ GetUserLocation()
             await GetUserLocation();
             if (isStandalone)
             {
-                _adapterManager = new AdapterManager();
+                _adapterManager = new AdapterManager() {InstagramAccessToken = _instagramAccessToken};
                 _adapterManager.OnNewPhotosReceived += AdapterOnNewPhotoAlertEventHandler;
             }
             Radius = 5000;
@@ -541,6 +542,69 @@ GetUserLocation()
 	        {
 	        }
 	    }
+
+		private string _instagramAccessToken;
+
+		private async Task<string> AuthInstagram()
+		{
+			var startURL = "https://www.instagram.com/oauth/authorize/?client_id=b83a51ed034f4156a3fbb79d1fabd2e3&redirect_uri=http://localhost&response_type=token";
+			var endURL = "http://localhost";
+
+			var startURI = new System.Uri(startURL);
+			var endURI = new System.Uri(endURL);
+
+			string result;
+			var vault = new Windows.Security.Credentials.PasswordVault();
+
+			var vaultTokens = vault.RetrieveAll();
+			var instagramAccessToken = vaultTokens.FirstOrDefault(t => t.Resource == "PhotoStorm");
+
+
+			if (instagramAccessToken == null)
+			{
+				try
+				{
+					var webAuthenticationResult =
+						await Windows.Security.Authentication.Web.WebAuthenticationBroker.AuthenticateAsync(
+							Windows.Security.Authentication.Web.WebAuthenticationOptions.None,
+							startURI,
+							endURI);
+
+					switch (webAuthenticationResult.ResponseStatus)
+					{
+						case Windows.Security.Authentication.Web.WebAuthenticationStatus.Success:
+							// Successful authentication. 
+							result = webAuthenticationResult.ResponseData.ToString();
+							var accesTokenIntro = "#access_token=";
+							var accessTokenString = result.Substring(result.IndexOf(accesTokenIntro) + accesTokenIntro.Length);
+
+
+							vault.Add(new Windows.Security.Credentials.PasswordCredential(
+								"PhotoStorm", accessTokenString, accessTokenString));
+							_instagramAccessToken = accessTokenString;
+							break;
+						case Windows.Security.Authentication.Web.WebAuthenticationStatus.ErrorHttp:
+							// HTTP error. 
+							result = webAuthenticationResult.ResponseErrorDetail.ToString();
+							break;
+						default:
+							// Other error.
+							result = webAuthenticationResult.ResponseData.ToString();
+							break;
+					}
+				}
+				catch (Exception ex)
+				{
+					// Authentication failed. Handle parameter, SSL/TLS, and Network Unavailable errors here. 
+					result = ex.Message;
+				}
+			}
+			else
+			{
+				_instagramAccessToken = instagramAccessToken.UserName;
+			}
+			return _instagramAccessToken;
+		}
 
 	    public bool DetailsIsVisible
 	    {
