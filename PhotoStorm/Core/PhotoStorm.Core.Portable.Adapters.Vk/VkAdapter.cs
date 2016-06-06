@@ -2,11 +2,10 @@
 using System.Linq;
 using PhotoStorm.Core.Portable.Adapters.Base;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
-using PhotoStorm.Core.Portable.Adapters.Helpers;
 using PhotoStorm.Core.Portable.Adapters.Rules;
-using PhotoStorm.Core.Portable.Common.Requests.Vkontakte;
+using PhotoStorm.Core.Portable.Adapters.Vk.Requests;
 
-namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vk
 {
 	public class VkAdapter : BaseAdapter<VkAdapterConfig>, IAdapter
 	{
@@ -41,7 +40,7 @@ namespace PhotoStorm.Core.Portable.Adapters.Vkontakte
             });
 		}
 
-	    private VkPhotoItemMapper _mapper;
+	    private readonly VkPhotoItemMapper _mapper;
 
         public void Stop()
 		{

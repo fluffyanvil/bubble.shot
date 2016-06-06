@@ -4,7 +4,7 @@ using System.Globalization;
 using PhotoStorm.Core.Portable.Common.Base;
 using PhotoStorm.Core.Portable.Common.Extensions;
 
-namespace PhotoStorm.Core.Portable.Common.Requests.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vk.Requests
 {
 	
 	public class VkPhotosSearchRequestParameters : BaseRequestParameters

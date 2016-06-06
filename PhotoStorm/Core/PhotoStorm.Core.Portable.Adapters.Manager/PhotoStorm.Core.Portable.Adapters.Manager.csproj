@@ -2,14 +2,14 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{60E28555-A960-45E0-8EBF-DB94D0B4914B}</ProjectGuid>
+    <ProjectGuid>{051978D5-91CB-4096-A128-C60E3C220FF7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhotoStorm.Core.Portable.Works</RootNamespace>
-    <AssemblyName>PhotoStorm.Core.Portable.Works</AssemblyName>
+    <RootNamespace>PhotoStorm.Core.Portable.Adapters.Manager</RootNamespace>
+    <AssemblyName>PhotoStorm.Core.Portable.Adapters.Manager</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,48 +33,29 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignalR_Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\SignalR_Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Manager\PhotoStorm.Core.Portable.Adapters.Manager.csproj">
-      <Project>{051978d5-91cb-4096-a128-c60e3c220ff7}</Project>
-      <Name>PhotoStorm.Core.Portable.Adapters.Manager</Name>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Instagram\PhotoStorm.Core.Portable.Adapters.Instagram.csproj">
+      <Project>{38899835-1994-4dbd-b723-5792ba1c4c97}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Instagram</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Rules\PhotoStorm.Core.Portable.Adapters.Rules.csproj">
       <Project>{bb031ae7-3f79-4373-91d3-a13fe660cfc7}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters.Rules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Vk\PhotoStorm.Core.Portable.Adapters.Vk.csproj">
+      <Project>{a6b6ac7e-023b-452e-98f8-715fdc51b415}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Vk</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters\PhotoStorm.Core.Portable.Adapters.csproj">
-      <Project>{2D69114A-BA46-44D5-A39F-49A7F0E2ABD3}</Project>
+      <Project>{2d69114a-ba46-44d5-a39f-49a7f0e2abd3}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
-      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
-      <Name>PhotoStorm.Core.Portable.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\WorkState.cs" />
+    <Compile Include="AdapterManager.cs" />
+    <Compile Include="IAdapterManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Works\IWork.cs" />
-    <Compile Include="Works\Work.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

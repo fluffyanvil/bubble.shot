@@ -1,7 +1,7 @@
-﻿using PhotoStorm.Core.Portable.Common.Base;
-using PhotoStorm.Core.Portable.Common.Results.Vkontakte;
+﻿using PhotoStorm.Core.Portable.Adapters.Vk.Results;
+using PhotoStorm.Core.Portable.Common.Base;
 
-namespace PhotoStorm.Core.Portable.Common.Requests.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vk.Requests
 {
 	public class VkPhotosSearchHttpRequest : BaseHttpRequest<VkPhotosSearchRequestParameters, VkPhotosSearchHttpResponse>
 	{

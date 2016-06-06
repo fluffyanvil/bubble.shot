@@ -1,7 +1,5 @@
 ﻿using System;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
-using PhotoStorm.Core.Portable.Adapters.Manager;
-using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Works.Enums;
 
 namespace PhotoStorm.Core.Portable.Works.Works

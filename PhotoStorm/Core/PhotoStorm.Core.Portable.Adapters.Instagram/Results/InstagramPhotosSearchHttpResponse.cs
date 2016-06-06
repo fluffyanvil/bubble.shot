@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Common.Base;
 
-namespace PhotoStorm.Core.Portable.Common.Results.Instagram
+namespace PhotoStorm.Core.Portable.Adapters.Instagram.Results
 {
 	[JsonObject]
 	public class InstagramPhotosSearchHttpResponse : BaseHttpResponse

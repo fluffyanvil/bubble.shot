@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2D69114A-BA46-44D5-A39F-49A7F0E2ABD3}</ProjectGuid>
+    <ProjectGuid>{BB031AE7-3F79-4373-91D3-A13FE660CFC7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhotoStorm.Core.Portable.Adapters</RootNamespace>
-    <AssemblyName>PhotoStorm.Core.Portable.Adapters</AssemblyName>
+    <RootNamespace>PhotoStorm.Core.Portable.Adapters.Rules</RootNamespace>
+    <AssemblyName>PhotoStorm.Core.Portable.Adapters.Rules</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,39 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SignalR_Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\SignalR_Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
-    <None Include="project.json" />
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseAdapter.cs" />
-    <Compile Include="Base\BaseAdapterConfig.cs" />
-    <Compile Include="Base\PollingManager.cs" />
-    <Compile Include="EventArgs\NewPhotoAlertEventArgs.cs" />
-    <Compile Include="Events\NewPhotoEvent.cs" />
-    <Compile Include="IAdapter.cs" />
+    <Compile Include="AdapterRule.cs" />
+    <Compile Include="IAdapterRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Rules\PhotoStorm.Core.Portable.Adapters.Rules.csproj">
-      <Project>{bb031ae7-3f79-4373-91d3-a13fe660cfc7}</Project>
-      <Name>PhotoStorm.Core.Portable.Adapters.Rules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
-      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
-      <Name>PhotoStorm.Core.Portable.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

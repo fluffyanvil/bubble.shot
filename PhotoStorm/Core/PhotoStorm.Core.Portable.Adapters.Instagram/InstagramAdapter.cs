@@ -2,10 +2,9 @@
 using System.Linq;
 using PhotoStorm.Core.Portable.Adapters.Base;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
-using PhotoStorm.Core.Portable.Adapters.Helpers;
+using PhotoStorm.Core.Portable.Adapters.Instagram.Requests;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Common.Extensions;
-using PhotoStorm.Core.Portable.Common.Requests.Instagram;
 
 namespace PhotoStorm.Core.Portable.Adapters.Instagram
 {

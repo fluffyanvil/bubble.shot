@@ -4,7 +4,7 @@ using System.Linq;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Instagram;
 using PhotoStorm.Core.Portable.Adapters.Rules;
-using PhotoStorm.Core.Portable.Adapters.Vkontakte;
+using PhotoStorm.Core.Portable.Adapters.Vk;
 
 namespace PhotoStorm.Core.Portable.Adapters.Manager
 {

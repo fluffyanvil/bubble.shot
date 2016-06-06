@@ -4,7 +4,7 @@ using System.Globalization;
 using PhotoStorm.Core.Portable.Common.Base;
 using PhotoStorm.Core.Portable.Common.Extensions;
 
-namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
+namespace PhotoStorm.Core.Portable.Adapters.Instagram.Requests
 {
 	
 	public class InstagramPhotosSearchRequestParameters : BaseRequestParameters

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Common.Base;
 
-namespace PhotoStorm.Core.Portable.Common.Results.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vk.Results
 {
 	[JsonObject]
 	public class VkPhotosSearchHttpResponse : BaseHttpResponse

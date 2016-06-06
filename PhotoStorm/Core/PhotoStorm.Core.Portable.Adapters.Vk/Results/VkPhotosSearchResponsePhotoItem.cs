@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using PhotoStorm.Core.Portable.Common.Extensions;
 
-namespace PhotoStorm.Core.Portable.Common.Results.Vkontakte
+namespace PhotoStorm.Core.Portable.Adapters.Vk.Results
 {
 	public class VkPhotosSearchResponsePhotoItem
 	{

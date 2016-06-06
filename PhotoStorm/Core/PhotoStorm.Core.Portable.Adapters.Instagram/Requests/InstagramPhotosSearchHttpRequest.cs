@@ -1,7 +1,7 @@
-﻿using PhotoStorm.Core.Portable.Common.Base;
-using PhotoStorm.Core.Portable.Common.Results.Instagram;
+﻿using PhotoStorm.Core.Portable.Adapters.Instagram.Results;
+using PhotoStorm.Core.Portable.Common.Base;
 
-namespace PhotoStorm.Core.Portable.Common.Requests.Instagram
+namespace PhotoStorm.Core.Portable.Adapters.Instagram.Requests
 {
 	public class InstagramPhotosSearchHttpRequest : BaseHttpRequest<InstagramPhotosSearchRequestParameters, InstagramPhotosSearchHttpResponse>
 	{

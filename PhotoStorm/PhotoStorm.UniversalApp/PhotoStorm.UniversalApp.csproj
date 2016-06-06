@@ -181,6 +181,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Adapters.Manager\PhotoStorm.Core.Portable.Adapters.Manager.csproj">
+      <Project>{051978d5-91cb-4096-a128-c60e3c220ff7}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Adapters.Rules\PhotoStorm.Core.Portable.Adapters.Rules.csproj">
+      <Project>{bb031ae7-3f79-4373-91d3-a13fe660cfc7}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Rules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Adapters\PhotoStorm.Core.Portable.Adapters.csproj">
       <Project>{2d69114a-ba46-44d5-a39f-49a7f0e2abd3}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters</Name>
