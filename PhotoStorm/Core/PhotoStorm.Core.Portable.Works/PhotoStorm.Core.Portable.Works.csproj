@@ -43,25 +43,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Manager\PhotoStorm.Core.Portable.Adapters.Manager.csproj">
-      <Project>{051978d5-91cb-4096-a128-c60e3c220ff7}</Project>
-      <Name>PhotoStorm.Core.Portable.Adapters.Manager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Rules\PhotoStorm.Core.Portable.Adapters.Rules.csproj">
-      <Project>{bb031ae7-3f79-4373-91d3-a13fe660cfc7}</Project>
-      <Name>PhotoStorm.Core.Portable.Adapters.Rules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters\PhotoStorm.Core.Portable.Adapters.csproj">
-      <Project>{2D69114A-BA46-44D5-A39F-49A7F0E2ABD3}</Project>
-      <Name>PhotoStorm.Core.Portable.Adapters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
-      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
-      <Name>PhotoStorm.Core.Portable.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Enums\WorkState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Works\IWork.cs" />
@@ -75,6 +56,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Manager\PhotoStorm.Core.Portable.Adapters.Manager.csproj">
+      <Project>{051978d5-91cb-4096-a128-c60e3c220ff7}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Rules\PhotoStorm.Core.Portable.Adapters.Rules.csproj">
+      <Project>{bb031ae7-3f79-4373-91d3-a13fe660cfc7}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters.Rules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters\PhotoStorm.Core.Portable.Adapters.csproj">
+      <Project>{2d69114a-ba46-44d5-a39f-49a7f0e2abd3}</Project>
+      <Name>PhotoStorm.Core.Portable.Adapters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
+      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
+      <Name>PhotoStorm.Core.Portable.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

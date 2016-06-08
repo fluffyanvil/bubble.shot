@@ -198,7 +198,7 @@
       <Name>PhotoStorm.Core.Portable.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Works\PhotoStorm.Core.Portable.Works.csproj">
-      <Project>{60E28555-A960-45E0-8EBF-DB94D0B4914B}</Project>
+      <Project>{60e28555-a960-45e0-8ebf-db94d0b4914b}</Project>
       <Name>PhotoStorm.Core.Portable.Works</Name>
     </ProjectReference>
   </ItemGroup>

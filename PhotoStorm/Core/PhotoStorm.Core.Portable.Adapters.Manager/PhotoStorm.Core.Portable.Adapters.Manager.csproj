@@ -34,7 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Compile Include="AdapterManager.cs" />
+    <Compile Include="IAdapterManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\PhotoStorm.Core.Portable.Adapters.Instagram\PhotoStorm.Core.Portable.Adapters.Instagram.csproj">
       <Project>{38899835-1994-4dbd-b723-5792ba1c4c97}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters.Instagram</Name>
@@ -51,11 +55,10 @@
       <Project>{2d69114a-ba46-44d5-a39f-49a7f0e2abd3}</Project>
       <Name>PhotoStorm.Core.Portable.Adapters</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AdapterManager.cs" />
-    <Compile Include="IAdapterManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
+      <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
+      <Name>PhotoStorm.Core.Portable.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
