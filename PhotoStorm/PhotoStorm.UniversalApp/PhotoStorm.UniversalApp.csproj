@@ -126,8 +126,10 @@
     <Compile Include="Helpers\GeocodingHelper.cs" />
     <Compile Include="Models\ViewModelCommands.cs" />
     <Compile Include="Models\PhotoWithUserLink.cs" />
+    <Compile Include="ViewModels\GalleryPivotItemViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MapPivotItemViewModel.cs" />
     <Compile Include="Views\MainPageNew.xaml.cs">
       <DependentUpon>MainPageNew.xaml</DependentUpon>
     </Compile>

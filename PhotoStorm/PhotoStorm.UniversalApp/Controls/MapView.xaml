@@ -27,32 +27,37 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <maps:MapControl Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2"
-            x:Name="Map" Style="Road"
+        <maps:MapControl Grid.Row="0"
+                         Grid.Column="0"
+                         Grid.RowSpan="3"
+                         Grid.ColumnSpan="2"
+                         x:Name="Map"
+                         Style="Road"
             MapServiceToken="{StaticResource MapApiKey}"
             ZoomInteractionMode="GestureAndControl"
             IsDoubleTapEnabled="True"
             LandmarksVisible="True"
-            Center="{Binding MapCenterGeopoint, Mode=TwoWay}"
-            ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}">
+            Center="{Binding MapPivotItemViewModel.MapCenterGeopoint, Mode=TwoWay}"
+            ZoomLevel="{Binding MapPivotItemViewModel.ZoomLevel, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="MapDoubleTapped">
-                    <core:InvokeCommandAction 
-                                          Command="{Binding MapDoubleTappedCommand}"/>
+                    <core:InvokeCommandAction Command="{Binding MapPivotItemViewModel.MapDoubleTappedCommand}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </maps:MapControl>
+
         <Border Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Margin="5,5" VerticalAlignment="Top" BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="DarkGray" Background="#80FFFFFF">
-            <AutoSuggestBox x:Uid="AutoSuggestBox" 
-                                        QueryIcon="Find" AutoMaximizeSuggestionArea="True"
-                                        Text="{Binding SearchAddress, Mode=TwoWay}"
-                                        PlaceholderText="Адрес" 
-                                        ItemsSource="{Binding SearchedLocations, Mode=TwoWay}"
-                                        UpdateTextOnSelect="True" >
+            <AutoSuggestBox x:Uid="AutoSuggestBox"
+							QueryIcon="Find"
+                            AutoMaximizeSuggestionArea="True"
+                            Text="{Binding MapPivotItemViewModel.SearchAddress, Mode=TwoWay}"
+                            PlaceholderText="Адрес"
+                            ItemsSource="{Binding MapPivotItemViewModel.SearchedLocations, Mode=TwoWay}"
+                            UpdateTextOnSelect="True">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="QuerySubmitted">
                         <core:InvokeCommandAction 
-                                          Command="{Binding SearchLocationCommand}"
+                                          Command="{Binding MapPivotItemViewModel.SearchLocationCommand}"
                                           InputConverter="{StaticResource AutoSuggestQueryParameterConverter}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
@@ -63,12 +68,12 @@
                 </AutoSuggestBox.ItemTemplate>
             </AutoSuggestBox>
         </Border>
-        <Slider Grid.Column="0" Grid.Row="1" Style="{StaticResource SliderStyle}" Margin="10,0" Value="{Binding Radius, Mode=TwoWay}"  Minimum="1000" Maximum="50000" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+        <Slider Grid.Column="0" Grid.Row="1" Style="{StaticResource SliderStyle}" Margin="10,0" Value="{Binding MapPivotItemViewModel.Radius, Mode=TwoWay}"  Minimum="1000" Maximum="50000" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch">
             <Slider.HeaderTemplate>
                 <DataTemplate>
                     <Border BorderThickness="1" BorderBrush="DarkGray" Background="#80F5F5DC" Margin="2">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
-                        <Run Text="{Binding Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
+                        <Run Text="{Binding MapPivotItemViewModel.Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
                         <Run>км</Run>
                         </TextBlock>
                     </Border>
@@ -81,5 +86,9 @@
                 <ContentControl Template="{StaticResource CloudAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=TwoWay}"></ContentControl>
             </Grid>
         </Border>
+        <!--SplashScreen-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="#802F4F4F" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding MapPivotItemViewModel.IsSearchingLocation, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="{Binding MapPivotItemViewModel.IsSearchingLocation}"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -17,11 +17,11 @@
         <converters:SourceToIconConverter x:Key="SourceToIconConverter"></converters:SourceToIconConverter>
     </UserControl.Resources>
     <Grid>
-        <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+        <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
                 <interactivity:BehaviorCollection>
                     <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding ShowDetails}"></core:InvokeCommandAction>
+                        <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.ShowDetails}"></core:InvokeCommandAction>
                     </core:EventTriggerBehavior>
                 </interactivity:BehaviorCollection>
             </interactivity:Interaction.Behaviors>
@@ -46,7 +46,7 @@
                                     </Style>
                                 </MenuFlyout.MenuFlyoutPresenterStyle>
                                 <MenuFlyoutItem x:Uid="MenuFlyoutItemRemove" Text="Удалить" 
-                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveItemCommand}"
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
                                                             CommandParameter="{Binding}">
                                     <MenuFlyoutItem.Template>
                                         <ControlTemplate TargetType="MenuFlyoutItem">
@@ -59,7 +59,7 @@
                                 </MenuFlyoutItem>
 
                                 <MenuFlyoutItem x:Uid="MenuFlyoutItemRemoveAll" Text="Очистить все" 
-                                                            Command="{Binding ElementName=GridView, Path=DataContext.RemoveAllItemsCommand}">
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveAllItemsCommand}">
                                     <MenuFlyoutItem.Template>
                                         <ControlTemplate TargetType="MenuFlyoutItem">
                                             <StackPanel Orientation="Horizontal">
@@ -75,7 +75,7 @@
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                                <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                                    <ContentControl ContentTemplate="{Binding Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                                    <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
                                 </Border>
                             </Grid>
                             
@@ -85,14 +85,14 @@
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapGrid ItemWidth="{Binding DynamicPhotoSize}" 
-                                      ItemHeight="{Binding DynamicPhotoSize}" 
+                    <WrapGrid ItemWidth="{Binding GalleryPivotItemViewModel.DynamicPhotoSize}" 
+                                      ItemHeight="{Binding GalleryPivotItemViewModel.DynamicPhotoSize}" 
                                       Orientation="Horizontal"
-                                      MaximumRowsOrColumns="{Binding MaximumColumns}">
+                                      MaximumRowsOrColumns="{Binding GalleryPivotItemViewModel.MaximumColumns}">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="SizeChanged">
-                                    <core:InvokeCommandAction Command="{Binding AdaptWrapGridSizeCommand}"></core:InvokeCommandAction>
+                                    <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.AdaptWrapGridSizeCommand}"></core:InvokeCommandAction>
                                 </core:EventTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
@@ -107,16 +107,16 @@
             </GridView.ItemContainerStyle>
         </GridView>
 
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
-            <Border Height="{Binding AvailableModalSize}" Width="{Binding AvailableModalSize}" Margin="5,5">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding GalleryPivotItemViewModel.DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
+            <Border Height="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Width="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Margin="5,5">
                 <Grid>
-                    <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
+                    <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:PhotoWithUserLink">
                                 <Grid>
                                     <Image Stretch="UniformToFill" Source="{Binding Image}" ManipulationMode="TranslateY"/>
                                     <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                                        <ContentControl ContentTemplate="{Binding Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                                        <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
                                     </Border>
                                 </Grid>
                             </DataTemplate>
@@ -128,7 +128,7 @@
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">
-                                    <core:InvokeCommandAction Command="{Binding CloseDetails}"></core:InvokeCommandAction>
+                                    <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.CloseDetails}"></core:InvokeCommandAction>
                                 </core:EventTriggerBehavior>
                             </interactivity:BehaviorCollection>
                         </interactivity:Interaction.Behaviors>
@@ -136,13 +136,11 @@
                     
                     <Border Background="DarkSlateGray" Opacity="0.6" VerticalAlignment="Bottom">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Padding="2">
-                            <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
-                            <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding SelectedItem.UserLink}" Content="{Binding SelectedItem.UserLink}" Margin="1"/>
+                            <TextBlock Opacity="1" Foreground="FloralWhite" Text="{Binding GalleryPivotItemViewModel.SelectedItem.FormattedAddress}" TextTrimming="CharacterEllipsis"></TextBlock>
+                            <HyperlinkButton Opacity="1" Foreground="FloralWhite" NavigateUri="{Binding GalleryPivotItemViewModel.SelectedItem.Source.ProfileLink}" Content="{Binding GalleryPivotItemViewModel.SelectedItem.Source.ProfileLink}" Margin="1"/>
                         </StackPanel>
                     </Border>
                 </Grid>
-                
-                
             </Border>
         </Grid>
     </Grid>
