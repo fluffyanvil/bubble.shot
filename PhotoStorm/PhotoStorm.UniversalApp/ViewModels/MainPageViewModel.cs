@@ -6,6 +6,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.AspNet.SignalR.Client;
+using Microsoft.Practices.Unity;
 using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
@@ -159,7 +160,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public MapPivotItemViewModel MapPivotItemViewModel { get;set; }
 		public GalleryPivotItemViewModel GalleryPivotItemViewModel { get; set; }
-	    public MainPageViewModel()
+	    public MainPageViewModel(IUnityContainer container)
 	    {
 			MapPivotItemViewModel = new MapPivotItemViewModel();
 			GalleryPivotItemViewModel = new GalleryPivotItemViewModel();

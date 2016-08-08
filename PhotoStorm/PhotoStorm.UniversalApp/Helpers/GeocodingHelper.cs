@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
@@ -59,7 +58,7 @@ namespace PhotoStorm.UniversalApp.Helpers
 				return new List<MapLocation>();
 			}
 
-			var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, mapCenterGeopoint, 10);
+			var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, mapCenterGeopoint, 15);
 			return mapLocationFinderResult.Status == MapLocationFinderStatus.Success ? mapLocationFinderResult.Locations.ToList() : new List<MapLocation>();
 		}
 	}

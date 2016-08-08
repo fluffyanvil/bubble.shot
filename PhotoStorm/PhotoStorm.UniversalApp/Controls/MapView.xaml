@@ -62,7 +62,7 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <AutoSuggestBox.ItemTemplate>
-                    <DataTemplate x:DataType="maps1:MapLocation">
+                    <DataTemplate>
                         <TextBlock Foreground="DarkSlateGray" Text="{Binding Address.FormattedAddress}"></TextBlock>
                     </DataTemplate>
                 </AutoSuggestBox.ItemTemplate>

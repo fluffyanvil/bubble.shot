@@ -41,7 +41,7 @@ namespace PhotoStorm.UniversalApp
 
 	    protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
 	    {
-            NavigationService.Navigate("Main", null);
+            NavigationService.Navigate("Main", Container);
             Window.Current.Activate();
             return Task.FromResult<object>(null);
         }

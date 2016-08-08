@@ -11,9 +11,9 @@
     x:Name="Page"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
     
-    <Page.DataContext>
+    <!--<Page.DataContext>
         <viewModels:MainPageViewModel></viewModels:MainPageViewModel>
-    </Page.DataContext>
+    </Page.DataContext>-->
     <Page.Resources>
 
        

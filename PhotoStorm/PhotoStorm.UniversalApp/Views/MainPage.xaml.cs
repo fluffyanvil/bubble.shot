@@ -2,6 +2,7 @@
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Practices.Unity;
 using PhotoStorm.UniversalApp.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -23,6 +24,7 @@ namespace PhotoStorm.UniversalApp.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            DataContext = new MainPageViewModel((IUnityContainer)e.Parameter);
             ViewModel.MapPivotItemViewModel.OnRaiseNeedToRedrawCircle += ViewModelOnOnRaiseNeedToRedrawCircle;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             
