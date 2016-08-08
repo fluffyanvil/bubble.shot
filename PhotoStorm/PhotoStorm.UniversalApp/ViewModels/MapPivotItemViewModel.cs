@@ -17,9 +17,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 {
 	public class MapPivotItemViewModel : ViewModelBase
 	{
-		
-
-		public event EventHandler OnRaiseNeedToRedrawCircle;
+        public event EventHandler OnRaiseNeedToRedrawCircle;
 
 		public int ZoomLevel
 		{

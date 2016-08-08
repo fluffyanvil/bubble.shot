@@ -26,7 +26,7 @@
                 </interactivity:BehaviorCollection>
             </interactivity:Interaction.Behaviors>
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:PhotoWithUserLink">
+                <DataTemplate>
                     <Grid x:Name="ItemGrid">
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
@@ -73,12 +73,11 @@
                         </MenuFlyout.AttachedFlyout>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                               <Image Source="{Binding Image}" Stretch="UniformToFill"/>
                                <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
                                     <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
                                 </Border>
                             </Grid>
-                            
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -110,9 +109,10 @@
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding GalleryPivotItemViewModel.DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
             <Border Height="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Width="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Margin="5,5">
                 <Grid>
+                    <TextBlock>123123123</TextBlock>
                     <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">
                         <FlipView.ItemTemplate>
-                            <DataTemplate x:DataType="models:PhotoWithUserLink">
+                            <DataTemplate>
                                 <Grid>
                                     <Image Stretch="UniformToFill" Source="{Binding Image}" ManipulationMode="TranslateY"/>
                                     <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
