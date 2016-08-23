@@ -87,6 +87,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				_selectedItem = value;
 				OnPropertyChanged();
+			    DetailsIsVisible = _selectedItem != null;
 			}
 		}
 

@@ -16,8 +16,51 @@
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
     <UserControl.Resources>
         <converters:SourceToIconConverter x:Key="SourceToIconConverter"></converters:SourceToIconConverter>
-        <DataTemplate x:DataType="models:PhotoWithUserLink" x:Key="PhotoWithUserLinkTemplate">
+        <DataTemplate x:DataType="models:PhotoWithUserLink" x:Key="PhotoWithUserLinkGridTemplate">
             <Grid x:Name="ItemGrid">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:BehaviorCollection>
+                        <core:EventTriggerBehavior EventName="Holding">
+                            <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                        </core:EventTriggerBehavior>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
+                        </core:EventTriggerBehavior>
+                    </interactivity:BehaviorCollection>
+                </interactivity:Interaction.Behaviors>
+                <MenuFlyout.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.MenuFlyoutPresenterStyle>
+                            <Style TargetType="MenuFlyoutPresenter">
+                                <Setter Property="Padding" Value="5"></Setter>
+                            </Style>
+                        </MenuFlyout.MenuFlyoutPresenterStyle>
+                        <MenuFlyoutItem x:Uid="MenuFlyoutItemRemove" Text="Удалить" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
+                                                            CommandParameter="{Binding}">
+                            <MenuFlyoutItem.Template>
+                                <ControlTemplate TargetType="MenuFlyoutItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf1f8;"/>
+                                        <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </MenuFlyoutItem.Template>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem x:Uid="MenuFlyoutItemRemoveAll" Text="Очистить все" 
+                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveAllItemsCommand}">
+                            <MenuFlyoutItem.Template>
+                                <ControlTemplate TargetType="MenuFlyoutItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf00d;"/>
+                                        <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </MenuFlyoutItem.Template>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </MenuFlyout.AttachedFlyout>
                 <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Image Source="{Binding Image}" Stretch="UniformToFill"/>
@@ -28,131 +71,77 @@
                 </Border>
             </Grid>
         </DataTemplate>
+        <DataTemplate x:DataType="models:PhotoWithUserLink" x:Key="PhotoWithUserLinkListTemplate">
+            <controls:SlidableListItem
+                HorizontalAlignment="Stretch"
+                LeftIcon="Delete"
+                RightIcon="Delete"
+                LeftLabel="Delete"
+                RightLabel="Delete"
+                LeftBackground="OrangeRed"
+                RightBackground="OrangeRed"
+                LeftForeground ="White"
+                RightForeground ="White"
+                ActivationWidth="100"
+                MouseSlidingEnabled="True"
+                LeftCommand="{Binding ElementName=LayoutRoot, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
+                RightCommand="{Binding ElementName=LayoutRoot, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}" Height="150">
+                
+                <Grid x:Name="OuterGrid" Height="150" Background="Gray">
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                            <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                                <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </controls:SlidableListItem>
+        </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Mobile">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="480" MinWindowHeight="800"/>
+                        <AdaptiveTrigger MinWindowWidth="480"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ModalBorder.Width" Value="300" />
                         <Setter Target="ModalBorder.Height" Value="300" />
+                        <Setter Target="AdaptiveGridView.Visibility" Value="Collapsed"></Setter>
+                        <Setter Target="ListView.Visibility" Value="Visible"></Setter>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Tablet">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" MinWindowHeight="480"/>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ModalBorder.Width" Value="500" />
                         <Setter Target="ModalBorder.Height" Value="500" />
+                        <Setter Target="AdaptiveGridView.Visibility" Value="Visible"></Setter>
+                        <Setter Target="ListView.Visibility" Value="Collapsed"></Setter>
                     </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="Widescreen">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1280" MinWindowHeight="720" />
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ModalBorder.Width" Value="650" />
                         <Setter Target="ModalBorder.Height" Value="650" />
+                        <Setter Target="AdaptiveGridView.Visibility" Value="Visible"></Setter>
+                        <Setter Target="ListView.Visibility" Value="Collapsed"></Setter>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <!--<GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay}">
-            <interactivity:Interaction.Behaviors>
-                <interactivity:BehaviorCollection>
-                    <core:EventTriggerBehavior EventName="Tapped">
-                        <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.ShowDetails}"></core:InvokeCommandAction>
-                    </core:EventTriggerBehavior>
-                </interactivity:BehaviorCollection>
-            </interactivity:Interaction.Behaviors>
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid x:Name="ItemGrid">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="Holding">
-                                    <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
-                                </core:EventTriggerBehavior>
-                                <core:EventTriggerBehavior EventName="RightTapped">
-                                    <actions:OpenMenuFlyoutAction></actions:OpenMenuFlyoutAction>
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-                        <MenuFlyout.AttachedFlyout>
-                            <MenuFlyout>
-                                <MenuFlyout.MenuFlyoutPresenterStyle>
-                                    <Style TargetType="MenuFlyoutPresenter">
-                                        <Setter Property="Padding" Value="5"></Setter>
-                                    </Style>
-                                </MenuFlyout.MenuFlyoutPresenterStyle>
-                                <MenuFlyoutItem x:Uid="MenuFlyoutItemRemove" Text="Удалить" 
-                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
-                                                            CommandParameter="{Binding}">
-                                    <MenuFlyoutItem.Template>
-                                        <ControlTemplate TargetType="MenuFlyoutItem">
-                                            <StackPanel Orientation="Horizontal">
-                                                <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf1f8;"/>
-                                                <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
-                                            </StackPanel>
-                                        </ControlTemplate>
-                                    </MenuFlyoutItem.Template>
-                                </MenuFlyoutItem>
-
-                                <MenuFlyoutItem x:Uid="MenuFlyoutItemRemoveAll" Text="Очистить все" 
-                                                            Command="{Binding ElementName=GridView, Path=DataContext.GalleryPivotItemViewModel.RemoveAllItemsCommand}">
-                                    <MenuFlyoutItem.Template>
-                                        <ControlTemplate TargetType="MenuFlyoutItem">
-                                            <StackPanel Orientation="Horizontal">
-                                                <FontIcon Margin="5,0,0,0" FontFamily="{StaticResource FontAwesome}" Glyph="&#xf00d;"/>
-                                                <TextBlock Margin="5,0,0,0" Text="{TemplateBinding Text}" />
-                                            </StackPanel>
-                                        </ControlTemplate>
-                                    </MenuFlyoutItem.Template>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </MenuFlyout.AttachedFlyout>
-                        <Border HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                               <Image Source="{Binding Image}" Stretch="UniformToFill"/>
-                               <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-                                    <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapGrid ItemWidth="{Binding GalleryPivotItemViewModel.DynamicPhotoSize}" 
-                                      ItemHeight="{Binding GalleryPivotItemViewModel.DynamicPhotoSize}" 
-                                      Orientation="Horizontal"
-                                      MaximumRowsOrColumns="{Binding GalleryPivotItemViewModel.MaximumColumns}">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:BehaviorCollection>
-                                <core:EventTriggerBehavior EventName="SizeChanged">
-                                    <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.AdaptWrapGridSizeCommand}"></core:InvokeCommandAction>
-                                </core:EventTriggerBehavior>
-                            </interactivity:BehaviorCollection>
-                        </interactivity:Interaction.Behaviors>
-                    </WrapGrid>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-            </GridView.ItemContainerStyle>
-        </GridView>-->
-
-        <controls:AdaptiveGridView x:Name="AdaptiveGridView" ItemTemplate="{StaticResource PhotoWithUserLinkTemplate}" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" ItemClickCommand="{Binding GalleryPivotItemViewModel.SelectItemCommand}" ItemHeight="200" DesiredWidth="200">
+        
+        <controls:AdaptiveGridView x:Name="AdaptiveGridView" ItemTemplate="{StaticResource PhotoWithUserLinkGridTemplate}" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" ItemClickCommand="{Binding GalleryPivotItemViewModel.SelectItemCommand}" ItemHeight="200" DesiredWidth="200">
             <interactivity:Interaction.Behaviors>
                 <interactivity:BehaviorCollection>
                     <core:EventTriggerBehavior EventName="Tapped">
@@ -161,7 +150,22 @@
                 </interactivity:BehaviorCollection>
             </interactivity:Interaction.Behaviors>
         </controls:AdaptiveGridView>
-        
+
+        <ListView x:Name="ListView"
+                  ItemTemplate="{StaticResource PhotoWithUserLinkListTemplate}"
+                  
+                  ItemsSource="{Binding GalleryPivotItemViewModel.Photos}"
+                  SelectionMode="Single"
+                  IsItemClickEnabled="False" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemContainerStyle>
+                
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Margin" Value="0,1"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding GalleryPivotItemViewModel.DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
             <Border x:Name="ModalBorder" Margin="5,5">
                 <Grid>
@@ -201,3 +205,6 @@
         </Grid>
     </Grid>
 </UserControl>
+
+
+
