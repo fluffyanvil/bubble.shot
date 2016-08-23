@@ -334,6 +334,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -2214,6 +2260,28 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {
+            "assetType": "native",
+            "rid": "win10-arm"
+          },
+          "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {
+            "assetType": "native",
+            "rid": "win10-x64"
+          },
+          "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {
+            "assetType": "native",
+            "rid": "win10-x86"
+          }
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -2510,6 +2578,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -4523,6 +4637,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -4820,6 +4945,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -6871,6 +7042,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -7171,6 +7353,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -9189,6 +9417,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -9490,6 +9729,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -11546,6 +11831,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -11846,6 +12142,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -13864,6 +14206,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -14165,6 +14518,52 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
+      "Microsoft.Toolkit.Uwp/1.0.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+          "Win2D.uwp": "1.18.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
+        }
+      },
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+        "dependencies": {
+          "Microsoft.Toolkit.Uwp": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+        },
+        "compile": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
+        }
+      },
       "Microsoft.VisualBasic/10.0.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
@@ -16221,6 +16620,17 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
+      "Win2D.uwp/1.18.0": {
+        "compile": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
+        }
+      },
       "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
@@ -16711,6 +17121,65 @@
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.json"
+      ]
+    },
+    "Microsoft.Toolkit.Uwp/1.0.0": {
+      "sha512": "beWPWTEv7eF+PhiH/a/I82U/K169rVPTPZQIE4s3xpSfmADAI+0jgK3N/SgOeY5AekwVVPLGBaHhpWDaPBvaDg==",
+      "type": "package",
+      "files": [
+        "Microsoft.Toolkit.Uwp.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.nuspec",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.dll",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.pdb",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.pri",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.xml"
+      ]
+    },
+    "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "sha512": "Yp1/YXgP2G9CnwN5/aoIwYgK97VG/CtsE0TbIveB4NGAAKfpt1dpueeTi2jhCRig3gPLcdeiVKxWEY3hYSqZBA==",
+      "type": "package",
+      "files": [
+        "Microsoft.Toolkit.Uwp.UI.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.nuspec",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.pdb",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.pri",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.xml"
+      ]
+    },
+    "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "sha512": "rtM1aSylBCqOKp4qYXXBNeK4flXu+gpMtdQkbLaaIQj9nTWDKrppxrIZh0apdDYNEh/s4Ebsuf2kVqw7WHblyQ==",
+      "type": "package",
+      "files": [
+        "Microsoft.Toolkit.Uwp.UI.Animations.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.Animations.nuspec",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.pdb",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.pri",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.xml"
+      ]
+    },
+    "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "sha512": "A5gFr5icrEHIK85ChpUbXOJjqIJrVYRJv+Rp6AuocCX6lAuX7QocIPpzUw4uuys9hbC7ljqaLBMSSQ++kk+p1w==",
+      "type": "package",
+      "files": [
+        "Microsoft.Toolkit.Uwp.UI.Controls.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.Controls.nuspec",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.pdb",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.pri",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.xml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/AdaptiveGridView/AdaptiveGridView.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/HamburgerMenu/HamburgerMenu.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/HeaderedTextBlock/HeaderedTextBlock.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/ImageEx/ImageEx.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Microsoft.Toolkit.Uwp.UI.Controls.xr.xml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/PullToRefreshListView/PullToRefreshListView.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RadialGauge/RadialGauge.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RangeSelector/RangeSelector.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RotatorTile/RotatorTile.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/SlidableListItem/SlidableListItem.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Themes/Generic.xaml"
       ]
     },
     "Microsoft.VisualBasic/10.0.1": {
@@ -22619,6 +23088,23 @@
         "lib/wp80/Microsoft.Practices.Unity.xml"
       ]
     },
+    "Win2D.uwp/1.18.0": {
+      "sha512": "qPRgHJF9l7vKLyM/adOjUHE9OE90nYFCpa3/IOaBu1lMyiMwcfXyV2JEri+beNir0eo7luzz8dRBpyBIkjK9qw==",
+      "type": "package",
+      "files": [
+        "Win2D.uwp.1.18.0.nupkg.sha512",
+        "Win2D.uwp.nuspec",
+        "Win2d.githash.txt",
+        "build/native/Win2D.uwp.targets",
+        "include/Microsoft.Graphics.Canvas.h",
+        "include/Microsoft.Graphics.Canvas.native.h",
+        "lib/uap10.0/Microsoft.Graphics.Canvas.winmd",
+        "lib/uap10.0/Microsoft.Graphics.Canvas.xml",
+        "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll",
+        "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll",
+        "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll"
+      ]
+    },
     "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
       "sha512": "xL+bvFJkIctSD1YnwnJkweMBJjXaxi1lt24EZrQ9x+wQzpcDzZgJ3jzb0zz3tSWsXsIZkOrEe0xsf0M1eY7Tnw==",
       "type": "package",
@@ -23144,6 +23630,9 @@
       "Microsoft.ApplicationInsights.WindowsApps >= 1.1.1",
       "Microsoft.AspNet.SignalR.Client >= 2.2.1",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
+      "Microsoft.Toolkit.Uwp >= 1.0.0",
+      "Microsoft.Toolkit.Uwp.UI >= 1.0.0",
+      "Microsoft.Toolkit.Uwp.UI.Controls >= 1.0.0",
       "Microsoft.Xaml.Behaviors.Uwp.Managed >= 1.1.0",
       "Prism.Core >= 6.1.0",
       "Prism.Unity >= 6.1.1",

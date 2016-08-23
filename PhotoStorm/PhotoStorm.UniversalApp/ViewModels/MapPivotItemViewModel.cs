@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
@@ -11,14 +9,12 @@ using Windows.UI.Xaml.Controls.Maps;
 using PhotoStorm.UniversalApp.Extensions;
 using PhotoStorm.UniversalApp.Helpers;
 using Prism.Commands;
-using Prism.Windows.Mvvm;
 
 namespace PhotoStorm.UniversalApp.ViewModels
 {
-	public class MapPivotItemViewModel : ViewModelBase
+	public class MapPivotItemViewModel : BaseViewModel
 	{
         public event EventHandler OnRaiseNeedToRedrawCircle;
-
 		public int ZoomLevel
 		{
 			get { return _zoomLevel; }
@@ -29,7 +25,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				OnRaiseNeedToRedrawCircle?.Invoke(this, null);
 			}
 		}
-
 		public bool ShowOnMap
 		{
 			get { return _showOnMap; }
@@ -61,7 +56,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
 			}
 		}
-
 		public Geopath SelectionAreaCirclePath
 		{
 			get { return _selectionAreaCirclePath; }
@@ -72,7 +66,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				OnRaiseNeedToRedrawCircle?.Invoke(this, null);
 			}
 		}
-
 		public ICommand SearchLocationCommand => _searchLocationCommand ?? (_searchLocationCommand = new DelegateCommand<Geopoint>(OnExecuteSearchLocationCommand));
 
 		private async void OnExecuteSearchLocationCommand(Geopoint point)
@@ -146,14 +139,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				OnPropertyChanged();
 			}
 		}
-
 		#region Public Methods
 		public MapPivotItemViewModel()
 		{
 			_geolocator = new Geolocator();
 			Radius = 5000;
 		}
-
 		public async Task GetUserLocation()
 		{
 			try

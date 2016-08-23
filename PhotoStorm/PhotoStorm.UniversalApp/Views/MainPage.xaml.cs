@@ -24,7 +24,7 @@ namespace PhotoStorm.UniversalApp.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            DataContext = new MainPageViewModel((IUnityContainer)e.Parameter);
+            DataContext = new MainPageViewModel();
             ViewModel.MapPivotItemViewModel.OnRaiseNeedToRedrawCircle += ViewModelOnOnRaiseNeedToRedrawCircle;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             

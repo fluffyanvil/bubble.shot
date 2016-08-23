@@ -126,6 +126,7 @@
     <Compile Include="Helpers\GeocodingHelper.cs" />
     <Compile Include="Models\ViewModelCommands.cs" />
     <Compile Include="Models\PhotoWithUserLink.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\GalleryPivotItemViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -198,6 +199,10 @@
     <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Common\PhotoStorm.Core.Portable.Common.csproj">
       <Project>{261036bf-9e90-459e-9e28-f53e09a708b1}</Project>
       <Name>PhotoStorm.Core.Portable.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Logging\PhotoStorm.Core.Portable.Logging.csproj">
+      <Project>{249276c7-db25-46b5-8fb1-985a0cca52a8}</Project>
+      <Name>PhotoStorm.Core.Portable.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\PhotoStorm.Core.Portable.Works\PhotoStorm.Core.Portable.Works.csproj">
       <Project>{60e28555-a960-45e0-8ebf-db94d0b4914b}</Project>

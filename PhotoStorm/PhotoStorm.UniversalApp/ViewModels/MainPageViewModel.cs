@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.AspNet.SignalR.Client;
@@ -11,6 +12,7 @@ using PhotoStorm.Core.Portable.Adapters.EventArgs;
 using PhotoStorm.Core.Portable.Adapters.Manager;
 using PhotoStorm.Core.Portable.Adapters.Rules;
 using PhotoStorm.Core.Portable.Common.Models;
+using PhotoStorm.Core.Portable.Logging;
 using PhotoStorm.Core.Portable.Works.Works;
 using PhotoStorm.UniversalApp.Controls;
 using PhotoStorm.UniversalApp.Helpers;
@@ -22,13 +24,13 @@ using Prism.Windows.Mvvm;
 
 namespace PhotoStorm.UniversalApp.ViewModels
 {
-	public class MainPageViewModel : ViewModelBase
+	public class MainPageViewModel : BaseViewModel
 	{
 	    private DelegateCommand _startManagerCommand;
 		private DelegateCommand _stopManagerCommand;
 		private IAdapterManager _adapterManager;
 	    private int _selectedPivotIndex;
-
+	    private ILogger _logger;
 	    
 
 	    #region Commands
@@ -160,11 +162,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public MapPivotItemViewModel MapPivotItemViewModel { get;set; }
 		public GalleryPivotItemViewModel GalleryPivotItemViewModel { get; set; }
-	    public MainPageViewModel(IUnityContainer container)
+	    public MainPageViewModel()
 	    {
+	        _logger = Container.Resolve<ILogger>();
+            _logger.Info("MainPageViewModel created");
 			MapPivotItemViewModel = new MapPivotItemViewModel();
 			GalleryPivotItemViewModel = new GalleryPivotItemViewModel();
-			//AuthInstagram().Wait(); // TODO: сделать заебись вход с инстаграмом
 			StartViewModel();
 	    }
 

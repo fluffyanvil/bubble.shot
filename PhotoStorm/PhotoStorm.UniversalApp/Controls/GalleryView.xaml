@@ -10,14 +10,60 @@
     xmlns:actions="using:PhotoStorm.UniversalApp.Actions"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel}">
     <UserControl.Resources>
         <converters:SourceToIconConverter x:Key="SourceToIconConverter"></converters:SourceToIconConverter>
+        <DataTemplate x:DataType="models:PhotoWithUserLink" x:Key="PhotoWithUserLinkTemplate">
+            <Grid x:Name="ItemGrid">
+                <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                        <Border Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                            <ContentControl ContentTemplate="{Binding Source.Source, Converter={StaticResource SourceToIconConverter}}"></ContentControl>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
+
     <Grid>
-        <GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="480" MinWindowHeight="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ModalBorder.Width" Value="300" />
+                        <Setter Target="ModalBorder.Height" Value="300" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" MinWindowHeight="480"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ModalBorder.Width" Value="500" />
+                        <Setter Target="ModalBorder.Height" Value="500" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Widescreen">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280" MinWindowHeight="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ModalBorder.Width" Value="650" />
+                        <Setter Target="ModalBorder.Height" Value="650" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <!--<GridView IsHoldingEnabled="True" CharacterSpacing="0" x:Name="GridView" AutomationProperties.AutomationId="ItemGridView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay}">
             <interactivity:Interaction.Behaviors>
                 <interactivity:BehaviorCollection>
                     <core:EventTriggerBehavior EventName="Tapped">
@@ -104,10 +150,20 @@
                     <Setter Property="Margin" Value="0" />
                 </Style>
             </GridView.ItemContainerStyle>
-        </GridView>
+        </GridView>-->
 
+        <controls:AdaptiveGridView x:Name="AdaptiveGridView" ItemTemplate="{StaticResource PhotoWithUserLinkTemplate}" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" ItemClickCommand="{Binding GalleryPivotItemViewModel.SelectItemCommand}" ItemHeight="200" DesiredWidth="200">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:BehaviorCollection>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.ShowDetails}"></core:InvokeCommandAction>
+                    </core:EventTriggerBehavior>
+                </interactivity:BehaviorCollection>
+            </interactivity:Interaction.Behaviors>
+        </controls:AdaptiveGridView>
+        
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding GalleryPivotItemViewModel.DetailsIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#CC2F4F4F">
-            <Border Height="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Width="{Binding GalleryPivotItemViewModel.AvailableModalSize}" Margin="5,5">
+            <Border x:Name="ModalBorder" Margin="5,5">
                 <Grid>
                     <TextBlock>123123123</TextBlock>
                     <FlipView ManipulationMode="TranslateRailsX" x:Name="FlipView" ItemsSource="{Binding GalleryPivotItemViewModel.Photos}" SelectedItem="{Binding GalleryPivotItemViewModel.SelectedItem, Mode=TwoWay, TargetNullValue={x:Null}, UpdateSourceTrigger=PropertyChanged}">

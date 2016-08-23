@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.ApplicationInsights;
 using Microsoft.Practices.Unity;
+using PhotoStorm.Core.Portable.Logging;
 using Prism.Events;
 using Prism.Unity.Windows;
 
@@ -16,7 +17,9 @@ namespace PhotoStorm.UniversalApp
 	/// </summary>
 	sealed partial class App : PrismUnityApplication
 	{
-        public IEventAggregator EventAggregator { get; set; }
+	    private IEventAggregator _eventAggregator;
+	    private ILogger _logger;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -32,10 +35,13 @@ namespace PhotoStorm.UniversalApp
 
 	    protected override Task OnInitializeAsync(IActivatedEventArgs args)
 	    {
-            EventAggregator = new EventAggregator();
+            _eventAggregator = new EventAggregator();
+            _logger = new Logger();
+
             Container.RegisterInstance(NavigationService);
             Container.RegisterInstance(SessionStateService);
-            Container.RegisterInstance(EventAggregator);
+            Container.RegisterInstance(_eventAggregator);
+	        Container.RegisterInstance(_logger);
             return base.OnInitializeAsync(args);
 	    }
 
