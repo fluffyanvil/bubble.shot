@@ -51,7 +51,7 @@ namespace PhotoStorm.UniversalApp.Helpers
 			return string.Empty;
 		}
 
-		public static async Task<IEnumerable<MapLocation>> DirectGeocoding(string address, Geopoint mapCenterGeopoint)
+		public static async Task<IEnumerable<MapLocation>> GetMapLocationByAddressString(string address, Geopoint mapCenterGeopoint)
 		{
 			if (string.IsNullOrEmpty(address))
 			{

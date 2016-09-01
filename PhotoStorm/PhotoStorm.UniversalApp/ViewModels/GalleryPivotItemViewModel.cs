@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
 using Prism.Windows.Mvvm;
@@ -77,7 +78,12 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    private void OnExecuteSelectitemCommand(object o)
 	    {
-            SelectedItem = (PhotoWithUserLink)o;
+            if (o is ItemClickEventArgs)
+                SelectedItem = ((ItemClickEventArgs) o).ClickedItem as PhotoWithUserLink;
+            else
+            {
+                SelectedItem = (PhotoWithUserLink) o;
+            }
         }
 
 	    public PhotoWithUserLink SelectedItem
@@ -87,7 +93,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			{
 				_selectedItem = value;
 				OnPropertyChanged();
-			    DetailsIsVisible = _selectedItem != null;
 			}
 		}
 

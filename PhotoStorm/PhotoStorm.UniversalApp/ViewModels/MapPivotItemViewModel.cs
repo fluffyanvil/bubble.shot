@@ -70,9 +70,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		private async void OnExecuteSearchLocationCommand(Geopoint point)
 		{
+		    IsSearchingLocation = true;
 			MapCenterGeopoint = point;
 			SelectionRadiusGeopoint = point;
 			SelectionAddress = await GeocodingHelper.GetAddressByCoordinates(point);
+		    IsSearchingLocation = false;
 		}
 
 		public ICommand MapDoubleTappedCommand => _mapDoubleTappedCommand ??
@@ -112,22 +114,22 @@ namespace PhotoStorm.UniversalApp.ViewModels
 			}
 		}
 
-		public IEnumerable<MapLocation> SearchedLocations
+		public IEnumerable<MapLocation> SearchedMapLocations
 		{
 			get
 			{
-				return _searchedLocations;
+				return _searchedMapLocations;
 			}
 			set
 			{
-				_searchedLocations = value;
+				_searchedMapLocations = value;
 				OnPropertyChanged();
 			}
 		}
 
 		private async void GetAddresses()
 		{
-			SearchedLocations = await GeocodingHelper.DirectGeocoding(SearchAddress, MapCenterGeopoint);
+			SearchedMapLocations = await GeocodingHelper.GetMapLocationByAddressString(SearchAddress, MapCenterGeopoint);
 		}
 
 		public bool IsSearchingLocation
@@ -174,7 +176,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private string _selectionAddress;
 		private Geopoint _mapCenterGeopoint;
 		private readonly Geolocator _geolocator;
-		private IEnumerable<MapLocation> _searchedLocations;
+		private IEnumerable<MapLocation> _searchedMapLocations;
 		private DelegateCommand<Geopoint> _searchLocationCommand;
 		private Geopath _selectionAreaCirclePath;
 		private ICommand _mapDoubleTappedCommand;

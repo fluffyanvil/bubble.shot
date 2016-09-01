@@ -10,6 +10,7 @@
     xmlns:maps1="using:Windows.Services.Maps"
     xmlns:viewModels="using:PhotoStorm.UniversalApp.ViewModels"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
+    xmlns:controls="using:WinRTXamlToolkit.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" d:DataContext="{d:DesignInstance viewModels:MainPageViewModel }">
@@ -52,7 +53,7 @@
                             AutoMaximizeSuggestionArea="True"
                             Text="{Binding MapPivotItemViewModel.SearchAddress, Mode=TwoWay}"
                             PlaceholderText="Адрес"
-                            ItemsSource="{Binding MapPivotItemViewModel.SearchedLocations, Mode=TwoWay}"
+                            ItemsSource="{Binding MapPivotItemViewModel.SearchedMapLocations, Mode=TwoWay}"
                             UpdateTextOnSelect="True">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="QuerySubmitted">

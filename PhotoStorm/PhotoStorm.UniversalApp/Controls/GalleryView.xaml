@@ -85,8 +85,8 @@
                 ActivationWidth="100"
                 MouseSlidingEnabled="True"
                 LeftCommand="{Binding ElementName=LayoutRoot, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
-                RightCommand="{Binding ElementName=LayoutRoot, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}" Height="150">
-                
+                RightCommand="{Binding ElementName=LayoutRoot, Path=DataContext.GalleryPivotItemViewModel.RemoveItemCommand}"
+                Height="150">
                 <Grid x:Name="OuterGrid" Height="150" Background="Gray">
                     <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -153,10 +153,19 @@
 
         <ListView x:Name="ListView"
                   ItemTemplate="{StaticResource PhotoWithUserLinkListTemplate}"
-                  
                   ItemsSource="{Binding GalleryPivotItemViewModel.Photos}"
-                  SelectionMode="Single"
-                  IsItemClickEnabled="False" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                  SelectionMode="Single"                  
+                  IsItemClickEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:BehaviorCollection>
+                    <core:EventTriggerBehavior EventName="Tapped">
+                        <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.ShowDetails}"></core:InvokeCommandAction>
+                    </core:EventTriggerBehavior>
+                    <core:EventTriggerBehavior EventName="ItemClick">
+                        <core:InvokeCommandAction Command="{Binding GalleryPivotItemViewModel.SelectItemCommand}"></core:InvokeCommandAction>
+                    </core:EventTriggerBehavior>
+                </interactivity:BehaviorCollection>
+            </interactivity:Interaction.Behaviors>
             <ListView.ItemContainerStyle>
                 
                 <Style TargetType="ListViewItem">
@@ -184,7 +193,7 @@
                     </FlipView>
 
                     <Grid HorizontalAlignment="Right" Width="40" Opacity="0.6" VerticalAlignment="Top" Height="40" Background="DarkSlateGray">
-                        <TextBlock Text="{StaticResource CloseButtonGlyph}" FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DarkGray"/>
+                        <ContentControl Template="{StaticResource CloseButtonIcon}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentControl>
                         <interactivity:Interaction.Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">

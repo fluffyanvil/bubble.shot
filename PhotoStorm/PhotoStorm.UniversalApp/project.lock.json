@@ -434,7 +434,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -442,10 +442,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -459,10 +459,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -2679,7 +2679,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -2687,10 +2687,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -2704,10 +2704,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -5046,7 +5046,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -5054,10 +5054,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -5071,10 +5071,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -7454,7 +7454,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -7462,10 +7462,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -7479,10 +7479,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -9830,7 +9830,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -9838,10 +9838,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -9855,10 +9855,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -12243,7 +12243,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -12251,10 +12251,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -12268,10 +12268,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -14619,7 +14619,7 @@
           "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
         }
       },
-      "Prism.Core/6.1.0": {
+      "Prism.Core/6.2.0": {
         "compile": {
           "lib/wpa81/Prism.dll": {}
         },
@@ -14627,10 +14627,10 @@
           "lib/wpa81/Prism.dll": {}
         }
       },
-      "Prism.Unity/6.1.1": {
+      "Prism.Unity/6.2.0": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Windows": "6.0.1",
+          "Prism.Windows": "6.0.2",
           "System.Diagnostics.Debug": "4.0.10",
           "System.Globalization": "4.0.10",
           "System.Runtime": "4.0.20",
@@ -14644,10 +14644,10 @@
           "lib/uap10.0/Prism.Unity.Windows.dll": {}
         }
       },
-      "Prism.Windows/6.0.1": {
+      "Prism.Windows/6.0.2": {
         "dependencies": {
           "CommonServiceLocator": "1.3.0",
-          "Prism.Core": "6.1.0",
+          "Prism.Core": "6.2.0",
           "System.Collections": "4.0.10",
           "System.ComponentModel": "4.0.0",
           "System.ComponentModel.Annotations": "4.0.10",
@@ -17298,11 +17298,11 @@
         "tools/install.ps1"
       ]
     },
-    "Prism.Core/6.1.0": {
-      "sha512": "JDUhYt+w3cawTVgLR1Hsbf59sytjsyFIdTmrbJKkKtHW7CCWAHFM9DGesWSU7cmUgbHm7MYZx5hQA+xiBTQeVg==",
+    "Prism.Core/6.2.0": {
+      "sha512": "jWJRmjvR/bJqVyLr3T9hKToyV6X0Q2DONtyfa8ZjHJwlkD/SF3YJM+z8xSdqQl8uPfLOmgBG6Xm4lPk69P5o0g==",
       "type": "package",
       "files": [
-        "Prism.Core.6.1.0.nupkg.sha512",
+        "Prism.Core.6.2.0.nupkg.sha512",
         "Prism.Core.nuspec",
         "lib/MonoAndroid10/Prism.dll",
         "lib/MonoAndroid10/Prism.xml",
@@ -17322,27 +17322,24 @@
         "lib/wpa81/Prism.xml"
       ]
     },
-    "Prism.Unity/6.1.1": {
-      "sha512": "SD8g7C7n96JmRWxafwr2iRxGoXHKeoBcM2EWHF5DHkQbfY8tGiBeFXWcdS2hZyoCjJiYa7BTYuGuVMVZT9Lb+g==",
+    "Prism.Unity/6.2.0": {
+      "sha512": "05bY5a5KX00N+IhzICMzDpBs0c/o3ubL4jkXxiF8RtYMCXmtEeUzz6pjLnA+G91/Jt2ssgGk2JDJyUB2JaJlGw==",
       "type": "package",
       "files": [
-        "Prism.Unity.6.1.1.nupkg.sha512",
+        "Prism.Unity.6.2.0.nupkg.sha512",
         "Prism.Unity.nuspec",
         "lib/net45/Prism.Unity.Wpf.dll",
         "lib/net45/Prism.Unity.Wpf.xml",
-        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Prism.Unity.Forms.dll",
-        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Prism.Unity.Forms.dll.config",
-        "lib/portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Prism.Unity.Forms.xml",
         "lib/uap10.0/Prism.Unity.Windows.dll",
         "lib/uap10.0/Prism.Unity.Windows.pri",
         "lib/uap10.0/Prism.Unity.Windows.xml"
       ]
     },
-    "Prism.Windows/6.0.1": {
-      "sha512": "ZizrGMZOkov0WGKPNnXS1bsIfh4oZnYqj5+bbqnAOQoDrG8FQO239Pc6U2glETwQDVhg30Eg5m1kfcKlfjjuDA==",
+    "Prism.Windows/6.0.2": {
+      "sha512": "0EwCQvzf+W8/7i9bZCJcjjXAg7h+/BquEuWWZUBr4NXsKteDh/K+4UQsFpTb/2YN1nROJI4ixJEamwNxaEvkkQ==",
       "type": "package",
       "files": [
-        "Prism.Windows.6.0.1.nupkg.sha512",
+        "Prism.Windows.6.0.2.nupkg.sha512",
         "Prism.Windows.nuspec",
         "lib/uap10.0/Prism.Windows.dll",
         "lib/uap10.0/Prism.Windows.pri",
@@ -23634,9 +23631,9 @@
       "Microsoft.Toolkit.Uwp.UI >= 1.0.0",
       "Microsoft.Toolkit.Uwp.UI.Controls >= 1.0.0",
       "Microsoft.Xaml.Behaviors.Uwp.Managed >= 1.1.0",
-      "Prism.Core >= 6.1.0",
-      "Prism.Unity >= 6.1.1",
-      "Prism.Windows >= 6.0.1",
+      "Prism.Core >= 6.2.0",
+      "Prism.Unity >= 6.2.0",
+      "Prism.Windows >= 6.0.2",
       "WinRTXamlToolkit.Controls.Gauge.UWP >= 2.0.0",
       "WinRTXamlToolkit.UWP >= 2.0.0"
     ],
