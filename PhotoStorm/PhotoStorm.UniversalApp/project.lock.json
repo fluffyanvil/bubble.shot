@@ -11,28 +11,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -334,7 +313,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -342,9 +324,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -353,12 +335,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -367,11 +349,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -416,7 +399,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -486,6 +469,43 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.dll": {
+            "assetType": "native",
+            "rid": "win10-arm"
+          },
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.pri": {
+            "assetType": "native",
+            "rid": "win10-arm"
+          },
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.dll": {
+            "assetType": "native",
+            "rid": "win10-x64"
+          },
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.pri": {
+            "assetType": "native",
+            "rid": "win10-x64"
+          },
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.dll": {
+            "assetType": "native",
+            "rid": "win10-x86"
+          },
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.pri": {
+            "assetType": "native",
+            "rid": "win10-x86"
+          }
         }
       },
       "runtime.native.System.IO.Compression/4.1.0": {
@@ -2260,7 +2280,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -2282,7 +2302,15 @@
           }
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -2290,12 +2318,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -2308,28 +2338,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -2578,7 +2587,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -2586,9 +2598,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -2597,12 +2609,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -2611,11 +2623,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -2661,7 +2674,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -2731,6 +2744,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -4637,7 +4665,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -4648,7 +4676,15 @@
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -4656,12 +4692,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -4674,28 +4712,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -4945,7 +4962,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -4953,9 +4973,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -4964,12 +4984,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -4978,11 +4998,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -5028,7 +5049,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -5098,6 +5119,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -7042,7 +7078,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -7053,7 +7089,15 @@
           "runtimes/win10-arm/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -7061,12 +7105,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -7079,28 +7125,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -7353,7 +7378,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -7361,9 +7389,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -7372,12 +7400,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -7386,11 +7414,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -7436,7 +7465,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -7506,6 +7535,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -9417,7 +9461,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -9428,7 +9472,15 @@
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -9436,12 +9488,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -9454,28 +9508,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -9729,7 +9762,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -9737,9 +9773,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -9748,12 +9784,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -9762,11 +9798,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -9812,7 +9849,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -9882,6 +9919,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -11831,7 +11883,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -11842,7 +11894,15 @@
           "runtimes/win10-x64/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -11850,12 +11910,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -11868,28 +11930,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -12142,7 +12183,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -12150,9 +12194,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -12161,12 +12205,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -12175,11 +12219,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -12225,7 +12270,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -12295,6 +12340,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.any.System.Collections/4.0.11": {
@@ -14206,7 +14266,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -14217,7 +14277,15 @@
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -14225,12 +14293,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     },
@@ -14243,28 +14313,7 @@
           "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.dll": {}
         }
       },
-      "Microsoft.ApplicationInsights/2.1.0": {
-        "dependencies": {
-          "System.Collections": "4.0.10",
-          "System.Diagnostics.Debug": "4.0.10",
-          "System.Diagnostics.Tools": "4.0.0",
-          "System.Diagnostics.Tracing": "4.0.20",
-          "System.Globalization": "4.0.10",
-          "System.IO": "4.0.10",
-          "System.IO.Compression": "4.0.0",
-          "System.Linq": "4.0.0",
-          "System.Net.Http": "4.0.0",
-          "System.Reflection": "4.0.10",
-          "System.Reflection.Extensions": "4.0.0",
-          "System.Runtime": "4.0.20",
-          "System.Runtime.Extensions": "4.0.10",
-          "System.Text.Encoding": "4.0.10",
-          "System.Text.Encoding.Extensions": "4.0.10",
-          "System.Text.RegularExpressions": "4.0.10",
-          "System.Threading": "4.0.10",
-          "System.Threading.Tasks": "4.0.10",
-          "System.Xml.XDocument": "4.0.10"
-        },
+      "Microsoft.ApplicationInsights/2.2.0": {
         "compile": {
           "lib/uap10.0/Microsoft.ApplicationInsights.dll": {}
         },
@@ -14518,7 +14567,10 @@
         }
       },
       "Microsoft.NETCore.Windows.ApiSets/1.0.1": {},
-      "Microsoft.Toolkit.Uwp/1.0.0": {
+      "Microsoft.Toolkit.Uwp/1.3.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         },
@@ -14526,9 +14578,9 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
@@ -14537,12 +14589,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
           "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
-          "Win2D.uwp": "1.18.0"
+          "Win2D.uwp": "1.19.0"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
@@ -14551,11 +14603,12 @@
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll": {}
         }
       },
-      "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
+      "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
         "dependencies": {
-          "Microsoft.Toolkit.Uwp": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI": "1.0.0",
-          "Microsoft.Toolkit.Uwp.UI.Animations": "1.0.0"
+          "Microsoft.Toolkit.Uwp": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI": "1.3.1",
+          "Microsoft.Toolkit.Uwp.UI.Animations": "1.3.1",
+          "Robmikh.CompositionSurfaceFactory": "0.7.1"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll": {}
@@ -14601,7 +14654,7 @@
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
+      "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Xaml.Interactions.dll": {},
           "lib/uap10.0/Microsoft.Xaml.Interactivity.dll": {}
@@ -14671,6 +14724,21 @@
         },
         "runtime": {
           "lib/uap10.0/Prism.Windows.dll": {}
+        }
+      },
+      "Robmikh.CompositionSurfaceFactory/0.7.1": {
+        "dependencies": {
+          "Win2D.uwp": "1.19.0"
+        },
+        "compile": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd": {}
+        },
+        "native": {
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.dll": {},
+          "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.pri": {}
         }
       },
       "runtime.aot.System.Collections/4.0.10": {
@@ -16620,7 +16688,7 @@
           "lib/win8/Microsoft.Practices.Unity.dll": {}
         }
       },
-      "Win2D.uwp/1.18.0": {
+      "Win2D.uwp/1.19.0": {
         "compile": {
           "lib/uap10.0/Microsoft.Graphics.Canvas.winmd": {}
         },
@@ -16631,7 +16699,15 @@
           "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll": {}
         }
       },
-      "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
+      "WinRTXamlToolkit/2.3.0": {
+        "compile": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+        }
+      },
+      "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
         "compile": {
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         },
@@ -16639,12 +16715,14 @@
           "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll": {}
         }
       },
-      "WinRTXamlToolkit.UWP/2.0.0": {
-        "compile": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/WinRTXamlToolkit.dll": {}
+      "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit.Controls.Gauge": "2.3.0"
+        }
+      },
+      "WinRTXamlToolkit.UWP/2.3.0": {
+        "dependencies": {
+          "WinRTXamlToolkit": "2.3.0"
         }
       }
     }
@@ -16661,20 +16739,21 @@
         "lib/portable-net4+sl5+netcore45+wpa81+wp8/Microsoft.Practices.ServiceLocation.pdb"
       ]
     },
-    "Microsoft.ApplicationInsights/2.1.0": {
-      "sha512": "mviO8PLQd3r22Pmv8JfjYzTCQ9ByhkU9wdC4fwd6WmAARwAMgMw9HEbHeYS3r+8pB3w+fZMi7p4LKijzgNybRQ==",
+    "Microsoft.ApplicationInsights/2.2.0": {
+      "sha512": "+JJ6qygUKQY2YnRfr0GlgdbKAhUqZhwd9zija0aKdDVQK60lQtnsBKzFY8/kMg0SH2MRXtmLkHG53oiNDQsLJQ==",
       "type": "package",
+      "path": "Microsoft.ApplicationInsights/2.2.0",
       "files": [
-        "Microsoft.ApplicationInsights.2.1.0.nupkg.sha512",
+        "Microsoft.ApplicationInsights.2.2.0.nupkg.sha512",
         "Microsoft.ApplicationInsights.nuspec",
-        "lib/dotnet5.4/Microsoft.ApplicationInsights.XML",
-        "lib/dotnet5.4/Microsoft.ApplicationInsights.dll",
         "lib/net40/Microsoft.ApplicationInsights.XML",
         "lib/net40/Microsoft.ApplicationInsights.dll",
         "lib/net45/Microsoft.ApplicationInsights.XML",
         "lib/net45/Microsoft.ApplicationInsights.dll",
         "lib/net46/Microsoft.ApplicationInsights.XML",
         "lib/net46/Microsoft.ApplicationInsights.dll",
+        "lib/netstandard1.5/Microsoft.ApplicationInsights.XML",
+        "lib/netstandard1.5/Microsoft.ApplicationInsights.dll",
         "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll",
         "lib/uap10.0/Microsoft.ApplicationInsights.dll",
         "lib/wp8/Microsoft.ApplicationInsights.dll"
@@ -17105,6 +17184,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2": {
       "sha512": "9UHv2YObWmcF8gqtBoDC4UW5gdHzFRtaZ5KtB9QKvCy+NC9LH1DMYyOI/ltupjVZlwYEulj3msjBXys9/QI6nw==",
       "type": "package",
+      "path": "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2",
       "files": [
         "Microsoft.NETCore.UniversalWindowsPlatform.5.2.2.nupkg.sha512",
         "Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
@@ -17123,11 +17203,12 @@
         "runtime.json"
       ]
     },
-    "Microsoft.Toolkit.Uwp/1.0.0": {
-      "sha512": "beWPWTEv7eF+PhiH/a/I82U/K169rVPTPZQIE4s3xpSfmADAI+0jgK3N/SgOeY5AekwVVPLGBaHhpWDaPBvaDg==",
+    "Microsoft.Toolkit.Uwp/1.3.1": {
+      "sha512": "+E8v/cm1WMsOICOriQ7IloFkN3x+G+LXmC3mlhvYpucmN6X9B7BJI18CgCRvQjTp1t53BDl387p7QIYxT7/bAQ==",
       "type": "package",
+      "path": "Microsoft.Toolkit.Uwp/1.3.1",
       "files": [
-        "Microsoft.Toolkit.Uwp.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.1.3.1.nupkg.sha512",
         "Microsoft.Toolkit.Uwp.nuspec",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.dll",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.pdb",
@@ -17135,11 +17216,12 @@
         "lib/uap10.0/Microsoft.Toolkit.Uwp.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI/1.0.0": {
-      "sha512": "Yp1/YXgP2G9CnwN5/aoIwYgK97VG/CtsE0TbIveB4NGAAKfpt1dpueeTi2jhCRig3gPLcdeiVKxWEY3hYSqZBA==",
+    "Microsoft.Toolkit.Uwp.UI/1.3.1": {
+      "sha512": "VGbyNQYFBnfyRrSOIkisUPEiThkkijnqnM/jg0kGYIQBpGjeF+lpTr4kWb6fjK0voo+1dUtyX0LWJe5+7brrkg==",
       "type": "package",
+      "path": "Microsoft.Toolkit.Uwp.UI/1.3.1",
       "files": [
-        "Microsoft.Toolkit.Uwp.UI.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.1.3.1.nupkg.sha512",
         "Microsoft.Toolkit.Uwp.UI.nuspec",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.dll",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.pdb",
@@ -17147,11 +17229,12 @@
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Animations/1.0.0": {
-      "sha512": "rtM1aSylBCqOKp4qYXXBNeK4flXu+gpMtdQkbLaaIQj9nTWDKrppxrIZh0apdDYNEh/s4Ebsuf2kVqw7WHblyQ==",
+    "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1": {
+      "sha512": "LECH71p/EWDrMkD+ebarVDzr1xSNq8ErJgbYbfD7PoFQDzqoC6Usr98MWTJPIHSzvCXJgSqzUhsooe0EA0+Idw==",
       "type": "package",
+      "path": "Microsoft.Toolkit.Uwp.UI.Animations/1.3.1",
       "files": [
-        "Microsoft.Toolkit.Uwp.UI.Animations.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.Animations.1.3.1.nupkg.sha512",
         "Microsoft.Toolkit.Uwp.UI.Animations.nuspec",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.dll",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.pdb",
@@ -17159,27 +17242,36 @@
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Animations.xml"
       ]
     },
-    "Microsoft.Toolkit.Uwp.UI.Controls/1.0.0": {
-      "sha512": "A5gFr5icrEHIK85ChpUbXOJjqIJrVYRJv+Rp6AuocCX6lAuX7QocIPpzUw4uuys9hbC7ljqaLBMSSQ++kk+p1w==",
+    "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1": {
+      "sha512": "i1Yd1dHTTB2mU8EZqv6i0fqOkaTXWG05nFtUgFZCKBoxcRgKjPvPXPn5YyWoWyyxEbfCH3x3y19K4RxCR+eTxA==",
       "type": "package",
+      "path": "Microsoft.Toolkit.Uwp.UI.Controls/1.3.1",
       "files": [
-        "Microsoft.Toolkit.Uwp.UI.Controls.1.0.0.nupkg.sha512",
+        "Microsoft.Toolkit.Uwp.UI.Controls.1.3.1.nupkg.sha512",
         "Microsoft.Toolkit.Uwp.UI.Controls.nuspec",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.dll",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.pdb",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.pri",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls.xml",
-        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/AdaptiveGridView/AdaptiveGridView.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/BladeView/BladeView.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/DropShadowPanel/DropShadowPanel.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Expander/Expander.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/GridSplitter/GridSplitter.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/HamburgerMenu/HamburgerMenu.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/HeaderedTextBlock/HeaderedTextBlock.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/ImageEx/ImageEx.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Loading/Loading.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/MarkdownTextBlock/MarkdownTextBlock.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/MasterDetailsView/MasterDetailsView.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Microsoft.Toolkit.Uwp.UI.Controls.xr.xml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/PullToRefreshListView/PullToRefreshListView.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RadialGauge/RadialGauge.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RangeSelector/RangeSelector.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/RotatorTile/RotatorTile.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/ScrollHeader/ScrollHeader.xaml",
         "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/SlidableListItem/SlidableListItem.xaml",
-        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Themes/Generic.xaml"
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/Themes/Generic.xaml",
+        "lib/uap10.0/Microsoft.Toolkit.Uwp.UI.Controls/TileControl/TileControl.xaml"
       ]
     },
     "Microsoft.VisualBasic/10.0.1": {
@@ -17259,11 +17351,12 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "Microsoft.Xaml.Behaviors.Uwp.Managed/1.1.0": {
-      "sha512": "Qxe4fblviCn2oFf7C4ahCsZHC0GzRa7Tz5z+L1QUHUljY3Oj/TMoT1O0jJ+ru6RcJ9qS8yFw/jIvstg2dxxpGA==",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0": {
+      "sha512": "LfzU68PVP33nqsuSlO5xAYuoI/itVKz4VVJSIunrS7iqqxE3sy0Q+VvtoYnFcBAoGnY83ZVn8Mnc9HYqOBiPmg==",
       "type": "package",
+      "path": "Microsoft.Xaml.Behaviors.Uwp.Managed/2.0.0",
       "files": [
-        "Microsoft.Xaml.Behaviors.Uwp.Managed.1.1.0.nupkg.sha512",
+        "Microsoft.Xaml.Behaviors.Uwp.Managed.2.0.0.nupkg.sha512",
         "Microsoft.Xaml.Behaviors.Uwp.Managed.nuspec",
         "lib/uap10.0/Design/Microsoft.Xaml.Interactions.Design.dll",
         "lib/uap10.0/Design/Microsoft.Xaml.Interactivity.Design.dll",
@@ -17344,6 +17437,25 @@
         "lib/uap10.0/Prism.Windows.dll",
         "lib/uap10.0/Prism.Windows.pri",
         "lib/uap10.0/Prism.Windows.xml"
+      ]
+    },
+    "Robmikh.CompositionSurfaceFactory/0.7.1": {
+      "sha512": "wbTtNg4/svj+foIP3sRZszbL/SwA2bioLTQzd58HKdcfFE2CIQyhwQeL829ioWseo0zU0fIqZyiw5CUDqKWS3g==",
+      "type": "package",
+      "path": "Robmikh.CompositionSurfaceFactory/0.7.1",
+      "files": [
+        "Robmikh.CompositionSurfaceFactory.0.7.1.nupkg.sha512",
+        "Robmikh.CompositionSurfaceFactory.nuspec",
+        "build/native/Robmikh.CompositionSurfaceFactory.props",
+        "build/native/Robmikh.CompositionSurfaceFactory.targets",
+        "lib/uap10.0/Robmikh.CompositionSurfaceFactory.winmd",
+        "lib/uap10.0/Robmikh.CompositionSurfaceFactory.xml",
+        "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.dll",
+        "runtimes/win10-arm/native/Robmikh.CompositionSurfaceFactory.pri",
+        "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.dll",
+        "runtimes/win10-x64/native/Robmikh.CompositionSurfaceFactory.pri",
+        "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.dll",
+        "runtimes/win10-x86/native/Robmikh.CompositionSurfaceFactory.pri"
       ]
     },
     "runtime.any.System.Collections/4.0.11": {
@@ -23085,11 +23197,12 @@
         "lib/wp80/Microsoft.Practices.Unity.xml"
       ]
     },
-    "Win2D.uwp/1.18.0": {
-      "sha512": "qPRgHJF9l7vKLyM/adOjUHE9OE90nYFCpa3/IOaBu1lMyiMwcfXyV2JEri+beNir0eo7luzz8dRBpyBIkjK9qw==",
+    "Win2D.uwp/1.19.0": {
+      "sha512": "pLL/gLb3uY75IlswAKzOvQnwwiGrMxZyBl2DbJOjuzG6SOWMp0sg+tkj+HZU8uyQ8jIdAbOE0Iu5+z9zyT5E6Q==",
       "type": "package",
+      "path": "Win2D.uwp/1.19.0",
       "files": [
-        "Win2D.uwp.1.18.0.nupkg.sha512",
+        "Win2D.uwp.1.19.0.nupkg.sha512",
         "Win2D.uwp.nuspec",
         "Win2d.githash.txt",
         "build/native/Win2D.uwp.targets",
@@ -23102,57 +23215,13 @@
         "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll"
       ]
     },
-    "WinRTXamlToolkit.Controls.Gauge.UWP/2.0.0": {
-      "sha512": "xL+bvFJkIctSD1YnwnJkweMBJjXaxi1lt24EZrQ9x+wQzpcDzZgJ3jzb0zz3tSWsXsIZkOrEe0xsf0M1eY7Tnw==",
+    "WinRTXamlToolkit/2.3.0": {
+      "sha512": "xwc0GmuZlbwrCFhBcsEjTzURsRQ+d0wI8N+qPOIY+dpJuT31hRtaxo6zNINCDaSbM7/9KdYIESWdMqC4VE/NyQ==",
       "type": "package",
+      "path": "WinRTXamlToolkit/2.3.0",
       "files": [
-        "WinRTXamlToolkit.Controls.Gauge.UWP.2.0.0.nupkg.sha512",
-        "WinRTXamlToolkit.Controls.Gauge.UWP.nuspec",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.pri",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Properties/WinRTXamlToolkit.Controls.Gauge.UWP.rd.xml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Themes/Generic.xbf",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/WinRTXamlToolkit.Controls.Gauge.xr.xml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/ARM/Debug/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/ARM/Release/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/Debug/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/Release/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x64/Debug/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x64/Release/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x86/Debug/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x86/Release/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/TempPE/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/intermediatexaml/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/intermediatexaml/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/TempPE/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/intermediatexaml/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/TempPE/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/intermediatexaml/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/TempPE/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/intermediatexaml/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/TempPE/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/Themes/Generic.xaml",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
-        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/intermediatexaml/_._"
-      ]
-    },
-    "WinRTXamlToolkit.UWP/2.0.0": {
-      "sha512": "aO7uISAWUNJojXOf36YpruZz1YPIC8l/vH5q5diPNaRpR8VuYRCOMw3tHq8VzaGj64w/a22bwVSon5elHAsj4Q==",
-      "type": "package",
-      "files": [
-        "WinRTXamlToolkit.UWP.2.0.0.nupkg.sha512",
-        "WinRTXamlToolkit.UWP.nuspec",
+        "WinRTXamlToolkit.2.3.0.nupkg.sha512",
+        "WinRTXamlToolkit.nuspec",
         "lib/uap10.0/WinRTXamlToolkit.dll",
         "lib/uap10.0/WinRTXamlToolkit.pri",
         "lib/uap10.0/WinRTXamlToolkit/Async/_._",
@@ -23235,7 +23304,7 @@
         "lib/uap10.0/WinRTXamlToolkit/Interactivity/_._",
         "lib/uap10.0/WinRTXamlToolkit/Licensing/_._",
         "lib/uap10.0/WinRTXamlToolkit/Net/_._",
-        "lib/uap10.0/WinRTXamlToolkit/Properties/WinRTXamlToolkit.UWP.rd.xml",
+        "lib/uap10.0/WinRTXamlToolkit/Properties/WinRTXamlToolkit.rd.xml",
         "lib/uap10.0/WinRTXamlToolkit/Themes/Generic.xaml",
         "lib/uap10.0/WinRTXamlToolkit/Themes/Generic.xbf",
         "lib/uap10.0/WinRTXamlToolkit/Tools/_._",
@@ -23618,24 +23687,88 @@
         "lib/uap10.0/WinRTXamlToolkit/obj/x86/Release/Themes/_._",
         "lib/uap10.0/WinRTXamlToolkit/obj/x86/Release/intermediatexaml/_._"
       ]
+    },
+    "WinRTXamlToolkit.Controls.Gauge/2.3.0": {
+      "sha512": "dj2N1EPEJUF9NR3rgyDWTpbXiC0oCBmj3tU9dNHCtjO8+UKTNdMaD/OkN3CBPkKnjl6lOPl15yfUtedypFigJg==",
+      "type": "package",
+      "path": "WinRTXamlToolkit.Controls.Gauge/2.3.0",
+      "files": [
+        "WinRTXamlToolkit.Controls.Gauge.2.3.0.nupkg.sha512",
+        "WinRTXamlToolkit.Controls.Gauge.nuspec",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.dll",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge.pri",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Properties/WinRTXamlToolkit.Controls.Gauge.UWP.rd.xml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/Themes/Generic.xbf",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/WinRTXamlToolkit.Controls.Gauge.xr.xml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/ARM/Debug/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/ARM/Release/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/Debug/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/Release/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x64/Debug/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x64/Release/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x86/Debug/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/bin/x86/Release/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/TempPE/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/ARM/Debug/intermediatexaml/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/Release/intermediatexaml/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/TempPE/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Debug/intermediatexaml/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/TempPE/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x64/Release/intermediatexaml/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/TempPE/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Debug/intermediatexaml/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/TempPE/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/Themes/Generic.xaml",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/WinRTXamlToolkit.Controls.Gauge/Themes/_._",
+        "lib/uap10.0/WinRTXamlToolkit.Controls.Gauge/obj/x86/Release/intermediatexaml/_._"
+      ]
+    },
+    "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0": {
+      "sha512": "+QfBc/mdR81rWkL2B5bmV1181NUIDdL0eKuj58NgDjPLij1v4GguEtxolfa7o6dxBdAr6Fh14X/TKQDiwn/IpA==",
+      "type": "package",
+      "path": "WinRTXamlToolkit.Controls.Gauge.UWP/2.3.0",
+      "files": [
+        "WinRTXamlToolkit.Controls.Gauge.UWP.2.3.0.nupkg.sha512",
+        "WinRTXamlToolkit.Controls.Gauge.UWP.nuspec"
+      ]
+    },
+    "WinRTXamlToolkit.UWP/2.3.0": {
+      "sha512": "eXm0xK37hHhF2PzYRenCrvaPKrM/gfu3ODMVe7EH4rNyzQwkwDnue6hY0smd2hiC9ZwNeLTgPzT1A0mdcJkTMA==",
+      "type": "package",
+      "path": "WinRTXamlToolkit.UWP/2.3.0",
+      "files": [
+        "WinRTXamlToolkit.UWP.2.3.0.nupkg.sha512",
+        "WinRTXamlToolkit.UWP.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.ApplicationInsights >= 2.1.0",
+      "Microsoft.ApplicationInsights >= 2.2.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.2.3",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.1.1",
       "Microsoft.AspNet.SignalR.Client >= 2.2.1",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
-      "Microsoft.Toolkit.Uwp >= 1.0.0",
-      "Microsoft.Toolkit.Uwp.UI >= 1.0.0",
-      "Microsoft.Toolkit.Uwp.UI.Controls >= 1.0.0",
-      "Microsoft.Xaml.Behaviors.Uwp.Managed >= 1.1.0",
+      "Microsoft.Toolkit.Uwp >= 1.3.1",
+      "Microsoft.Toolkit.Uwp.UI >= 1.3.1",
+      "Microsoft.Toolkit.Uwp.UI.Controls >= 1.3.1",
+      "Microsoft.Xaml.Behaviors.Uwp.Managed >= 2.0.0",
       "Prism.Core >= 6.2.0",
       "Prism.Unity >= 6.2.0",
       "Prism.Windows >= 6.0.2",
-      "WinRTXamlToolkit.Controls.Gauge.UWP >= 2.0.0",
-      "WinRTXamlToolkit.UWP >= 2.0.0"
+      "WinRTXamlToolkit.Controls.Gauge.UWP >= 2.3.0",
+      "WinRTXamlToolkit.UWP >= 2.3.0"
     ],
     "UAP,Version=v10.0": []
   }

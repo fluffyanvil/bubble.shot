@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters1="using:WinRTXamlToolkit.Converters"
     xmlns:converters="using:PhotoStorm.UniversalApp.Converters"
-    xmlns:foundation="using:Windows.Foundation"
     xmlns:windows="using:Prism.Unity.Windows"
     RequestedTheme="Light">
     <Application.Resources>

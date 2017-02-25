@@ -24,8 +24,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Manager
             var vkAdapter = new VkAdapter(new VkAdapterConfig { ApiAddress = "https://api.vk.com/method/photos.search" });
             AddAdapter(vkAdapter);
 
-            var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig { ApiAddress = "https://api.instagram.com/v1/media/search", ClientId = "1677ed07ddd54db0a70f14f9b1435579", AccessToken = InstagramAccessToken });
-            AddAdapter(instagramAdapter);
+            //var instagramAdapter = new InstagramAdapter(new InstagramAdapterConfig { ApiAddress = "https://api.instagram.com/v1/media/search", ClientId = "1677ed07ddd54db0a70f14f9b1435579", AccessToken = InstagramAccessToken });
+            //AddAdapter(instagramAdapter);
         }
 
 		public string InstagramAccessToken { get; set; }
