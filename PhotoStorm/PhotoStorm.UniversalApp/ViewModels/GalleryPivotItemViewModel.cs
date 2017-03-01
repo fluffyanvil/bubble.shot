@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using PhotoStorm.UniversalApp.Models;
 using Prism.Commands;
@@ -14,9 +15,6 @@ namespace PhotoStorm.UniversalApp.ViewModels
 		private PhotoWithUserLink _selectedItem;
 		private DelegateCommand _cLoseDetails;
 
-		private double _availableModalSize;
-		private double _dynamicPhotoSize;
-		private int _maximumColumns;
 		private DelegateCommand<object> _removeItemCommand;
 		private DelegateCommand _removeAllItemsCommand;
 	    private ICommand _showDetails;

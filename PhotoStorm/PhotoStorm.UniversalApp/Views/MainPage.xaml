@@ -39,7 +39,18 @@
             <PivotItem x:Uid="MapPivotItem" Header="Карта">
                 <controls:MapView x:Name="MapView"/>
             </PivotItem>
-            <PivotItem x:Uid="GalleryPivotItem" Header="Галерея">
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Галерея</TextBlock>
+                        <Border VerticalAlignment="Top" Visibility="{Binding NewPhotosNotificationVisibility}">
+                            <Grid Width="20" MaxWidth="40" Height="20">
+                                <Ellipse Stroke="DarkGreen" Fill="DarkOliveGreen"/>
+                                <TextBlock FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding NewPhotosCount}"></TextBlock>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </PivotItem.Header>
                 <controls:GalleryView/>
             </PivotItem>
         </Pivot>
