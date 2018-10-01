@@ -21,7 +21,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Vk.Requests
 		public int Count { get; set; } // количество возвращаемых фотографий
 		public int Radius { get; set; }
 
-		public string ApiVersion => "5.42";
+		public string ApiVersion => "5.85";
+		public string ClientSecret => "d06488f5d06488f5d06488f5bad038e3a2dd064d06488f58954b0224c3936b085e39f02";
 
 		public VkPhotosSearchRequestParameters()
 		{
@@ -49,7 +50,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Vk.Requests
 					{"offset", Offset.ToString()},
 					{"count", Count.ToString()},
 					{"radius", Radius.ToString()},
-					{"v", ApiVersion }
+					{"v", ApiVersion },
+					{"access_token", ClientSecret }
 				};
 
 				return result;

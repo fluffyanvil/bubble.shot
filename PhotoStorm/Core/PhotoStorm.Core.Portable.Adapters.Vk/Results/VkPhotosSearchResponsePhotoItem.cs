@@ -15,24 +15,6 @@ namespace PhotoStorm.Core.Portable.Adapters.Vk.Results
 		[JsonProperty("owner_id")]
 		public string OwnerId { get; set; }
 
-		[JsonProperty("photo_75")]
-		public string Photo75 { get; set; }
-
-		[JsonProperty("photo_130")]
-		public string Photo130 { get; set; }
-
-		[JsonProperty("photo_604")]
-		public string Photo604 { get; set; }
-
-		[JsonProperty("photo_807")]
-		public string Photo807 { get; set; }
-
-		[JsonProperty("photo_1280")]
-		public string Photo1280 { get; set; }
-
-		[JsonProperty("photo_2560")]
-		public string Photo2560 { get; set; }
-
 		[JsonProperty("width")]
 		public int Width { get; set; }
 
@@ -53,5 +35,8 @@ namespace PhotoStorm.Core.Portable.Adapters.Vk.Results
 
 		[JsonProperty("long")]
 		public double Longitude { get; set; }
+
+		[JsonProperty("sizes")]
+		public VkPhotosSearchSize[] Sizes { get; set; }
 	}
 }
