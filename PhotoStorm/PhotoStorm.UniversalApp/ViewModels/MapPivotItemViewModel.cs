@@ -17,52 +17,52 @@ namespace PhotoStorm.UniversalApp.ViewModels
         public event EventHandler OnRaiseNeedToRedrawCircle;
 		public int ZoomLevel
 		{
-			get { return _zoomLevel; }
+			get => _zoomLevel;
 			set
 			{
 				_zoomLevel = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				OnRaiseNeedToRedrawCircle?.Invoke(this, null);
 			}
 		}
 		public bool ShowOnMap
 		{
-			get { return _showOnMap; }
+			get => _showOnMap;
 			set
 			{
 				_showOnMap = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 			}
 		}
 
 		public Geopoint MapCenterGeopoint
 		{
-			get { return _mapCenterGeopoint; }
+			get => _mapCenterGeopoint;
 			set
 			{
 				_mapCenterGeopoint = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				ZoomLevel = 11;
 			}
 		}
 
 		public Geopoint SelectionRadiusGeopoint
 		{
-			get { return _selectionRadiusGeopoint; }
+			get => _selectionRadiusGeopoint;
 			set
 			{
 				_selectionRadiusGeopoint = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
 			}
 		}
 		public Geopath SelectionAreaCirclePath
 		{
-			get { return _selectionAreaCirclePath; }
+			get => _selectionAreaCirclePath;
 			set
 			{
 				_selectionAreaCirclePath = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				OnRaiseNeedToRedrawCircle?.Invoke(this, null);
 			}
 		}
@@ -89,41 +89,43 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public int Radius
 		{
-			get { return _radius; }
+			get => _radius;
 			set
 			{
-				_radius = value; OnPropertyChanged();
+				_radius = value;
+				RaisePropertyChanged();
 				SelectionAreaCirclePath = new Geopath(SelectionRadiusGeopoint.GetCirclePoints(Radius));
 			}
 		}
 
 		public string SelectionAddress
 		{
-			get { return _selectionAddress; }
-			set { _selectionAddress = value; OnPropertyChanged(); }
+			get => _selectionAddress;
+			set
+			{
+				_selectionAddress = value;
+				RaisePropertyChanged();
+			}
 		}
 
 		public string SearchAddress
 		{
-			get { return _searchAddress; }
+			get => _searchAddress;
 			set
 			{
 				_searchAddress = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				GetAddresses();
 			}
 		}
 
 		public IEnumerable<MapLocation> SearchedMapLocations
 		{
-			get
-			{
-				return _searchedMapLocations;
-			}
+			get => _searchedMapLocations;
 			set
 			{
 				_searchedMapLocations = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -134,11 +136,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public bool IsSearchingLocation
 		{
-			get { return _isSearchingLocation; }
+			get => _isSearchingLocation;
 			set
 			{
 				_isSearchingLocation = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 			}
 		}
 		#region Public Methods

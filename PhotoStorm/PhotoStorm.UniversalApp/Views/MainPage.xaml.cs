@@ -17,7 +17,7 @@ namespace PhotoStorm.UniversalApp.Views
         private MainPageViewModel ViewModel => (MainPageViewModel)DataContext;
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             
         }
 

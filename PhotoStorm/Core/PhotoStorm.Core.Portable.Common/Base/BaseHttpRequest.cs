@@ -14,7 +14,6 @@ namespace PhotoStorm.Core.Portable.Common.Base
 	{
 	    private readonly HttpClient _httpClient;
 		private readonly string _address;
-		private readonly string _method;
 		private string _responseJson;
 		private readonly Serializer<TResponse> _serializer;
 		private TResponse _result;
@@ -22,7 +21,6 @@ namespace PhotoStorm.Core.Portable.Common.Base
 		{
             _httpClient = new HttpClient();
 			_address = address;
-			_method = method;
 			_serializer = new Serializer<TResponse>();
 		}
 		public async Task<TResponse> Execute(TRequest request)
@@ -39,7 +37,7 @@ namespace PhotoStorm.Core.Portable.Common.Base
 						_result = _serializer.DeserializeJson(_responseJson);
 					}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 			}
 			return _result;

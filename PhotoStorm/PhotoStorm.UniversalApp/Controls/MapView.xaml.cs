@@ -26,7 +26,7 @@ namespace PhotoStorm.UniversalApp.Controls
     {
         public MapView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public void RedrawCircle(Geopath geopath)

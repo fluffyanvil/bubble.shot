@@ -27,11 +27,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 		public bool DetailsIsVisible
 		{
-			get { return _detailsIsVisible; }
+			get => _detailsIsVisible;
 			set
 			{
 				_detailsIsVisible = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 			}
 		}
 
@@ -86,11 +86,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    public PhotoWithUserLink SelectedItem
 		{
-			get { return _selectedItem; }
-			set
+			get => _selectedItem;
+		    set
 			{
 				_selectedItem = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 			}
 		}
 

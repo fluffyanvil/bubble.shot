@@ -13,13 +13,12 @@ namespace PhotoStorm.UniversalApp.Extensions
         {
             try
             {
-                if (items.Any())
-                {
-                    foreach (var item in items)
-                    {
-                        collection.Add(item);
-                    }
-                }
+	            var enumerable = items as T[] ?? items.ToArray();
+	            if (!enumerable.Any()) return;
+	            foreach (var item in enumerable)
+	            {
+		            collection.Add(item);
+	            }
             }
             catch (Exception)
             {

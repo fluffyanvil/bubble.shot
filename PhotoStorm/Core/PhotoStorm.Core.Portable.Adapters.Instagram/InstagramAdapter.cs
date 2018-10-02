@@ -13,13 +13,11 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 		private InstagramPhotosSearchRequestParameters  _instagramPhotosSearchRequestParameters;
 		private readonly InstagramPhotosSearchHttpRequest _instagramPhotosSearchHttpRequest;
 
-	    private readonly string _clientId;
-	    private readonly string _accessToken;
+		private readonly string _accessToken;
 
 		public InstagramAdapter(InstagramAdapterConfig c) : base(c)
 		{
-		    _clientId = c.ClientId;
-		    _accessToken = c.AccessToken;
+			_accessToken = c.AccessToken;
 			_instagramPhotosSearchHttpRequest = new InstagramPhotosSearchHttpRequest(c.ApiAddress);
             _mapper = new InstagramPhotoItemMapper();
         }
@@ -44,16 +42,19 @@ namespace PhotoStorm.Core.Portable.Adapters.Instagram
 				var result = _instagramPhotosSearchHttpRequest.Execute(_instagramPhotosSearchRequestParameters);
 				if (result?.Result?.Images.Count > 0)
 				{
-					result.Result.Images = result.Result.Images.Where(
-						i =>
-							i.DateUnixStyle >= startTime.ToUnixStyle() &&
-							i.DateUnixStyle <= endTime.ToUnixStyle()).ToList();
+					if (result.Result != null)
+						result.Result.Images = result.Result.Images.Where(
+							i =>
+								i.DateUnixStyle >= startTime.ToUnixStyle() &&
+								i.DateUnixStyle <= endTime.ToUnixStyle()).ToList();
 				}
 				if (result?.Result?.Images.Count > 0)
 				{
-					
-					var genericResult = _mapper.MapInstagramPhotoItems(result.Result.Images).ToList();
-					OnNewPhotosReceived?.Invoke(this, new NewPhotoAlertEventArgs { Count = result.Result.Images.Count, Photos = genericResult });
+					if (result.Result != null)
+					{
+						var genericResult = _mapper.MapInstagramPhotoItems(result.Result.Images).ToList();
+						OnNewPhotosReceived?.Invoke(this, new NewPhotoAlertEventArgs { Count = result.Result.Images.Count, Photos = genericResult });
+					}
 				}
 
 			});

@@ -69,25 +69,19 @@
                 </AutoSuggestBox.ItemTemplate>
             </AutoSuggestBox>
         </Border>
-        <Slider Grid.Column="0" Grid.Row="1" Style="{StaticResource SliderStyle}" Margin="10,0" Value="{Binding MapPivotItemViewModel.Radius, Mode=TwoWay}"  Minimum="1000" Maximum="50000" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch">
-            <Slider.HeaderTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="1" BorderBrush="DarkGray" Background="#80F5F5DC" Margin="2">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+		<Slider Grid.Column="0" Grid.Row="1" Style="{StaticResource SliderStyle}" Margin="10,0" Value="{Binding MapPivotItemViewModel.Radius, Mode=TwoWay}"  Minimum="1000" Maximum="50000" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+			<Slider.HeaderTemplate>
+				<DataTemplate>
+					<Border BorderThickness="1" BorderBrush="DarkGray" Background="#80F5F5DC" Margin="2">
+						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
                         <Run Text="{Binding MapPivotItemViewModel.Radius, Converter={StaticResource MetersToKilometersConverter}}"></Run>
                         <Run>км</Run>
-                        </TextBlock>
-                    </Border>
-                </DataTemplate>
-            </Slider.HeaderTemplate>
-        </Slider>
-        <Border Grid.Column="1" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Opacity="0.8" Padding="1">
-            <Grid>
-                <ContentControl Template="{StaticResource CloudNotAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay}"></ContentControl>
-                <ContentControl Template="{StaticResource CloudAvailableIcon}" Visibility="{Binding IsStandalone, Converter={StaticResource InvertedBooleanToVisibilityConverter}, Mode=TwoWay}"></ContentControl>
-            </Grid>
-        </Border>
-        <!--SplashScreen-->
+						</TextBlock>
+					</Border>
+				</DataTemplate>
+			</Slider.HeaderTemplate>
+		</Slider>
+		<!--SplashScreen-->
         <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="#802F4F4F" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding MapPivotItemViewModel.IsSearchingLocation, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="{Binding MapPivotItemViewModel.IsSearchingLocation}"/>
         </Grid>

@@ -21,7 +21,7 @@ namespace PhotoStorm.UniversalApp.Controls
     {
         public StartContentDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -37,8 +37,8 @@ namespace PhotoStorm.UniversalApp.Controls
 
         public string Url
         {
-            get { return UrlTextBox.Text; }
-            set { SetValue(UrlProperty, value); }
+            get => UrlTextBox.Text;
+	        set => SetValue(UrlProperty, value);
         }
     }
 }

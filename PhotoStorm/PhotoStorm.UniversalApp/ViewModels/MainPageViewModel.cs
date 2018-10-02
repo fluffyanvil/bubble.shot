@@ -20,7 +20,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 	{
 	    private DelegateCommand _startManagerCommand;
 		private DelegateCommand _stopManagerCommand;
-		private IAdapterManager _adapterManager;
+		private readonly IAdapterManager _adapterManager;
 	    private int _selectedPivotIndex;
 
 	    #region Commands
@@ -88,7 +88,7 @@ namespace PhotoStorm.UniversalApp.ViewModels
 				}
 
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 			}
 		}
@@ -134,11 +134,11 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
 	    public int SelectedPivotIndex
 	    {
-	        get { return _selectedPivotIndex; }
-	        set
+	        get => _selectedPivotIndex;
+		    set
 	        {
 	            _selectedPivotIndex = value;
-	            OnPropertyChanged();
+	            RaisePropertyChanged();
 	            if (_selectedPivotIndex == 1)
 	                NewPhotosCount = 0;
 	        }
@@ -149,27 +149,22 @@ namespace PhotoStorm.UniversalApp.ViewModels
 
         public Visibility NewPhotosNotificationVisibility
         {
-            get { return _newPhotosNotificationVisibility; }
-            set
+            get => _newPhotosNotificationVisibility;
+	        set
             {
                 _newPhotosNotificationVisibility = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
         public int NewPhotosCount
         {
-            get { return _newPhotosCount; }
-            set
+            get => _newPhotosCount;
+	        set
             {
                 _newPhotosCount = value;
-                if (_newPhotosCount > 0)
-                    NewPhotosNotificationVisibility = Visibility.Visible;
-                else
-                {
-                    NewPhotosNotificationVisibility = Visibility.Collapsed;
-                }
-                OnPropertyChanged();
+                NewPhotosNotificationVisibility = _newPhotosCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+                RaisePropertyChanged();
             }
         }
     }

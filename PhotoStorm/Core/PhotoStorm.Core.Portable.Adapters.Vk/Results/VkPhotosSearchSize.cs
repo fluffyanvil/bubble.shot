@@ -18,14 +18,6 @@ namespace PhotoStorm.Core.Portable.Adapters.Vk.Results
 		public string InternalType { get; set; }
 
 		[JsonIgnore]
-		public string Type
-		{
-			get
-			{
-				return string.Empty;
-			}
-		}
-
-		
+		public string Type => string.Empty;
 	}
 }

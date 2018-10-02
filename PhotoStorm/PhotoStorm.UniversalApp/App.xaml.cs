@@ -25,8 +25,8 @@ namespace PhotoStorm.UniversalApp
 			WindowsAppInitializer.InitializeAsync(
 				WindowsCollectors.Metadata |
 				WindowsCollectors.Session);
-			this.InitializeComponent();
-			this.Suspending += OnSuspending;
+			InitializeComponent();
+			Suspending += OnSuspending;
 		}
 
 	    protected override Task OnInitializeAsync(IActivatedEventArgs args)
